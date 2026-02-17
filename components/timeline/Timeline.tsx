@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Card, CardHeader, CardBody } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { Role } from '@/lib/content/roles'
@@ -5,6 +6,38 @@ import { format } from 'date-fns'
 
 interface TimelineProps {
   roles: Role[]
+}
+
+function CompanyLogo({ logo, company }: { logo?: string; company: string }) {
+  if (logo) {
+    return (
+      <Image
+        src={logo}
+        alt={`${company} logo`}
+        width={32}
+        height={32}
+        className="object-contain rounded-sm shrink-0"
+      />
+    )
+  }
+
+  const initials = company
+    .split(/[\s,&.]+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map(word => word[0].toUpperCase())
+    .join('')
+
+  return (
+    <div
+      className="w-8 h-8 rounded-sm bg-gray-100 border border-gray-200 flex items-center justify-center shrink-0"
+      aria-hidden="true"
+    >
+      <span className="text-xs font-semibold text-gray-500 leading-none">
+        {initials}
+      </span>
+    </div>
+  )
 }
 
 export function Timeline({ roles }: TimelineProps) {
@@ -19,9 +52,12 @@ export function Timeline({ roles }: TimelineProps) {
                 <h3 className="text-xl font-semibold text-gray-900">
                   {role.title}
                 </h3>
-                <div className="mt-1 text-sm text-gray-600">
-                  {role.company}
-                  {role.location && ` • ${role.location}`}
+                <div className="mt-1 flex items-center gap-2 text-sm text-gray-600">
+                  <CompanyLogo logo={role.logo} company={role.company} />
+                  <span>
+                    {role.company}
+                    {role.location && ` • ${role.location}`}
+                  </span>
                 </div>
               </div>
               <div className="text-sm font-medium text-gray-500 whitespace-nowrap">

@@ -16,6 +16,7 @@ export interface Role {
   skills?: string[]
   content: string
   slug: string
+  logo?: string
 }
 
 export function getRoles(): Role[] {
@@ -44,6 +45,7 @@ export function getRoles(): Role[] {
       skills: data.skills || [],
       content,
       slug: filename.replace('.md', ''),
+      logo: data.logo || undefined,
     } as Role
   })
 
