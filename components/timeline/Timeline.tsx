@@ -14,8 +14,8 @@ function CompanyLogo({ logo, company }: { logo?: string; company: string }) {
       <Image
         src={logo}
         alt={`${company} logo`}
-        width={32}
-        height={32}
+        width={48}
+        height={48}
         className="object-contain rounded-sm shrink-0"
       />
     )
@@ -30,10 +30,10 @@ function CompanyLogo({ logo, company }: { logo?: string; company: string }) {
 
   return (
     <div
-      className="w-8 h-8 rounded-sm bg-surface-2 border border-border flex items-center justify-center shrink-0"
+      className="w-12 h-12 rounded-sm bg-surface-2 border border-border flex items-center justify-center shrink-0"
       aria-hidden="true"
     >
-      <span className="text-xs font-semibold text-text-muted leading-none">
+      <span className="text-sm font-semibold text-text-muted leading-none">
         {initials}
       </span>
     </div>

@@ -7,6 +7,7 @@ location: "New York, NY"
 employment_type: full-time
 level: "SVP"
 team_size: 2
+logo: "/logos/citi.png"
 tags: [enterprise-transformation, regulatory-compliance, program-management, consent-order]
 skills: [stakeholder-management, governance-design, regulatory-reporting, process-optimization, people-management]
 ---

@@ -6,6 +6,7 @@ end_date: 2020-10-15
 location: "New York, NY"
 employment_type: full-time
 level: "AVP"
+logo: "/logos/morgan-stanley.png"
 tags: [wealth-management, business-strategy, client-experience, partnerships]
 skills: [strategic-planning, stakeholder-interviews, operating-model-design, partnership-development]
 ---

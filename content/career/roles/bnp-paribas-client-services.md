@@ -6,6 +6,7 @@ start_date: 2010-02
 end_date: 2013-05-10
 location: "New York, NY"
 employment_type: full-time
+logo: "/logos/bnp-paribas.png"
 tags: [investment-banking, commodities, prime-brokerage, client-services, operations]
 skills: [client-relationship-management, process-optimization, six-sigma, vba-automation, regulatory-compliance]
 certifications: ["FINRA Series 7 (October 2008)"]

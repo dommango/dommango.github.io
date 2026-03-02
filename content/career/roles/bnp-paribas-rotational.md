@@ -6,6 +6,7 @@ start_date: 2008-07-07
 end_date: 2010-02
 location: "New York, NY"
 employment_type: full-time
+logo: "/logos/bnp-paribas.png"
 tags: [investment-banking, trading-operations, derivatives, rotational-program]
 skills: [derivatives-operations, collateral-management, documentation, vba, cross-functional-collaboration]
 rotations:
