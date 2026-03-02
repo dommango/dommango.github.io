@@ -5,8 +5,7 @@ start_date: 2021-09-07
 end_date: present
 location: "New York, NY"
 employment_type: full-time
-level: "C14 / SVP"
-manager: "Alana Detenbeck (2023)"
+level: "SVP"
 team_size: 2
 tags: [enterprise-transformation, regulatory-compliance, program-management, consent-order]
 skills: [stakeholder-management, governance-design, regulatory-reporting, process-optimization, people-management]
@@ -14,57 +13,56 @@ skills: [stakeholder-management, governance-design, regulatory-reporting, proces
 
 ## Summary
 
-Lead cross-organizational efforts on Citi's highest-priority strategic initiatives, including regulatory Consent Order remediation and enterprise risk/control framework transformation. Transitioned from contractor (Matrix Resources, Sep 2021 - Mar 2022) to full-time SVP (Mar 2022 - present).
+Lead cross-organizational efforts on strategic regulatory remediation and enterprise risk/control framework transformation initiatives. Transitioned from contractor to full-time SVP, driving governance design and regulatory compliance programs across the enterprise.
 
 ## Key Responsibilities
 
-- Lead enterprise-wide transformation initiatives for Consent Order remediation
+- Lead enterprise-wide transformation initiatives for regulatory compliance and remediation
 - Design and implement governance frameworks for regulatory commitments
-- Develop strategic dashboards for CEO and Board of Directors
+- Develop strategic dashboards for executive leadership and Board of Directors
 - Establish global standards for program/project management across 15,000+ projects
 - Oversee financial governance for ~$7.1B technology and business investment portfolio
-- Manage team of direct reports (2 Tampa-based as of 2023)
+- Manage distributed team of direct reports
 
 ## Notable Achievements
 
-### MRA Reporting Transformation (Enterprise-Scale)
-- **Designed & implemented Citi's MRA Reporting Operating Model** translating vague Article XII.1.e regulatory requirements into a documented, scalable governance framework across 15,000+ projects
-- **Authored Unmapped MRA Requirements** (v1.8 - v1.12): Progressive clarification of regulatory intent with embedded version lineage, field inventory, sourcing logic, and QC decision matrices
-- **Built MRA Design Council:** Established cross-functional forum (Oversight, ORM, IA, MRAAOF, business units) to translate regulatory language into operational procedures; drove consensus through structured facilitation and concrete prototypes
-- **Led sustainability testing** across lifecycle phases (RBCM 13.1/13.2, CAO-XIIE.10/11.3): Validated testing strategy, designed scalable QCR model, executed evidence QA across RET/iCAPS/PTS, authored closure packages with governance alignment
-- **Created Board-grade executive materials:** Dashboard framework with defensible definitions, Weekly Oversight Tracker, Committee presentation templates, stakeholder communication plans driving adoption across org structures
-- **Outcome:** Established sustainable BAU operating model owned by Oversight Function and MRAAOF; regulators approved model without major revisions
+### Enterprise Regulatory Reporting Transformation
+- **Designed & implemented enterprise regulatory reporting operating model** translating complex regulatory requirements into a documented, scalable governance framework across 15,000+ projects
+- **Authored regulatory requirements documentation** with progressive clarification of regulatory intent, embedded version lineage, field inventory, and quality control decision matrices
+- **Built cross-functional governance forum** establishing alignment across multiple business units and control functions to translate regulatory language into operational procedures through structured facilitation
+- **Led sustainability testing** across program lifecycle phases, validating testing strategy, designing scalable quality control model, and executing evidence review across enterprise systems
+- **Created Board-grade executive materials** including dashboard framework with defensible definitions, oversight tracking, presentation templates, and stakeholder communication plans
+- **Outcome:** Established sustainable business-as-usual operating model; regulators approved approach without major revisions
 
 ### Enterprise Governance & Board Reporting
-- **Developed and delivered 3 strategic dashboards** reconciling fragmented, cross-silo regulatory issue data into Board- and Audit-grade reporting with clear definitions and cited sourcing logic
-- **Established global PM standards** across 15,000+ project portfolio with structured program/lifecycle phase requirements (documented in Article XII.1.e RBCMs)
+- **Developed and delivered strategic dashboards** reconciling fragmented cross-silo regulatory data into Board- and Audit-grade reporting with clear definitions
+- **Established global program management standards** across 15,000+ project portfolio with structured lifecycle phase requirements
 - **Overhauled financial governance framework** for ~$7.1B technology and business investment portfolio through standardized cost estimation, tracking, variance analysis, and portfolio segmentation
-- **Led early status-reporting initiatives** translating executive dashboard from "craft build" to sustainable BAU, building weekly oversight tracking framework
+- **Led reporting initiatives** translating executive dashboard requirements from initial build to sustainable operations
 
 ### Regulatory Remediation & Controls
-- **Secured on-time closure of 4+ critical regulatory commitments** (RBCM 10.3, 11.3 sustainability testing) through validated controls and documented evidence packages
-- **Designed & launched new senior oversight function** improving quality and timeliness of regulatory remediation delivery; structured escalation constructs and stakeholder governance
-- **Executed ownership of testing and evidence QA** across multiple Unmapped MRA milestones: testing strategy definition, sampling methodology validation, cross-system evidence verification, risk/control findings packaging
-- **Established evidence-based risk frameworks** documenting assumptions, boundary conditions, and control-framework interpretation to support governance review and audit acceptance
+- **Secured on-time closure of 4+ critical regulatory commitments** through validated controls and documented evidence packages
+- **Designed & launched senior oversight function** improving quality and timeliness of regulatory remediation delivery with structured escalation and stakeholder governance
+- **Executed testing and evidence quality assurance** including testing strategy definition, sampling methodology validation, cross-system evidence verification, and risk/control findings packaging
+- **Established evidence-based risk frameworks** documenting assumptions, boundary conditions, and control-framework interpretation for governance review and audit acceptance
 
 ### Data Architecture & Technology
-- **Re-engineered data architecture** for 150+ strategic investments with visibility into ~$1.1B spend; documented field sourcing, refresh frequency, and QC approach
-- **Built reconciliation frameworks** aligning data across RET (Gold Source), iCAPS, and PTS; created illustrative one-time reconciliation workbook showing field-level sourcing logic and week-over-week variance tracking
-- **Leveraged AI-powered tools** to automate End User Computing (EUC) processes, reducing manual reporting effort and variance in data timeliness
-- **Created efficiency tools & templates** (Hot Keys workshop, dashboard templates, governance checklists) improving team productivity and decision speed
+- **Re-engineered data architecture** for 150+ strategic investments with visibility into ~$1.1B spend, documenting field requirements, refresh frequency, and quality control approach
+- **Built reconciliation frameworks** aligning data across enterprise systems with field-level logic and variance tracking
+- **Leveraged AI-powered tools** to automate manual reporting processes, reducing effort and improving data timeliness
+- **Created efficiency tools & templates** including training workshops, dashboard templates, and governance checklists improving team productivity
+- **Developed AI-powered training curriculum** for enterprise tool adoption with automated content refresh, ensuring training materials stay current without manual intervention
 
-### Project Portfolio (Article XII.1.e RBCMs)
-- **CAO-XIIE.4:** Work effort governance structure — contributor to cross-org PM standards
-- **CAO-XIIE.6:** Project management metrics and Board reporting — design authority for PM metrics framework
-- **CAO-XIIE.7:** Book of Work metrics framework — contributor to BoW segmentation logic
-- **CAO-XIIE.8:** Book of Work segmentation process — stakeholder alignment & testing oversight
-- **CAO-XIIE.10.3, 11.3:** Execute/Close-phase requirements sustainability testing — **primary author; testing lead; workstream general manager**
-- **CAO-XIIE.13.1/13.2:** Quality Assurance working group design — design leadership on QCR model and reviewer checklists (~50% artifact ownership)
+### Automation & AI Exploration
+- **Championed automation-first mindset** across manual reporting processes, identifying opportunities for AI integration
+- **Piloted AI-assisted workflows** for document processing and evidence synthesis
+- **Built template systems** reducing manual entry and improving data quality through pre-populated fields
+- **Explored enterprise AI adoption patterns** for scaling efficiency gains to broader transformation work
 
 ## Performance History
 
 ### 2023
-- **Rating:** 3-Valued Contributor (Manager) / 2-Exceeds Expectations (Self)
+- **Rating:** Valued Contributor (Manager) / Exceeds Expectations (Self)
 - **Strengths:** Complex-to-simple translation, rapid information synthesis, efficiency champion
 - **Development:** Increase transparency on objectives, more frequent communication on priorities
-- **First-time people manager** with 2 Tampa-based direct reports
+- **First-time people manager** with distributed team
