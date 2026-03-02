@@ -1,13 +1,14 @@
 ---
 name: "Dominic Mangonon"
 headline: "SVP, Transformation Senior Lead at Citi"
-location: "New York, NY"
-email: ""
+location: "New Jersey"
+email: "dom.mangonon@gmail.com"
 linkedin: ""
 github: ""
 website: ""
 travel: "55+ countries across 5 continents"
-interests: ["trekking", "snowboarding", "live music", "DIY electronics", "NY sports"]
+interests: ["trekking", "snowboarding", "live music", "DIY electronics", "NY sports", "AI exploration"]
+background: "First-generation American"
 ---
 
 ## Professional Summary
@@ -31,6 +32,9 @@ Worked across the financial services value chain: investment banking operations,
 ### 5. Quantitative Foundation
 MBA from CMU Tepper (3.68 GPA) with strong performance in analytics, strategy, and finance. Apply quantitative rigor to strategic problems.
 
+### 6. Technology & Automation
+Lifelong tinkerer with a bias toward building. From VBA macros at BNP Paribas to AI-powered automation at Citi, consistently leveraged technology to solve problems. Currently exploring AI tools and their application to enterprise transformation—this website itself was built via "vibecoding" with Claude Code.
+
 ## Career Arc
 
 ```
@@ -42,4 +46,35 @@ Operations (BNP) → Strategy Consulting (PwC/Strategy&) → Advisory (Treliant)
 
 ## What I'm Looking For
 
-<!-- To be filled in based on discovery conversation -->
+Exploring opportunities at the intersection of enterprise transformation and AI. My career has consistently involved translating complex systems into actionable frameworks—skills that translate directly to AI implementation, adoption, and change management.
+
+**Interested in:**
+- AI-powered transformation initiatives
+- Enterprise AI strategy and implementation
+- Roles that leverage both business acumen and technical curiosity
+- Building and scaling new capabilities within organizations
+
+**What I bring:**
+- Deep experience navigating complex, regulated environments
+- Track record of simplifying complexity for executive audiences
+- Hands-on comfort with technology and automation
+- Strategic perspective combined with execution focus
+
+---
+
+## Beyond Work
+
+### Builder & Tinkerer
+I've always been drawn to making things work. Whether it's VBA macros to automate trading desk workflows, DIY electronics projects, or building this website through AI-assisted "vibecoding" with Claude Code—I find satisfaction in turning ideas into working systems.
+
+Currently exploring the intersection of AI and practical problem-solving: How can these tools change how we work? How do we integrate them thoughtfully into enterprise environments? This website is both a showcase and an experiment in that exploration.
+
+### Adventurer
+**55+ countries across 5 continents.** Not just checking boxes—seeking out experiences that push comfort zones.
+
+Favorite adventures include trekking in Patagonia, exploring Southeast Asia, and finding live music venues in unexpected cities. Snowboarding whenever mountains and winter align.
+
+Travel has shaped how I approach work: comfort with ambiguity, adaptability to new contexts, and appreciation for different ways of solving problems.
+
+### NY Sports
+Lifelong New York sports fan—the highs, the lows, and everything in between. There's something about the shared experience of rooting for a team that builds community and teaches patience.

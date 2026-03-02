@@ -50,3 +50,16 @@ export function CardBody({ children, className }: CardSectionProps) {
     </div>
   )
 }
+
+export function CardFooter({ children, className }: CardSectionProps) {
+  return (
+    <div
+      className={clsx(
+        'mt-4 pt-3 border-t border-border-subtle flex items-center justify-between',
+        className
+      )}
+    >
+      {children}
+    </div>
+  )
+}
