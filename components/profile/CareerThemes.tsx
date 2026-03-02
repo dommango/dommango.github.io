@@ -12,17 +12,17 @@ export function CareerThemes({ themes }: CareerThemesProps) {
   }
 
   return (
-    <Section className="bg-gray-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <Section variant="highlight">
+      <div className="container mx-auto px-6 lg:px-8">
         <SectionHeader>Career Themes</SectionHeader>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {themes.map((theme, index) => (
             <Card key={index} className="h-full">
               <CardBody>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                <h3 className="text-lg font-semibold text-foreground mb-4">
                   {theme.title}
                 </h3>
-                <p className="text-sm text-gray-600 leading-relaxed">
+                <p className="text-sm text-text-secondary leading-relaxed">
                   {theme.description}
                 </p>
               </CardBody>

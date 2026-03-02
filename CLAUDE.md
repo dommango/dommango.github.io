@@ -1,3 +1,9 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+---
+
 # Personal Website - Development Guidelines
 
 A Next.js portfolio site built with TypeScript, React 19, and Tailwind CSS. These guidelines ensure consistency, performance, and maintainability.
@@ -7,6 +13,14 @@ A Next.js portfolio site built with TypeScript, React 19, and Tailwind CSS. Thes
 ## Project Overview
 
 **Stack:** Next.js 16 • React 19 • TypeScript • Tailwind CSS 4 • gray-matter
+
+**Key Features:**
+- Static site export (no server runtime)
+- Markdown-based content with gray-matter parsing
+- Pre-build career content sync from external directory
+- TypeScript strict mode enabled
+- ESLint + Next.js best practices
+- Vitest for unit/component testing with jsdom
 
 **Structure:**
 ```
@@ -20,20 +34,71 @@ components/
 └── career/          # Career-related components
 
 app/                 # Next.js App Router pages
+├── api/             # API routes (contact form endpoint)
 ├── career/
 ├── education/
 ├── skills/
 └── page.tsx         # Home page
 
-content/             # Markdown content
+content/             # Markdown content (synced at build time)
 ├── career/          # Career entries (parsed with gray-matter)
 
 lib/                 # Utilities
 ├── content/         # Content loading functions
 
 public/              # Static assets
-scripts/             # Build scripts (sync-career-content.js)
+scripts/             # Build scripts
+├── sync-career-content.js  # Copy career files from CAREER_DIR
+├── process-logos.js        # Logo processing utility
 ```
+
+---
+
+## Quick Reference
+
+### Common Commands
+
+**Development:**
+```bash
+npm run dev              # Start dev server (http://localhost:3000)
+npm run lint            # Check code quality with ESLint
+npm test                # Run all tests
+npm run test:watch      # Run tests in watch mode
+npm run test:coverage   # Generate coverage report
+```
+
+**Building & Deployment:**
+```bash
+npm run build            # Build static site (output to 'out/')
+npm start               # Serve production build locally
+```
+
+**Running Specific Tests:**
+```bash
+npm test -- Button      # Run tests matching filename "Button"
+npm test -- --run       # Run tests once (without watch)
+npm test -- components/ # Run tests in specific directory
+```
+
+**Debugging:**
+```bash
+npm run lint -- --fix   # Auto-fix ESLint issues
+tsc --noEmit            # Check TypeScript without emitting
+npm run build 2>&1 | grep error  # Check build errors only
+```
+
+### Build Process
+
+**Pre-build Hook:**
+The `prebuild` script runs automatically before `npm run build`:
+1. Copies career content from `$CAREER_DIR` (default: `/home/dom/career`) to `content/career/`
+2. Set `CAREER_DIR` env var to override the source directory
+
+**Static Export:**
+- Next.js is configured with `output: 'export'` — builds a static site
+- Images use `unoptimized: true` — no server-side image optimization
+- Output directory: `out/`
+- No API routes execute at runtime (must be serverless handlers or removed for static export)
 
 ---
 
@@ -347,6 +412,24 @@ export default async function CareerPage() {
 
 ## Testing & Verification
 
+### Test Setup
+
+**Framework:** Vitest with jsdom environment
+**Configuration:**
+- `vitest.config.ts` — Main config with jsdom environment, React plugin
+- `vitest.setup.ts` — Global setup: cleanup, window.matchMedia mock, IntersectionObserver mock
+- Coverage: v8 provider, HTML + JSON reporting
+
+**Running Tests:**
+```bash
+npm test                      # Watch mode (re-runs on file change)
+npm run test:watch            # Explicit watch mode
+npm test -- --run             # Run once without watch
+npm run test:coverage         # Generate coverage report (opens HTML report)
+npm test -- components/ui/    # Test specific directory
+npm test -- Button            # Test files matching name
+```
+
 ### Test Patterns
 
 ```typescript
@@ -377,18 +460,19 @@ describe('Button', () => {
 
 ### Build Verification
 
-Always verify the build before deployment:
+Always verify before deployment:
 
 ```bash
-npm run build
-npm run lint
+npm run lint      # Check code quality
+npm test -- --run # Ensure tests pass
+npm run build     # Build static site
 ```
 
 Check for:
-- ✅ TypeScript errors
+- ✅ TypeScript errors (`tsc --noEmit` if needed)
 - ✅ ESLint warnings
-- ✅ Build size warnings
-- ✅ Accessibility issues
+- ✅ Build errors
+- ✅ Accessibility issues (Next.js core-web-vitals config)
 
 ---
 
@@ -504,25 +588,69 @@ export default async function ProjectsPage() {
 
 ---
 
+## Environment & Configuration
+
+### Environment Variables
+
+**Build-time Variables:**
+- `CAREER_DIR` — Source directory for career content (default: `/home/dom/career`)
+  - Used by `scripts/sync-career-content.js` before build
+  - Example: `CAREER_DIR=/path/to/career npm run build`
+
+**TypeScript Configuration:**
+- `strict: true` — Strict type checking enabled
+- `@/*` path alias points to project root for imports
+
+**ESLint Configuration:**
+- Extends `eslint-config-next/core-web-vitals` and typescript configs
+- Ignores: `.next/`, `out/`, `build/`, `next-env.d.ts`
+
+---
+
 ## Debugging & Troubleshooting
 
 ### Common Issues
 
+**Build Fails - Career Content Not Found:**
+```bash
+# Verify career directory exists
+ls /home/dom/career
+# Or specify custom path
+CAREER_DIR=/path/to/career npm run build
+```
+
 **Hydration Mismatch:**
 - Ensure server-rendered content matches client-rendered content
-- Avoid reading browser APIs in server components
-- Use `'use client'` directive when needed
+- Avoid reading browser APIs (localStorage, window) in server components
+- Use `'use client'` directive in components that need browser APIs
 
 **Performance Issues:**
-- Run `npm run build` and check bundle size
-- Use React DevTools Profiler
-- Check Lighthouse scores
+- Run `npm run build` and check bundle size in `out/` directory
+- Use React DevTools Profiler for component render performance
+- Check Lighthouse scores against `out/` static files
 - Identify slow components with `<Suspense>` boundaries
 
 **Type Errors:**
-- Run `tsc --noEmit` to check types
-- Ensure all props have proper interfaces
-- Check generic type parameters
+- Run `tsc --noEmit` to check types without emitting files
+- Ensure all props have proper TypeScript interfaces
+- Check generic type parameters in React hooks
+
+**Test Failures:**
+- Check `vitest.setup.ts` for environment mocks (matchMedia, IntersectionObserver)
+- Ensure components are rendered with `@testing-library/react`
+- Mock API calls with `vi.mock()` or `vi.fn()`
+- Use `cleanup()` between tests (handled by setup)
+
+---
+
+## API Routes
+
+The `/app/api/` directory contains serverless endpoint handlers. Since this is a **static export**, API routes cannot use server-side session/state — they're limited to:
+- Static data processing
+- Client-side form handlers (consider serverless alternatives like Netlify Functions, Vercel Functions)
+- Contact form endpoints that delegate to external services
+
+**Important:** API routes in a static export build require special handling. If adding new routes, ensure they work with your deployment platform's serverless functions.
 
 ---
 
@@ -532,7 +660,8 @@ export default async function ProjectsPage() {
 - [React Documentation](https://react.dev)
 - [Tailwind CSS Docs](https://tailwindcss.com/docs)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs)
-- [Web Vitals](https://web.dev/vitals/)
+- [Vitest Documentation](https://vitest.dev/)
+- [Testing Library](https://testing-library.com/)
 
 ---
 

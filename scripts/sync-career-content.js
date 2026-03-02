@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
-const SOURCE = process.env.CAREER_DIR || '/home/dom/career'
+const SOURCE = process.env.CAREER_DIR || '/home/dom/personal/career'
 const DEST = path.join(__dirname, '../content/career')
 
 // Skip if source and dest are the same

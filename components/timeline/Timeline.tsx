@@ -30,10 +30,10 @@ function CompanyLogo({ logo, company }: { logo?: string; company: string }) {
 
   return (
     <div
-      className="w-8 h-8 rounded-sm bg-gray-100 border border-gray-200 flex items-center justify-center shrink-0"
+      className="w-8 h-8 rounded-sm bg-surface-2 border border-border flex items-center justify-center shrink-0"
       aria-hidden="true"
     >
-      <span className="text-xs font-semibold text-gray-500 leading-none">
+      <span className="text-xs font-semibold text-text-muted leading-none">
         {initials}
       </span>
     </div>
@@ -42,25 +42,26 @@ function CompanyLogo({ logo, company }: { logo?: string; company: string }) {
 
 export function Timeline({ roles }: TimelineProps) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {roles.map(role => (
-        <Card key={role.slug} className="relative">
-          <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 to-blue-300 rounded-l-lg" />
-          <CardHeader>
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+        <Card key={role.slug} className="relative overflow-hidden">
+          {/* Gold accent bar */}
+          <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-accent-gold to-accent-gold-muted" />
+          <CardHeader className="pl-6">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900">
+                <h3 className="text-xl font-semibold text-foreground">
                   {role.title}
                 </h3>
-                <div className="mt-1 flex items-center gap-2 text-sm text-gray-600">
+                <div className="mt-2 flex items-center gap-3 text-sm text-text-secondary">
                   <CompanyLogo logo={role.logo} company={role.company} />
                   <span>
                     {role.company}
-                    {role.location && ` • ${role.location}`}
+                    {role.location && ` \u2022 ${role.location}`}
                   </span>
                 </div>
               </div>
-              <div className="text-sm font-medium text-gray-500 whitespace-nowrap">
+              <div className="text-sm font-medium text-text-muted whitespace-nowrap">
                 {format(new Date(role.start_date), 'MMM yyyy')} -{' '}
                 {role.end_date === 'present'
                   ? 'Present'
@@ -68,8 +69,8 @@ export function Timeline({ roles }: TimelineProps) {
               </div>
             </div>
           </CardHeader>
-          <CardBody>
-            <div className="prose prose-sm max-w-none text-gray-700 mb-4">
+          <CardBody className="pl-6">
+            <div className="prose prose-sm prose-invert max-w-none text-text-secondary mb-5">
               {role.content.split('\n\n')[0]}
             </div>
             {role.skills && role.skills.length > 0 && (
