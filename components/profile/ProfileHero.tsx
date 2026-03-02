@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 interface ProfileHeroProps {
   name: string
   headline: string
@@ -18,6 +20,18 @@ export function ProfileHero({
 
       <div className="container relative mx-auto px-6 lg:px-8">
         <div className="text-center max-w-4xl mx-auto">
+          {/* Profile Image */}
+          <div className="mb-8 flex justify-center">
+            <Image
+              src="/images/cartoon-headshot.jpg"
+              alt={name}
+              width={200}
+              height={200}
+              priority
+              className="rounded-full border-4 border-accent-gold-muted shadow-lg"
+            />
+          </div>
+
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 tracking-tight">
             {name}
           </h1>

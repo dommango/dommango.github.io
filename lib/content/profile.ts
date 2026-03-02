@@ -17,6 +17,8 @@ export interface Profile {
   location: string
   email: string
   linkedin: string
+  twitter: string
+  substack: string
   github: string
   website: string
   travel: string
@@ -46,6 +48,8 @@ export function getProfile(): Profile {
     location: data.location || '',
     email: data.email || '',
     linkedin: data.linkedin || '',
+    twitter: data.twitter || '',
+    substack: data.substack || '',
     github: data.github || '',
     website: data.website || '',
     travel: data.travel || '',
@@ -82,6 +86,8 @@ function getDefaultProfile(): Profile {
     location: '',
     email: '',
     linkedin: '',
+    twitter: '',
+    substack: '',
     github: '',
     website: '',
     travel: '',

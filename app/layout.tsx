@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { getProfile } from "@/lib/content/profile";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,11 +20,13 @@ export const metadata: Metadata = {
   description: "SVP Transformation Senior Lead at Citi. Financial services executive with expertise in enterprise transformation, strategy, and regulatory compliance.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const profile = getProfile()
+
   return (
     <html lang="en">
       <body
@@ -33,7 +36,7 @@ export default function RootLayout({
         <main className="flex-grow">
           {children}
         </main>
-        <Footer />
+        <Footer profile={profile} />
       </body>
     </html>
   );
