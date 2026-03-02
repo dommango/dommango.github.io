@@ -1,0 +1,210 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Overview
+
+This is a **professional experience database** — a structured knowledge base capturing career history, skills, competencies, and interview-ready examples. It's designed to support career development activities: interviews, job applications, performance reviews, and self-assessment.
+
+Unlike a traditional codebase, this is a **documentation system** organized as interconnected Markdown files with YAML frontmatter for structured metadata. There is no build process, tests, or deployment — the primary "output" is preparation materials extracted from the structured content.
+
+## Architecture & Data Model
+
+### Core Directory Structure
+
+```
+├── profile.md              # Professional identity, summary, contact info
+├── roles/                  # Employment history (9 roles, reverse chronological)
+│   ├── _index.md          # Timeline, by industry, by function
+│   └── {company}-*.md     # Individual role details
+├── projects/              # Notable projects with outcomes
+│   └── _index.md          # Project index and links
+├── stories/               # Interview-ready examples (STAR/CAR format)
+│   └── _index.md          # Stories indexed by competency
+├── skills/                # Skills inventory with proficiency levels
+│   └── _index.md          # Technical, soft, domain skills with evidence
+├── achievements/          # Timeline of notable accomplishments
+├── certifications/        # Professional credentials and training
+├── education/             # Degrees, coursework, GPA
+│   ├── carnegie-mellon-mba.md
+│   ├── rutgers-bs-finance.md
+│   └── coursework/_index.md
+├── leadership/            # Mentorship, teams led, communities
+└── source-docs/           # Supporting documents (PDFs, transcripts)
+```
+
+### Key Structural Concepts
+
+**Frontmatter Metadata**: All content files use YAML frontmatter for structured data:
+```markdown
+---
+title: "Role Title"
+company: "Company Name"
+start_date: 2021-09-07
+end_date: present
+tags: [tag1, tag2]
+skills: [skill1, skill2]
+---
+```
+
+**Index Files**: Each category has an `_index.md` that serves as a table of contents and cross-reference hub:
+- Provides timelines and tables summarizing content
+- Groups content multiple ways (chronological, by industry, by function, by competency)
+- Links to individual detailed files
+- Identifies patterns and themes
+
+**Evidence-Based Skills**: The `skills/_index.md` file links skill claims back to specific roles and projects where they were demonstrated (e.g., "Complex-to-Simple Communication: CEO dashboards at Citi").
+
+**Tagging System**: Two primary tag taxonomies:
+- **Competencies**: leadership, problem-solving, communication, collaboration, strategic-thinking, execution, innovation
+- **Impact Types**: revenue, efficiency, team-growth, customer-satisfaction, technical-excellence
+
+### Data Relationships
+
+The database is interconnected via **internal markdown links**:
+- Roles reference relevant skills via links to `../skills/_index.md`
+- Stories are indexed by competency in `stories/_index.md`
+- Achievements link back to roles that produced them
+- Each role file is linked from both `roles/_index.md` and potentially from projects/achievements
+
+## Common Development Tasks
+
+### Adding a New Role
+
+1. Create file: `roles/{company-descriptive-name}.md`
+2. Add frontmatter with: title, company, start_date, end_date, employment_type, level, manager, team_size, tags (enterprise-transformation, regulatory, etc.), skills
+3. Structure content:
+   - Summary (1-2 sentences)
+   - Key Responsibilities (bulleted list)
+   - Notable Achievements (organized by category, with metrics/impact)
+   - Performance History (if available)
+4. Update `roles/_index.md`:
+   - Add row to Timeline table
+   - Add to appropriate "By Industry" section
+   - Add to appropriate "By Function" section
+   - Update Career Progression ascii diagram if needed
+
+### Adding a Story (Interview Example)
+
+1. Create file: `stories/{story-slug}.md`
+2. Add frontmatter with: title, competency (single), interview_ready: true/false, tags (optional)
+3. Structure as STAR or CAR format:
+   - **Situation**: Context and challenge
+   - **Task**: Your specific responsibility
+   - **Action**: What you did
+   - **Result**: Quantified outcome or learning
+4. Update `stories/_index.md`:
+   - Add to appropriate competency section
+   - Add to "Interview-Ready" if `interview_ready: true`
+
+### Updating Skills Inventory
+
+1. Edit `skills/_index.md`
+2. For each skill, provide:
+   - Name and proficiency level (Expert, Advanced, Intermediate, Practitioner, Developing)
+   - Evidence link back to specific role or project where demonstrated
+3. Organized into:
+   - Technical Skills (Excel, VBA, SQL, etc.)
+   - Soft Skills (communication, stakeholder management, etc.)
+   - Domain Knowledge (regulatory compliance, wealth management, etc.)
+
+### Adding Education/Certification
+
+1. Create file: `education/{institution-degree}.md` or `certifications/{cert-name}.md`
+2. Include: institution, degree/cert, graduation date, relevant courses/details, GPA
+3. Update corresponding `_index.md` file
+4. For coursework: add to `education/coursework/_index.md` with course name, grade, relevance
+
+## Content Guidelines
+
+### Metadata Standards
+
+- **Dates**: ISO 8601 format (YYYY-MM-DD), use "present" for current roles
+- **Employment Type**: full-time, contractor, intern, part-time
+- **Level**: Use company-specific leveling (e.g., "C14 / SVP" for Citi)
+- **Team Size**: Number of direct reports or team members managed
+- **Proficiency Levels**: Expert, Advanced, Intermediate, Practitioner, Developing
+- **Tags**: Use kebab-case (lowercase with hyphens)
+
+### Writing Style
+
+- **Role Summaries**: 1-2 sentences, action-oriented
+- **Achievements**: Lead with impact (metric/outcome), then mechanism. Format: "Achievement Name - outcome, method"
+- **Links**: Use relative markdown links (`../roles/file.md`) for internal references
+- **Proficiency Evidence**: Link claims to supporting work (e.g., "[BNP Paribas](../roles/bnp-paribas-client-services.md) - 6 macros for trading desk")
+
+### Completeness Checklist
+
+Before considering content ready:
+- [ ] All roles have frontmatter with required fields
+- [ ] Index files link to and describe all content
+- [ ] Achievement metrics are quantified where possible (%, $M, count)
+- [ ] Skills have evidence links back to roles/projects
+- [ ] Competency tags align with taxonomy
+- [ ] Internal links are valid and relative
+
+## Usage Patterns
+
+### For Interview Prep
+1. Browse `stories/_index.md` grouped by competency
+2. Check `interview_ready: true` flag to find polished examples
+3. Pull context from `roles/_index.md` to understand timeline
+4. Reference `skills/_index.md` to discuss proficiency levels
+
+### For Resume/Application Materials
+1. Use `profile.md` for professional summary language
+2. Pull achievements from role files (quantified, impact-focused)
+3. Reference `skills/_index.md` to identify relevant skills with evidence
+4. Check `education/` and `certifications/` for credentials to highlight
+
+### For Self-Assessment & Career Planning
+1. Review `education/coursework/` for knowledge areas and confidence levels
+2. Use `skills/_index.md` to assess and track proficiency growth
+3. Check `leadership/` for team and mentoring experience
+4. Analyze `achievements/` for impact patterns and career themes
+
+## Tools & Queries
+
+### Find All Roles in an Industry
+- See `roles/_index.md` "By Industry" section
+- Example: Financial Services banking roles: Citi, Morgan Stanley, BNP Paribas, Bear Stearns
+
+### Find Stories by Competency
+- See `stories/_index.md` "By Competency" sections
+- All stories tagged with matching competency tag
+
+### Find Skills with Evidence
+- See `skills/_index.md` organized by Technical, Soft, and Domain
+- Each skill includes a link to the role/project demonstrating it
+
+### Build Interview Story Set
+- Filter `stories/` for `interview_ready: true`
+- Verify competency coverage across required domains
+
+## File Format Notes
+
+- All content is **Markdown** with **YAML frontmatter**
+- No special processing or build system required
+- Internal links use relative paths (`../roles/file.md`)
+- When referencing external links (e.g., LinkedIn URLs), use absolute URLs
+- Source documents (PDFs, Word docs) are archived in `source-docs/` for reference
+
+## Key Career Themes (from profile.md)
+
+For context when crafting materials, understand these dominant themes in the career:
+
+1. **Complex-to-Simple Translation**: Ability to take disorganized, complex information and synthesize into clear deliverables for leadership and stakeholders
+2. **Process Optimization & Efficiency**: Consistently identified and implemented efficiency improvements (Hot Keys, VBA macros, streamlined processes)
+3. **Regulatory & Risk Expertise**: Deep experience in regulatory environments, Consent Order remediation, risk management
+4. **Financial Services Breadth**: Worked across banking operations, strategy consulting, corporate transformation
+5. **Quantitative Foundation**: MBA from CMU Tepper with analytics and strategy focus
+
+When updating materials or creating stories, ensure they reinforce these themes.
+
+## Next Steps for Future Enhancement
+
+The database is well-structured for:
+- Extracting targeted resume variations by industry/competency
+- Generating interview prep guides organized by role requirement
+- Building application materials by pulling relevant achievements
+- Tracking career progression and identifying patterns

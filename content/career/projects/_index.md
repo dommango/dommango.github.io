@@ -25,6 +25,7 @@ Notable projects across roles.
 ## By Role
 
 ### Citi (2021-Present)
+- [MRA Reporting Transformation](citi-mra-transformation.md) - Enterprise operating model design & governance
 - [Consent Order Remediation](citi-consent-order.md) - Article XII.1.e RBCMs
 - [CEO/Board Dashboards](citi-dashboards.md) - Strategic reporting
 - [Financial Governance Framework](citi-financial-governance.md) - $7.1B portfolio

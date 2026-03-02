@@ -7,12 +7,9 @@ export default async function CareerPage() {
 
   return (
     <Section>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeader>
+      <div className="container mx-auto px-6 lg:px-8">
+        <SectionHeader subtitle={`${roles.length} roles spanning financial services, consulting, and transformation`}>
           Career Timeline
-          <p className="text-lg text-gray-600 mt-2">
-            {roles.length} roles spanning financial services, consulting, and transformation
-          </p>
         </SectionHeader>
         <Timeline roles={roles} />
       </div>

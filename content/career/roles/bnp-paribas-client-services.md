@@ -1,7 +1,6 @@
 ---
 title: "Client Services Analyst, Commodities/Prime Brokerage"
 company: "BNP Paribas"
-logo: "/logos/bnp-paribas.png"
 division: "Corporate and Investment Banking"
 start_date: 2010-02
 end_date: 2013-05-10

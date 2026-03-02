@@ -1,7 +1,6 @@
 ---
 title: "Senior Associate, Financial Services Strategy Consulting"
 company: "Strategy& (formerly Booz & Co.)"
-logo: "/logos/strategy-and.png"
 parent_company: "PwC Network"
 start_date: 2015-09-14
 end_date: 2017-10-10

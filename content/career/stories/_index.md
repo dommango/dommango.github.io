@@ -5,22 +5,23 @@ Interview-ready examples organized by competency.
 ## By Competency
 
 ### Leadership
-<!-- Stories demonstrating leadership -->
+- [Driving Executive Alignment Across Silos Without Formal Authority](stakeholder-influence-governance.md) - How to influence across governance boundaries
 
 ### Problem-Solving
-<!-- Stories demonstrating problem-solving -->
+- [Translating Vague Regulatory Requirements into an Enterprise Operating Model](regulatory-translation-mra.md) - First-principles thinking applied to regulatory translation
 
 ### Communication
-<!-- Stories demonstrating communication -->
+- [Driving Executive Alignment Across Silos Without Formal Authority](stakeholder-influence-governance.md) - Executive communication and stakeholder facilitation
 
 ### Collaboration
-<!-- Stories demonstrating collaboration -->
+- [Driving Executive Alignment Across Silos Without Formal Authority](stakeholder-influence-governance.md) - Cross-functional alignment under uncertainty
 
 ### Strategic Thinking
-<!-- Stories demonstrating strategic thinking -->
+- [Translating Vague Regulatory Requirements into an Enterprise Operating Model](regulatory-translation-mra.md) - Systems thinking and architecture design
 
 ### Execution
-<!-- Stories demonstrating execution -->
+- [Building Governance Frameworks Under Regulatory Deadline Pressure](governance-under-pressure.md) - Delivering complex work under deadline constraints
+- [Translating Vague Regulatory Requirements into an Enterprise Operating Model](regulatory-translation-mra.md) - End-to-end execution from design through sustainability testing
 
 ### Innovation
 <!-- Stories demonstrating innovation -->
@@ -28,4 +29,6 @@ Interview-ready examples organized by competency.
 ## Interview-Ready
 
 Stories marked as polished and ready to use:
-<!-- List stories where interview_ready: true -->
+- [Translating Vague Regulatory Requirements into an Enterprise Operating Model](regulatory-translation-mra.md) - **Problem-solving** - How to approach ambiguous regulatory requirements through first-principles thinking and design iteration
+- [Building Governance Frameworks Under Regulatory Deadline Pressure](governance-under-pressure.md) - **Execution** - Balancing speed with rigor under compressed timelines
+- [Driving Executive Alignment Across Silos Without Formal Authority](stakeholder-influence-governance.md) - **Leadership/Communication** - Influencing across boundaries and driving consensus through structured facilitation

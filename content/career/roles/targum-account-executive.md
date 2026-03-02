@@ -1,7 +1,6 @@
 ---
 title: "Account Executive, Advertising Sales"
 company: "Targum Publishing Company"
-logo: "/logos/targum.png"
 publication: "The Daily Targum"
 start_date: 2007-07
 end_date: 2008-05

@@ -8,33 +8,33 @@ interface EducationSectionProps {
 
 export function EducationSection({ degrees }: EducationSectionProps) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {degrees.map(degree => (
         <Card key={degree.slug}>
           <CardHeader>
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900">
+                <h3 className="text-xl font-semibold text-foreground">
                   {degree.degree}
                 </h3>
-                <div className="mt-1 text-sm text-gray-600">
+                <div className="mt-2 text-sm text-text-secondary">
                   {degree.school}
-                  {degree.field && ` • ${degree.field}`}
+                  {degree.field && ` \u2022 ${degree.field}`}
                 </div>
               </div>
-              <div className="text-sm font-medium text-gray-500">
+              <div className="text-sm font-medium text-text-muted">
                 {degree.graduation_year}
               </div>
             </div>
             {degree.gpa && (
-              <div className="mt-3">
+              <div className="mt-4">
                 <Badge variant="primary">GPA: {degree.gpa}</Badge>
               </div>
             )}
           </CardHeader>
           {degree.content && (
             <CardBody>
-              <div className="prose prose-sm max-w-none text-gray-700">
+              <div className="prose prose-sm prose-invert max-w-none text-text-secondary">
                 {degree.content.split('\n\n')[0]}
               </div>
             </CardBody>

@@ -1,7 +1,6 @@
 ---
 title: "Assistant Vice President, Corporate & Institutional Solutions"
 company: "Morgan Stanley"
-logo: "/logos/morgan-stanley.png"
 start_date: 2019-07-29
 end_date: 2020-10-15
 location: "New York, NY"

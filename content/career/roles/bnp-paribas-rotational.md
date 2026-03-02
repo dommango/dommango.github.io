@@ -1,7 +1,6 @@
 ---
 title: "Rotational Analyst, Trading Operations"
 company: "BNP Paribas"
-logo: "/logos/bnp-paribas.png"
 division: "Corporate and Investment Banking"
 start_date: 2008-07-07
 end_date: 2010-02
