@@ -1,0 +1,649 @@
+{
+  "countries": [
+    {
+      "id": "usa",
+      "name": "USA",
+      "flag": "🇺🇸",
+      "firstVisited": 1986,
+      "order": 1,
+      "continent": "North America",
+      "coordinates": [
+        37.0902,
+        -95.7129
+      ]
+    },
+    {
+      "id": "philippines",
+      "name": "Philippines",
+      "flag": "🇵🇭",
+      "firstVisited": 1994,
+      "order": 2,
+      "continent": "Asia",
+      "coordinates": [
+        12.8797,
+        121.774
+      ]
+    },
+    {
+      "id": "canada",
+      "name": "Canada",
+      "flag": "🇨🇦",
+      "firstVisited": 1997,
+      "order": 3,
+      "continent": "North America",
+      "coordinates": [
+        56.1304,
+        -106.3468
+      ]
+    },
+    {
+      "id": "grenada",
+      "name": "Grenada",
+      "flag": "🇬🇩",
+      "firstVisited": 1998,
+      "order": 4,
+      "continent": "North America",
+      "coordinates": [
+        12.1165,
+        -61.679
+      ]
+    },
+    {
+      "id": "sweden",
+      "name": "Sweden",
+      "flag": "🇸🇪",
+      "firstVisited": 2000,
+      "order": 5,
+      "continent": "Europe",
+      "coordinates": [
+        60.1282,
+        18.6435
+      ]
+    },
+    {
+      "id": "estonia",
+      "name": "Estonia",
+      "flag": "🇪🇪",
+      "firstVisited": 2000,
+      "order": 6,
+      "continent": "Europe",
+      "coordinates": [
+        58.5953,
+        25.0136
+      ]
+    },
+    {
+      "id": "russia",
+      "name": "Russia",
+      "flag": "🇷🇺",
+      "firstVisited": 2000,
+      "order": 7,
+      "continent": "Europe",
+      "coordinates": [
+        61.524,
+        105.3188
+      ]
+    },
+    {
+      "id": "finland",
+      "name": "Finland",
+      "flag": "🇫🇮",
+      "firstVisited": 2000,
+      "order": 8,
+      "continent": "Europe",
+      "coordinates": [
+        61.9241,
+        25.7482
+      ]
+    },
+    {
+      "id": "dominican-republic",
+      "name": "Dominican Republic",
+      "flag": "🇩🇴",
+      "firstVisited": 2003,
+      "order": 9,
+      "continent": "North America",
+      "coordinates": [
+        18.7357,
+        -70.1627
+      ]
+    },
+    {
+      "id": "uk",
+      "name": "UK",
+      "flag": "🇬🇧",
+      "firstVisited": 2008,
+      "order": 10,
+      "continent": "Europe",
+      "coordinates": [
+        55.3781,
+        -3.436
+      ]
+    },
+    {
+      "id": "france",
+      "name": "France",
+      "flag": "🇫🇷",
+      "firstVisited": 2008,
+      "order": 11,
+      "continent": "Europe",
+      "coordinates": [
+        46.2276,
+        2.2137
+      ]
+    },
+    {
+      "id": "monaco",
+      "name": "Monaco",
+      "flag": "🇲🇨",
+      "firstVisited": 2008,
+      "order": 12,
+      "continent": "Europe",
+      "coordinates": [
+        43.7384,
+        7.4246
+      ]
+    },
+    {
+      "id": "italy",
+      "name": "Italy",
+      "flag": "🇮🇹",
+      "firstVisited": 2008,
+      "order": 13,
+      "continent": "Europe",
+      "coordinates": [
+        41.8719,
+        12.5674
+      ]
+    },
+    {
+      "id": "vatican-city",
+      "name": "Vatican City",
+      "flag": "🇻🇦",
+      "firstVisited": 2008,
+      "order": 14,
+      "continent": "Europe",
+      "coordinates": [
+        41.9029,
+        12.4534
+      ]
+    },
+    {
+      "id": "greece",
+      "name": "Greece",
+      "flag": "🇬🇷",
+      "firstVisited": 2008,
+      "order": 15,
+      "continent": "Europe",
+      "coordinates": [
+        39.0742,
+        21.8243
+      ]
+    },
+    {
+      "id": "austria",
+      "name": "Austria",
+      "flag": "🇦🇹",
+      "firstVisited": 2008,
+      "order": 16,
+      "continent": "Europe",
+      "coordinates": [
+        47.5162,
+        14.5501
+      ]
+    },
+    {
+      "id": "switzerland",
+      "name": "Switzerland",
+      "flag": "🇨🇭",
+      "firstVisited": 2008,
+      "order": 17,
+      "continent": "Europe",
+      "coordinates": [
+        46.8182,
+        8.2275
+      ]
+    },
+    {
+      "id": "czech-republic",
+      "name": "Czech Republic",
+      "flag": "🇨🇿",
+      "firstVisited": 2008,
+      "order": 18,
+      "continent": "Europe",
+      "coordinates": [
+        49.8175,
+        15.473
+      ]
+    },
+    {
+      "id": "germany",
+      "name": "Germany",
+      "flag": "🇩🇪",
+      "firstVisited": 2008,
+      "order": 19,
+      "continent": "Europe",
+      "coordinates": [
+        51.1657,
+        10.4515
+      ]
+    },
+    {
+      "id": "liechtenstein",
+      "name": "Liechtenstein",
+      "flag": "🇱🇮",
+      "firstVisited": 2008,
+      "order": 20,
+      "continent": "Europe",
+      "coordinates": [
+        47.166,
+        9.5554
+      ]
+    },
+    {
+      "id": "netherlands",
+      "name": "Netherlands",
+      "flag": "🇳🇱",
+      "firstVisited": 2008,
+      "order": 21,
+      "continent": "Europe",
+      "coordinates": [
+        52.1326,
+        5.2913
+      ]
+    },
+    {
+      "id": "costa-rica",
+      "name": "Costa Rica",
+      "flag": "🇨🇷",
+      "firstVisited": 2009,
+      "order": 22,
+      "continent": "North America",
+      "coordinates": [
+        9.7489,
+        -83.7534
+      ]
+    },
+    {
+      "id": "jamaica",
+      "name": "Jamaica",
+      "flag": "🇯🇲",
+      "firstVisited": 2009,
+      "order": 23,
+      "continent": "North America",
+      "coordinates": [
+        18.1096,
+        -77.2975
+      ]
+    },
+    {
+      "id": "colombia",
+      "name": "Colombia",
+      "flag": "🇨🇴",
+      "firstVisited": 2010,
+      "order": 24,
+      "continent": "South America",
+      "coordinates": [
+        4.5709,
+        -74.2973
+      ]
+    },
+    {
+      "id": "panama",
+      "name": "Panama",
+      "flag": "🇵🇦",
+      "firstVisited": 2011,
+      "order": 25,
+      "continent": "North America",
+      "coordinates": [
+        8.538,
+        -80.7821
+      ]
+    },
+    {
+      "id": "hong-kong",
+      "name": "Hong Kong",
+      "flag": "🇭🇰",
+      "firstVisited": 2011,
+      "order": 26,
+      "continent": "Asia",
+      "coordinates": [
+        22.3193,
+        114.1694
+      ]
+    },
+    {
+      "id": "cambodia",
+      "name": "Cambodia",
+      "flag": "🇰🇭",
+      "firstVisited": 2011,
+      "order": 27,
+      "continent": "Asia",
+      "coordinates": [
+        12.5657,
+        104.991
+      ]
+    },
+    {
+      "id": "bolivia",
+      "name": "Bolivia",
+      "flag": "🇧🇴",
+      "firstVisited": 2013,
+      "order": 28,
+      "continent": "South America",
+      "coordinates": [
+        -16.2902,
+        -63.5887
+      ]
+    },
+    {
+      "id": "chile",
+      "name": "Chile",
+      "flag": "🇨🇱",
+      "firstVisited": 2013,
+      "order": 29,
+      "continent": "South America",
+      "coordinates": [
+        -35.6751,
+        -71.543
+      ]
+    },
+    {
+      "id": "peru",
+      "name": "Peru",
+      "flag": "🇵🇪",
+      "firstVisited": 2013,
+      "order": 30,
+      "continent": "South America",
+      "coordinates": [
+        -9.19,
+        -75.0152
+      ]
+    },
+    {
+      "id": "morocco",
+      "name": "Morocco",
+      "flag": "🇲🇦",
+      "firstVisited": 2014,
+      "order": 31,
+      "continent": "Africa",
+      "coordinates": [
+        31.7917,
+        -7.0926
+      ]
+    },
+    {
+      "id": "cuba",
+      "name": "Cuba",
+      "flag": "🇨🇺",
+      "firstVisited": 2015,
+      "order": 32,
+      "continent": "North America",
+      "coordinates": [
+        21.5218,
+        -77.7812
+      ]
+    },
+    {
+      "id": "japan",
+      "name": "Japan",
+      "flag": "🇯🇵",
+      "firstVisited": 2015,
+      "order": 33,
+      "continent": "Asia",
+      "coordinates": [
+        36.2048,
+        138.2529
+      ]
+    },
+    {
+      "id": "china",
+      "name": "China",
+      "flag": "🇨🇳",
+      "firstVisited": 2015,
+      "order": 34,
+      "continent": "Asia",
+      "coordinates": [
+        35.8617,
+        104.1954
+      ]
+    },
+    {
+      "id": "vietnam",
+      "name": "Vietnam",
+      "flag": "🇻🇳",
+      "firstVisited": 2015,
+      "order": 35,
+      "continent": "Asia",
+      "coordinates": [
+        14.0583,
+        108.2772
+      ]
+    },
+    {
+      "id": "thailand",
+      "name": "Thailand",
+      "flag": "🇹🇭",
+      "firstVisited": 2015,
+      "order": 36,
+      "continent": "Asia",
+      "coordinates": [
+        15.87,
+        100.9925
+      ]
+    },
+    {
+      "id": "malaysia",
+      "name": "Malaysia",
+      "flag": "🇲🇾",
+      "firstVisited": 2015,
+      "order": 37,
+      "continent": "Asia",
+      "coordinates": [
+        4.2105,
+        101.9758
+      ]
+    },
+    {
+      "id": "singapore",
+      "name": "Singapore",
+      "flag": "🇸🇬",
+      "firstVisited": 2015,
+      "order": 38,
+      "continent": "Asia",
+      "coordinates": [
+        1.3521,
+        103.8198
+      ]
+    },
+    {
+      "id": "turkey",
+      "name": "Turkey",
+      "flag": "🇹🇷",
+      "firstVisited": 2015,
+      "order": 39,
+      "continent": "Asia",
+      "coordinates": [
+        38.9637,
+        35.2433
+      ]
+    },
+    {
+      "id": "hungary",
+      "name": "Hungary",
+      "flag": "🇭🇺",
+      "firstVisited": 2015,
+      "order": 40,
+      "continent": "Europe",
+      "coordinates": [
+        47.1625,
+        19.5033
+      ]
+    },
+    {
+      "id": "denmark",
+      "name": "Denmark",
+      "flag": "🇩🇰",
+      "firstVisited": 2015,
+      "order": 41,
+      "continent": "Europe",
+      "coordinates": [
+        56.2639,
+        9.5018
+      ]
+    },
+    {
+      "id": "poland",
+      "name": "Poland",
+      "flag": "🇵🇱",
+      "firstVisited": 2016,
+      "order": 42,
+      "continent": "Europe",
+      "coordinates": [
+        51.9194,
+        19.1451
+      ]
+    },
+    {
+      "id": "mexico",
+      "name": "Mexico",
+      "flag": "🇲🇽",
+      "firstVisited": 2017,
+      "order": 43,
+      "continent": "North America",
+      "coordinates": [
+        23.6345,
+        -102.5528
+      ]
+    },
+    {
+      "id": "nepal",
+      "name": "Nepal",
+      "flag": "🇳🇵",
+      "firstVisited": 2017,
+      "order": 44,
+      "continent": "Asia",
+      "coordinates": [
+        28.3949,
+        84.124
+      ]
+    },
+    {
+      "id": "india",
+      "name": "India",
+      "flag": "🇮🇳",
+      "firstVisited": 2017,
+      "order": 45,
+      "continent": "Asia",
+      "coordinates": [
+        20.5937,
+        78.9629
+      ]
+    },
+    {
+      "id": "south-korea",
+      "name": "South Korea",
+      "flag": "🇰🇷",
+      "firstVisited": 2017,
+      "order": 46,
+      "continent": "Asia",
+      "coordinates": [
+        35.9078,
+        127.7669
+      ]
+    },
+    {
+      "id": "spain",
+      "name": "Spain",
+      "flag": "🇪🇸",
+      "firstVisited": 2019,
+      "order": 47,
+      "continent": "Europe",
+      "coordinates": [
+        40.4637,
+        -3.7492
+      ]
+    },
+    {
+      "id": "portugal",
+      "name": "Portugal",
+      "flag": "🇵🇹",
+      "firstVisited": 2019,
+      "order": 48,
+      "continent": "Europe",
+      "coordinates": [
+        39.3999,
+        -8.2245
+      ]
+    },
+    {
+      "id": "taiwan",
+      "name": "Taiwan",
+      "flag": "🇹🇼",
+      "firstVisited": 2023,
+      "order": 49,
+      "continent": "Asia",
+      "coordinates": [
+        23.6978,
+        120.9605
+      ]
+    },
+    {
+      "id": "qatar",
+      "name": "Qatar",
+      "flag": "🇶🇦",
+      "firstVisited": 2023,
+      "order": 50,
+      "continent": "Asia",
+      "coordinates": [
+        25.3548,
+        51.1839
+      ]
+    },
+    {
+      "id": "argentina",
+      "name": "Argentina",
+      "flag": "🇦🇷",
+      "firstVisited": 2024,
+      "order": 51,
+      "continent": "South America",
+      "coordinates": [
+        38.4161,
+        -63.6167
+      ]
+    },
+    {
+      "id": "brazil",
+      "name": "Brazil",
+      "flag": "🇧🇷",
+      "firstVisited": 2024,
+      "order": 52,
+      "continent": "South America",
+      "coordinates": [
+        -14.235,
+        -51.9253
+      ]
+    }
+  ],
+  "stats": {
+    "totalCountries": 52,
+    "continents": 5,
+    "continentNames": [
+      "Africa",
+      "Asia",
+      "Europe",
+      "North America",
+      "South America"
+    ],
+    "yearRange": "1986-2024",
+    "firstYear": 1986,
+    "lastYear": 2024,
+    "countriesByContinent": {
+      "Africa": 1,
+      "Asia": 15,
+      "Europe": 21,
+      "North America": 9,
+      "South America": 6
+    }
+  }
+}

@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
   }
 
   return {
-    title: `${post.title} | Dominic Mangonon`,
+    title: `${post.title} | Dom Mangonon`,
     description: post.description,
   }
 }

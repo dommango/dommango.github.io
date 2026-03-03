@@ -1,5 +1,5 @@
 ---
-name: "Dominic Mangonon"
+name: "Dom Mangonon"
 headline: "SVP, Transformation Senior Lead at Citi"
 location: "New Jersey"
 email: "dom.mangonon@gmail.com"
