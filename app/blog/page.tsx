@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/Badge'
 import Link from 'next/link'
 
 export const metadata = {
-  title: 'Blog | Dominic Mangonon',
+  title: 'Blog | Dom Mangonon',
   description: 'Thoughts on AI, technology, and enterprise transformation',
 }
 
