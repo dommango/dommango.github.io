@@ -14,7 +14,19 @@ async function generateResumePDF() {
 
   // Check if resume HTML exists
   if (!fs.existsSync(RESUME_HTML_SOURCE)) {
+    // Check if PDF already exists (e.g., committed to repo)
+    const pdfPath = path.join(OUTPUT_DIR, OUTPUT_FILE)
+    if (fs.existsSync(pdfPath)) {
+      const stats = fs.statSync(pdfPath)
+      // If PDF is larger than 100KB, it's likely the real resume (not placeholder)
+      if (stats.size > 100 * 1024) {
+        console.log(`✓ Resume PDF already exists: ${OUTPUT_FILE} (${(stats.size / 1024).toFixed(0)} KB)`)
+        console.log('  Skipping generation - PDF is already in repo')
+        return
+      }
+    }
     console.error(`✗ Resume HTML not found at: ${RESUME_HTML_SOURCE}`)
+    console.error('  And no valid PDF exists in public/assets/')
     process.exit(1)
   }
 
