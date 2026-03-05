@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Dom Mangonon - Portfolio",
-  description: "SVP Transformation Senior Lead at Citi. Financial services executive with expertise in enterprise transformation, strategy, and regulatory compliance.",
+  description: "Financial services executive with expertise in enterprise transformation, strategy, and technology. Explore my career journey, skills, and travels across 52 countries.",
 };
 
 export default async function RootLayout({

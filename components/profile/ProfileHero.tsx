@@ -32,12 +32,9 @@ export function ProfileHero({
             />
           </div>
 
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 tracking-tight">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-8 tracking-tight">
             {name}
           </h1>
-          <p className="text-2xl md:text-3xl text-accent-gold font-semibold mb-8">
-            {headline}
-          </p>
           <div className="flex flex-col md:flex-row items-center justify-center gap-6 text-text-secondary">
             {location && (
               <span className="flex items-center gap-2">
