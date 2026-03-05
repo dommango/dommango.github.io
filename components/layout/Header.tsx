@@ -11,6 +11,7 @@ const navigation = [
   { name: 'Education', href: '/education' },
   { name: 'Travel', href: '/travel' },
   { name: 'Blog', href: '/blog' },
+  { name: 'Contact', href: '/contact' },
 ]
 
 export function Header() {
