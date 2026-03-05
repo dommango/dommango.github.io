@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { ChatBot } from "@/components/chat/ChatBot";
 import { getProfile } from "@/lib/content/profile";
 import "./globals.css";
 
@@ -37,6 +38,7 @@ export default async function RootLayout({
           {children}
         </main>
         <Footer profile={profile} />
+        <ChatBot />
       </body>
     </html>
   );
