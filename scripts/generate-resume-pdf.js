@@ -25,9 +25,9 @@ async function generateResumePDF() {
         return
       }
     }
-    console.error(`✗ Resume HTML not found at: ${RESUME_HTML_SOURCE}`)
-    console.error('  And no valid PDF exists in public/assets/')
-    process.exit(1)
+    console.warn(`⚠ Resume HTML not found at: ${RESUME_HTML_SOURCE}`)
+    console.warn('  No PDF will be generated (resume requests handled via email form)')
+    return
   }
 
   const htmlContent = fs.readFileSync(RESUME_HTML_SOURCE, 'utf-8')
