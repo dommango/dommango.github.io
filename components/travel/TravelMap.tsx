@@ -1,18 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import {
   ComposableMap,
   Geographies,
   Geography,
   Marker,
+  Line,
   ZoomableGroup
 } from 'react-simple-maps'
-import { Country } from '@/lib/content/travel'
+import { Country, FlightRoute } from '@/lib/content/travel'
 
 const geoUrl = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json'
 
-// ISO country code mapping for highlighting
 const COUNTRY_ISO_MAP: Record<string, string> = {
   usa: 'USA',
   philippines: 'PHL',
@@ -65,124 +65,184 @@ const COUNTRY_ISO_MAP: Record<string, string> = {
   taiwan: 'TWN',
   qatar: 'QAT',
   argentina: 'ARG',
-  brazil: 'BRA'
+  brazil: 'BRA',
+  iceland: 'ISL',
+  'saudi-arabia': 'SAU',
+  oman: 'OMN',
+  'united-arab-emirates': 'ARE'
 }
 
 interface TravelMapProps {
   countries: Country[]
+  flightRoutes?: FlightRoute[]
   selectedYear?: number
-  onCountryClick?: (country: Country) => void
+  showFlights?: boolean
+  showCountries?: boolean
+}
+
+interface TooltipData {
+  content: string
+  subtext?: string
 }
 
 export function TravelMap({
   countries,
+  flightRoutes = [],
   selectedYear,
-  onCountryClick
+  showFlights = false,
+  showCountries = true
 }: TravelMapProps) {
-  const [tooltip, setTooltip] = useState<{
-    name: string
-    year: number
-    x: number
-    y: number
-  } | null>(null)
+  const [tooltip, setTooltip] = useState<TooltipData | null>(null)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const containerRef = useRef<HTMLDivElement>(null)
 
-  // Filter countries by selected year if provided
   const displayedCountries = selectedYear
     ? countries.filter(c => c.firstVisited <= selectedYear)
     : countries
 
-  // Create set of visited country ISO codes for quick lookup
-  const visitedIsoCodes = new Set(
+  const visitedIsoCodesSet = new Set(
     displayedCountries.map(c => COUNTRY_ISO_MAP[c.id]).filter(Boolean)
   )
 
-  // Create map of country ID to country data for marker click handling
-  const countryMap = new Map(countries.map(c => [c.id, c]))
+  const isoToCountryMap = new Map<string, Country>()
+  displayedCountries.forEach(c => {
+    const iso = COUNTRY_ISO_MAP[c.id]
+    if (iso) isoToCountryMap.set(iso, c)
+  })
+
+  const airportsMap = new Map<string, { code: string; coords: [number, number]; count: number }>()
+  if (showFlights) {
+    flightRoutes.forEach(route => {
+      if (!airportsMap.has(route.from)) {
+        airportsMap.set(route.from, { code: route.from, coords: route.fromCoords, count: route.count })
+      } else {
+        airportsMap.get(route.from)!.count += route.count
+      }
+      if (!airportsMap.has(route.to)) {
+        airportsMap.set(route.to, { code: route.to, coords: route.toCoords, count: route.count })
+      } else {
+        airportsMap.get(route.to)!.count += route.count
+      }
+    })
+  }
+  const airports = Array.from(airportsMap.values())
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    setMousePos({ x: e.clientX, y: e.clientY })
+  }, [])
+
+  const showCountryTooltip = useCallback((isoCode: string) => {
+    const country = isoToCountryMap.get(isoCode)
+    if (country) {
+      setTooltip({
+        content: country.name,
+        subtext: `First visited: ${country.firstVisited}`
+      })
+    }
+  }, [])
+
+  const showFlightTooltip = useCallback((from: string, to: string, count: number) => {
+    setTooltip({
+      content: `${from} → ${to}`,
+      subtext: `${count} flight${count > 1 ? 's' : ''}`
+    })
+  }, [])
+
+  const showAirportTooltip = useCallback((code: string) => {
+    setTooltip({ content: code })
+  }, [])
+
+  const hideTooltip = useCallback(() => {
+    setTooltip(null)
+  }, [])
 
   return (
-    <div className="relative w-full bg-surface-1 rounded-xl border border-border overflow-hidden">
+    <div
+      ref={containerRef}
+      className="relative w-full bg-surface-1 rounded-xl border border-border overflow-hidden"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={hideTooltip}
+    >
       {tooltip && (
         <div
-          className="absolute z-50 bg-surface-2 border border-accent-gold-muted rounded-lg px-3 py-2 pointer-events-none shadow-lg"
+          className="fixed z-[9999] bg-gray-900 border border-yellow-600 rounded px-2 py-1 pointer-events-none shadow-lg text-sm"
           style={{
-            left: `${tooltip.x}px`,
-            top: `${tooltip.y}px`,
-            transform: 'translate(-50%, -120%)'
+            left: mousePos.x + 15,
+            top: mousePos.y + 15
           }}
         >
-          <p className="font-semibold text-text-primary">{tooltip.name}</p>
-          <p className="text-sm text-text-muted">First visited: {tooltip.year}</p>
+          <p className="font-medium text-white">{tooltip.content}</p>
+          {tooltip.subtext && (
+            <p className="text-gray-400 text-xs">{tooltip.subtext}</p>
+          )}
         </div>
       )}
 
       <ComposableMap
         projection="geoMercator"
-        projectionConfig={{
-          scale: 140,
-          center: [0, 20]
-        }}
-        style={{
-          width: '100%',
-          height: 'auto'
-        }}
+        projectionConfig={{ scale: 140, center: [0, 20] }}
+        style={{ width: '100%', height: 'auto' }}
       >
         <ZoomableGroup>
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
               geographies.map(geo => {
-                const isoCode = geo.id
-                const isVisited = visitedIsoCodes.has(isoCode)
+                const isoCode = geo.id as string
+                const isVisited = showCountries && visitedIsoCodesSet.has(isoCode)
 
                 return (
                   <Geography
-                    key={geo.rsmKey}
+                    key={`${geo.rsmKey}-${showCountries}`}
                     geography={geo}
-                    fill={isVisited ? '#d4a847' : '#2a2a2a'}
+                    fill={isVisited ? '#b8922f' : '#2a2a2a'}
                     stroke="#1a1a1a"
                     strokeWidth={0.5}
                     style={{
-                      default: {
-                        outline: 'none'
-                      },
+                      default: { outline: 'none' },
                       hover: {
-                        fill: isVisited ? '#e6c56a' : '#3a3a3a',
+                        fill: isVisited ? '#d4a847' : '#3a3a3a',
                         outline: 'none',
                         cursor: isVisited ? 'pointer' : 'default'
                       },
-                      pressed: {
-                        fill: isVisited ? '#b8922f' : '#2a2a2a',
-                        outline: 'none'
-                      }
+                      pressed: { outline: 'none' }
                     }}
+                    onMouseEnter={() => {
+                      if (isVisited) showCountryTooltip(isoCode)
+                    }}
+                    onMouseLeave={hideTooltip}
                   />
                 )
               })
             }
           </Geographies>
 
-          {/* Markers for visited countries */}
-          {displayedCountries.map(country => (
+          {showFlights && flightRoutes.map((route, idx) => (
+            <Line
+              key={`flight-${route.from}-${route.to}-${idx}`}
+              from={[route.fromCoords[1], route.fromCoords[0]]}
+              to={[route.toCoords[1], route.toCoords[0]]}
+              stroke="rgba(212, 168, 71, 0.6)"
+              strokeWidth={Math.min(0.8 + route.count * 0.15, 3)}
+              strokeLinecap="round"
+              style={{ cursor: 'pointer' }}
+              onMouseEnter={() => showFlightTooltip(route.from, route.to, route.count)}
+              onMouseLeave={hideTooltip}
+            />
+          ))}
+
+          {showFlights && airports.map(airport => (
             <Marker
-              key={country.id}
-              coordinates={[country.coordinates[1], country.coordinates[0]]}
-              onMouseEnter={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect()
-                setTooltip({
-                  name: country.name,
-                  year: country.firstVisited,
-                  x: rect.left + rect.width / 2,
-                  y: rect.top
-                })
-              }}
-              onMouseLeave={() => setTooltip(null)}
-              onClick={() => onCountryClick?.(country)}
+              key={`airport-${airport.code}`}
+              coordinates={[airport.coords[1], airport.coords[0]]}
+              onMouseEnter={() => showAirportTooltip(airport.code)}
+              onMouseLeave={hideTooltip}
             >
               <circle
-                r={3}
+                r={Math.min(2.5 + airport.count * 0.05, 5)}
                 fill="#d4a847"
                 stroke="#1a1a1a"
-                strokeWidth={1}
-                className="hover:fill-accent-gold-bright transition-colors cursor-pointer"
+                strokeWidth={0.5}
+                style={{ cursor: 'pointer' }}
               />
             </Marker>
           ))}

@@ -1,4 +1,5 @@
 import travelData from '@/content/travel/countries.json'
+import flightData from '@/content/travel/flights.json'
 
 export interface Country {
   id: string
@@ -114,4 +115,39 @@ export function getRecentCountries(count: number = 5): Country[] {
     .sort((a, b) => b.firstVisited - a.firstVisited)
     .slice(0, count)
     .map(castCountry)
+}
+
+// Flight data types and functions
+export interface FlightRoute {
+  from: string
+  to: string
+  fromCoords: [number, number]
+  toCoords: [number, number]
+  count: number
+}
+
+export interface FlightStats {
+  totalFlights: number
+  totalRoutes: number
+}
+
+/**
+ * Get flight routes data
+ */
+export function getFlightRoutes(): FlightRoute[] {
+  return flightData.routes.map(r => ({
+    ...r,
+    fromCoords: r.fromCoords as [number, number],
+    toCoords: r.toCoords as [number, number]
+  }))
+}
+
+/**
+ * Get flight statistics
+ */
+export function getFlightStats(): FlightStats {
+  return {
+    totalFlights: flightData.totalFlights,
+    totalRoutes: flightData.routes.length
+  }
 }
