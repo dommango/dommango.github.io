@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { ChatBot } from "@/components/chat/ChatBot";
-import { getProfile } from "@/lib/content/profile";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,27 +14,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dom Mangonon - Portfolio",
-  description: "Financial services executive with expertise in enterprise transformation, strategy, and technology. Explore my career journey, skills, and travels across 52 countries.",
+  title: "Dom Mangonon",
+  description: "Personal website of Dom Mangonon",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const profile = getProfile()
-
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header />
-        <main className="flex-grow">
-          {children}
-        </main>
-        <Footer profile={profile} />
+        {children}
         <ChatBot />
       </body>
     </html>
