@@ -2,8 +2,8 @@ name: Update Dashboard Data
 
   on:
     schedule:
-      - cron: '0 */6 * * *'  # Every 6 hours
-    workflow_dispatch:        # Manual trigger
+      - cron: '0 */6 * * *'
+    workflow_dispatch:
 
   permissions:
     contents: write
@@ -47,6 +47,3 @@ name: Update Dashboard Data
               git commit -m "chore: update dashboard data"
               git push
             fi
-
-  4. Click "Commit changes"
-  5. Then go to Actions tab and run "Update Dashboard Data" manually
