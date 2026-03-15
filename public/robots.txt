@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Exclude dashboard from search engines
+Disallow: /dashboard-
