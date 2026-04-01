@@ -93,6 +93,15 @@ export function Footer({ profile }: FooterProps) {
           <p className="text-center text-sm text-text-muted">
             &copy; {currentYear} Dominic Mangonon. All rights reserved.
           </p>
+
+          <a
+            href="https://github.com/dommango/dommango.github.io/commits/main"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-text-muted/60 hover:text-accent-gold transition-colors"
+          >
+            Changelog
+          </a>
         </div>
       </div>
     </footer>
