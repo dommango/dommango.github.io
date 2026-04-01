@@ -23,7 +23,7 @@ export function ProfileHero({
           {/* Profile Image */}
           <div className="mb-8 flex justify-center">
             <Image
-              src="/images/cartoon-headshot.jpg"
+              src="/images/portrait_skyline.png"
               alt={name}
               width={200}
               height={200}

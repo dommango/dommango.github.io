@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import ReCAPTCHA from 'react-google-recaptcha'
 import dynamic from 'next/dynamic'
-import { LinkedinLogo, XLogo, FileText, CaretRight } from '@phosphor-icons/react'
+import { LinkedinLogo, XLogo, FileText } from '@phosphor-icons/react'
 import { getTravelData, getFlightRoutes, getFlightStats } from '@/lib/content/travel'
 
 const TravelMap = dynamic(
@@ -81,7 +81,7 @@ export default function Home() {
         {/* Profile Section */}
         <div className="flex flex-col items-center text-center mb-6">
           <Image
-            src="/images/cartoon-headshot.jpg"
+            src="/images/portrait_skyline.png"
             alt="Dom Mangonon"
             width={120}
             height={120}
@@ -116,7 +116,7 @@ export default function Home() {
             <LinkedinLogo size={24} weight="fill" />
           </a>
           <a
-            href="https://twitter.com/dommangonon"
+            href="https://x.com/collapsecontext"
             target="_blank"
             rel="noopener noreferrer"
             className="text-text-muted hover:text-accent-gold transition-colors"
@@ -135,17 +135,6 @@ export default function Home() {
               <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24l9.54-5.318L20.539 24V10.812H1.46zm0-8.242h21.08v2.836H1.46V2.57z"/>
             </svg>
           </a>
-        </div>
-
-        {/* Blog Link */}
-        <div className="text-center mb-6">
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-1 text-accent-gold hover:text-accent-gold-bright transition-colors font-medium"
-          >
-            Read the Blog
-            <CaretRight size={18} weight="bold" />
-          </Link>
         </div>
 
         {/* Resume Request */}
