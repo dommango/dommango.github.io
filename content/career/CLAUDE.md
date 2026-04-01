@@ -30,6 +30,9 @@ Unlike a traditional codebase, this is a **documentation system** organized as i
 │   ├── rutgers-bs-finance.md
 │   └── coursework/_index.md
 ├── leadership/            # Mentorship, teams led, communities
+├── ai-collaborations/     # AI partnership case studies (9 cases, YYYYMMDD-slug.md)
+│   └── CLAUDE.md          # Processing spec for this directory
+├── images/                # Logos and visual assets (DM-LOGO-WB.jpg)
 └── source-docs/           # Supporting documents (PDFs, transcripts)
 ```
 
@@ -181,6 +184,18 @@ Before considering content ready:
 - Filter `stories/` for `interview_ready: true`
 - Verify competency coverage across required domains
 
+### Adding an AI Collaboration Case Study
+
+See `ai-collaborations/CLAUDE.md` for the full processing spec. Key points:
+
+1. Create file: `ai-collaborations/YYYYMMDD-{slug}.md`
+2. Frontmatter includes: title, date, primary_theme, ai_functions, leverage_type, confidence_level, estimated_time_saved_hrs, role (link), interview_ready, source_doc
+3. Content merges three versions from source PDFs: Internal (business context), Meta (cognitive patterns), Sanitized (portfolio-ready)
+4. Use HTML comments (`<!-- internal -->`, `<!-- meta -->`, `<!-- sanitized -->`) to track content origin
+5. Update `ai-collaborations/_index.md` with new entry
+
+**Taxonomies**: themes (automation, governance, product_dev, research, strategy), AI functions (synthesis, generation, analysis, reframing, validation, retrieval, pattern_recognition), leverage types (cognitive, executional, strategic, communicative, automation)
+
 ## File Format Notes
 
 - All content is **Markdown** with **YAML frontmatter**
@@ -189,22 +204,16 @@ Before considering content ready:
 - When referencing external links (e.g., LinkedIn URLs), use absolute URLs
 - Source documents (PDFs, Word docs) are archived in `source-docs/` for reference
 
-## Key Career Themes (from profile.md)
+## Career Context
 
-For context when crafting materials, understand these dominant themes in the career:
+**Current positioning** (from `context.md`): Exploring opportunities at the intersection of enterprise transformation and AI. Target roles leverage both business acumen and technical curiosity — AI-powered transformation, enterprise AI strategy, building/scaling new capabilities.
 
-1. **Complex-to-Simple Translation**: Ability to take disorganized, complex information and synthesize into clear deliverables for leadership and stakeholders
-2. **Process Optimization & Efficiency**: Consistently identified and implemented efficiency improvements (Hot Keys, VBA macros, streamlined processes)
-3. **Regulatory & Risk Expertise**: Deep experience in regulatory environments, Consent Order remediation, risk management
-4. **Financial Services Breadth**: Worked across banking operations, strategy consulting, corporate transformation
-5. **Quantitative Foundation**: MBA from CMU Tepper with analytics and strategy focus
+**Career arc**: Operations (BNP) → Strategy Consulting (PwC/Strategy&) → Advisory (Treliant) → Corporate Strategy (Morgan Stanley) → Enterprise Transformation (Citi)
 
-When updating materials or creating stories, ensure they reinforce these themes.
-
-## Next Steps for Future Enhancement
-
-The database is well-structured for:
-- Extracting targeted resume variations by industry/competency
-- Generating interview prep guides organized by role requirement
-- Building application materials by pulling relevant achievements
-- Tracking career progression and identifying patterns
+**Key themes** to reinforce when crafting materials:
+1. **Complex-to-Simple Translation** — synthesizing disorganized info into clear deliverables
+2. **Process Optimization & Efficiency** — Hot Keys, VBA macros, streamlined workflows
+3. **Regulatory & Risk Expertise** — Consent Order remediation, risk management
+4. **Financial Services Breadth** — banking ops, consulting, corporate transformation
+5. **Quantitative Foundation** — CMU Tepper MBA, 720 GMAT
+6. **AI Partnership** — documented via `ai-collaborations/` (33.9 hrs saved across 9 cases)

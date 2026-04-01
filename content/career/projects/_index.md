@@ -13,13 +13,13 @@ Notable projects across roles.
 ### Strategic ($100M+)
 | Project | Role | Impact |
 |---------|------|--------|
-| [Online Brokerage M&A Analysis](strategy-ma-analysis.md) | Strategy& | $4B acquisition |
-| [Wealth Client Migration](strategy-client-migration.md) | Strategy& | $465M risk reduction |
+| Online Brokerage M&A Analysis *(planned)* | Strategy& | $4B acquisition |
+| Wealth Client Migration *(planned)* | Strategy& | $465M risk reduction |
 
 ### Operational ($10M+)
 | Project | Role | Impact |
 |---------|------|--------|
-| [Insurance TOM Optimization](strategy-tom-optimization.md) | Strategy& | $14M run-rate savings |
+| Insurance TOM Optimization *(planned)* | Strategy& | $14M run-rate savings |
 | [Concierge Service Model](ms-concierge-model.md) | Morgan Stanley | $15B AUM opportunity |
 
 ## By Role
@@ -27,21 +27,21 @@ Notable projects across roles.
 ### Citi (2021-Present)
 - [MRA Reporting Transformation](citi-mra-transformation.md) - Enterprise operating model design & governance
 - [Consent Order Remediation](citi-consent-order.md) - Article XII.1.e RBCMs
-- [CEO/Board Dashboards](citi-dashboards.md) - Strategic reporting
-- [Financial Governance Framework](citi-financial-governance.md) - $7.1B portfolio
-- [PM Standards Implementation](citi-pm-standards.md) - 15,000+ projects
+- CEO/Board Dashboards *(planned)* - Strategic reporting
+- Financial Governance Framework *(planned)* - $7.1B portfolio
+- PM Standards Implementation *(planned)* - 15,000+ projects
 
 ### Morgan Stanley (2019-2020)
 - [Concierge Service Model](ms-concierge-model.md) - Wealth management
 
 ### Strategy& (2015-2017)
-- [Online Brokerage M&A](strategy-ma-analysis.md) - Growth strategy
-- [Wealth Client Migration](strategy-client-migration.md) - Segmentation
-- [Insurance TOM](strategy-tom-optimization.md) - Cost optimization
+- Online Brokerage M&A *(planned)* - Growth strategy
+- Wealth Client Migration *(planned)* - Segmentation
+- Insurance TOM *(planned)* - Cost optimization
 
 ### BNP Paribas (2008-2013)
-- [Six Sigma Initiative](bnp-six-sigma.md) - Trade processing
-- [Global Reporting Tools](bnp-reporting.md) - 15+ tools implemented
+- Six Sigma Initiative *(planned)* - Trade processing
+- Global Reporting Tools *(planned)* - 15+ tools implemented
 
 ## By Technology/Domain
 
@@ -67,4 +67,4 @@ Notable projects across roles.
 
 ---
 
-*Note: Individual project files to be created during discovery discussions to capture full context and STAR-format narratives.*
+*Note: Items marked (planned) do not yet have detail files. Individual project files to be created during discovery discussions to capture full context and STAR-format narratives.*

@@ -12,12 +12,13 @@ pre_mba: true
 
 ## Summary
 
-Summer internship in sales at Bear Stearns (pre-financial crisis), supporting client acquisition and lead generation efforts.
+Summer internship in private wealth management at Bear Stearns (pre-financial crisis), supporting client acquisition and lead generation efforts.
 
 ## Key Responsibilities
 
 - Generate qualified leads for sales team
 - Support new account opening process
+- Cold calling prospects
 
 ## Notable Achievements
 

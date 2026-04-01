@@ -14,30 +14,23 @@ certifications: ["FINRA Series 7 (October 2008)"]
 
 ## Summary
 
-Promoted from rotational analyst to Client Services Analyst supporting commodities and prime brokerage operations. Led process improvement initiatives and client-facing deliverables.
+Promoted from rotational analyst to a permanent team member supporting commodities and prime brokerage operations. Led process improvement initiatives and production of client-facing deliverables.
 
 ## Key Responsibilities
 
 - Manage client relationships for commodities and prime brokerage clients
 - Deliver presentations to existing and prospective clients
 - Coordinate reporting tools development with Paris and London teams
-- Lead process optimization and Six Sigma initiatives
 
 ## Notable Achievements
+
+### Process Optimization
+- Developed process controls and VBA macros for trade reconciliation
+- Standardized reporting procedures to meet regulatory standards
 
 ### Client Development
 - Delivered 20+ presentations to existing and prospective clients
 - Directly resulted in opening of 8 new accounts
 - Instituted 15+ new reporting tools by coordinating Business Analysts and IT teams globally
 
-### Process Optimization
-- Appointed to Six Sigma improvement initiative for Fixed Income Documentation Team
-- Improved trade processing by ~10% (3 days reduction)
-- Developed process controls and VBA macros for trade reconciliation
-- Standardized reporting procedures to meet regulatory standards
 
-### Risk Management
-- Reduced unconfirmed credit default swaps with 60 hedge-fund/institutional counterparties
-- Mitigated operational risk during 2008 global financial crisis
-- Eliminated potential overnight risk exposure
-- Proficient in all operational aspects including regulatory compliance, margin settlement, and managing $100M+ in assets

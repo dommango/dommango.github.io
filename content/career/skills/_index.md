@@ -8,12 +8,15 @@ Skills inventory with proficiency levels and evidence.
 |-------|-------------|----------|
 | MS Office 365 (Excel, PowerPoint) | Expert | All roles; VBA macros at BNP |
 | VBA/Macros | Advanced | [BNP Paribas](../roles/bnp-paribas-client-services.md) - 6 macros for trading desk |
-| Data Modeling (PowerQuery, SQL) | Intermediate | [Citi](../roles/citi-svp-transformation.md) - data architecture, field inventory & sourcing logic |
+| Data Modeling (PowerQuery, SQL) | Advanced | [Citi](../roles/citi-svp-transformation.md) - data architecture, field inventory & sourcing logic; [RBCM-12 EUC pipeline](../stories/rbcm12-budgeting-resourcing-metrics.md) |
+| EUC Governance & Development | Advanced | [RBCM-12 pipeline](../stories/rbcm12-budgeting-resourcing-metrics.md); [Unmapped MRA EUC](../stories/unmapped-mra-reporting-euc.md) - audit-grade controls, release protocols |
 | Process Documentation (BRDs) | Expert | [Citi](../roles/citi-svp-transformation.md) - BAU Transition, QC decision matrices; [PwC](../roles/pwc-mba-intern.md) |
 | Six Sigma | Practitioner | [BNP Paribas](../roles/bnp-paribas-client-services.md) - improvement initiative |
 | Regulatory Documentation & Compliance | Expert | [Citi](../roles/citi-svp-transformation.md) - MRA reporting requirements, Article XII evidence packages |
 | Operating Model Design | Expert | [Citi MRA Transformation](../projects/citi-mra-transformation.md) - enterprise-scale design; design council facilitation |
 | Governance Framework Design | Expert | [Citi](../roles/citi-svp-transformation.md) - financial governance, oversight frameworks, escalation constructs |
+| AI Collaboration & Prompt Engineering | Advanced | [9 documented cases](../ai-collaborations/_index.md) - 33.9 hrs saved; master prompt patterns, iterative refinement cycles, multi-persona workflows |
+| Human-AI Workflow Design | Advanced | [Citi](../roles/citi-svp-transformation.md) - AI-assisted document processing, training curriculum automation; [8 reusable framework patterns](../ai-collaborations/_index.md#framework-patterns) |
 
 ## Soft Skills
 
@@ -90,6 +93,10 @@ Based on demonstrated experience:
 
 ### Innovation
 - AI-powered automation (EUC processes)
-- Efficiency tools (Hot Keys workshops, templates)
+- Efficiency tools (Hot Keys workshops, templates); [Keyboard shortcuts training](../stories/keyboard-shortcuts-training.md)
 - Creative reporting solutions (source-to-board operating model)
 - Process innovation under regulatory constraints
+- Training program design and delivery; [Keyboard shortcuts training](../stories/keyboard-shortcuts-training.md)
+- Quality standardization; [Formatting best practices](../stories/formatting-best-practices.md)
+- Strategic AI collaboration; [9 case studies](../ai-collaborations/_index.md) with quantified efficiency gains (33.9 hrs saved)
+- Human-AI workflow design; reusable [framework patterns](../ai-collaborations/_index.md#framework-patterns) for enterprise adoption

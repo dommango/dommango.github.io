@@ -59,6 +59,8 @@ Lead cross-organizational efforts on strategic regulatory remediation and enterp
 - **Piloted AI-assisted workflows** for document processing and evidence synthesis
 - **Built template systems** reducing manual entry and improving data quality through pre-populated fields
 - **Explored enterprise AI adoption patterns** for scaling efficiency gains to broader transformation work
+- **Documented [9 AI collaboration case studies](../ai-collaborations/_index.md)** saving 33.9 hours across governance, automation, product development, and research workflows (avg. 0.92 confidence level)
+- **Established reusable AI partnership frameworks** including iterative refinement cycles, multi-persona workflows, master prompt patterns, and human-in-the-loop development — applied across regulatory documentation, data pipeline refactoring, and training content generation
 
 ## Performance History
 

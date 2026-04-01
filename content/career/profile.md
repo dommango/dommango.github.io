@@ -4,9 +4,9 @@ headline: "SVP, Transformation Senior Lead at Citi"
 location: "New Jersey"
 email: "dom.mangonon@gmail.com"
 linkedin: "https://linkedin.com/in/dommangonon"
-twitter: "https://twitter.com/dommangonon"
+twitter: "https://x.com/collapsecontext"
 substack: "https://dommangonon.substack.com"
-github: ""
+github: "https://dommango.github.io"
 website: ""
 travel: "55+ countries across 5 continents"
 interests: ["trekking", "snowboarding", "live music", "DIY electronics", "NY sports", "AI exploration"]
@@ -45,6 +45,28 @@ Operations (BNP) → Strategy Consulting (PwC/Strategy&) → Advisory (Treliant)
 ```
 
 **Pattern:** Progressive shift from execution to strategy to transformation leadership, with each role building on prior experience.
+
+### The Through-Line
+
+**BNP Paribas (2008–2013)** — Started in operations during the 2008 financial crisis. Working inside a large bank as the system nearly collapsed gave me an appreciation for the many functions that keep a bank running — and exposed me to its fragility. Over five years I built deep operational knowledge across trading desks, client services, and global reporting, but I knew I wanted to move beyond the middle and back office.
+
+**CMU Tepper MBA (2013–2015)** — Chose Tepper specifically for its analytical rigor and quantitative reputation. The curriculum was exactly what I needed to bridge operations experience with strategic thinking. Tepper was also at the frontier of research in emerging technologies like AI and machine learning — a thread I didn't fully pull on until a decade later. Case competition wins (1st SCIO, 2nd McKinsey) and the Consortium Fellowship validated the pivot.
+
+**PwC / Strategy& (2014–2017)** — Consulting gave me the strategic toolkit: M&A analysis, operating model design, client migration planning. I was working at the intersection of wealth management strategy and execution — sizing $4B acquisition targets, migrating 32,000 clients, identifying $14M in run-rate savings. Intense, high-impact work, but the travel and pace eventually caught up.
+
+**Treliant (2018–2019)** — After burning out on consulting travel, I moved back to the NY area to settle down. An old PwC partner offered the chance to build a wealth management advisory practice from scratch — an entrepreneurial opportunity I couldn't pass up. In four months I co-authored a published article series on sales practice risk in ThinkAdvisor and mapped out 10 go-to-market campaigns. Unfortunately the firm decided to take the business in a different direction and terminated the practice before it could gain traction. Short tenure, but I delivered and published.
+
+**Morgan Stanley (2019–2020)** — Another PwC network connection brought me to Morgan Stanley's wealth management strategy group. I led projects supporting ~$15B in new AUM opportunity and designed a concierge service model that cut onboarding time by 40%+. Ultimately wasn't the right long-term fit.
+
+**Citi (2021–Present)** — Citi was eager to hire and the opportunity to lead large-scale enterprise transformation was too compelling to pass up. Started as a contractor and proved myself quickly — became one of the fastest contractor-to-hire conversions many had seen, with my manager Angelique as a huge advocate. Since then I've closed critical regulatory commitments, re-engineered data architecture across 150+ investments (~$1.1B visibility), overhauled financial governance for a ~$7.1B portfolio, and established PM standards across 15,000+ projects.
+
+**The AI Turn (2025)** — In early 2025 I made a deliberate decision to run towards AI rather than be anxious about it. I committed to finding real use cases — both personal and professional — to genuinely engage. Citi's enterprise AI rollout gave me free tokens to explore with, and I went deep: 9 documented collaboration case studies, 33.9 hours of quantified efficiency gains, published frameworks for human-AI partnership. The same instinct that made me a builder (VBA macros, Hot Keys workshops, process automation) now has a much more powerful set of tools.
+
+### Why It All Connects
+
+Each chapter built something the next one needed. Operations gave me institutional knowledge. The MBA gave me analytical frameworks. Consulting taught me to structure ambiguity for executive audiences. Building a practice showed me what entrepreneurial ownership feels like. Wealth management strategy deepened my client lens. And transformation at Citi brought it all together — running large, complex programs across regulatory, data, financial, and people dimensions.
+
+The AI thread was always there in the background (Tepper's research, automation at every stop) but became the foreground in 2025. Now I'm looking for the role that combines everything: enterprise transformation experience, strategic thinking, hands-on technical comfort, and genuine conviction about what AI changes.
 
 ## What I'm Looking For
 
