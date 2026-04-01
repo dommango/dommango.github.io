@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Windows NTFS zone identifiers
+*:Zone.Identifier
+
+# Career source docs and processing
+content/career/source-docs/
+content/career/_processing/
+content/career/package.json
