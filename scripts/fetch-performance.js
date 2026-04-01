@@ -18,7 +18,6 @@ const OUTPUT_PATH = join(__dirname, '../public/data/performance.json')
 const SITE_URL = process.env.SITE_URL || 'https://example.com'
 const PAGES_TO_TEST = [
   '/',
-  '/blog',
   '/career',
 ]
 

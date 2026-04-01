@@ -3,3 +3,5 @@ Allow: /
 
 # Exclude dashboard from search engines
 Disallow: /dashboard-
+
+Sitemap: https://dommango.github.io/sitemap.xml

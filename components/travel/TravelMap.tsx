@@ -7,8 +7,9 @@ import {
   Geography,
   Marker,
   Line,
-  ZoomableGroup
+  Sphere
 } from 'react-simple-maps'
+import { geoOrthographic } from 'd3-geo'
 import { Country, FlightRoute } from '@/lib/content/travel'
 
 const geoUrl = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json'
@@ -77,7 +78,6 @@ interface TravelMapProps {
   flightRoutes?: FlightRoute[]
   selectedYear?: number
   showFlights?: boolean
-  showCountries?: boolean
 }
 
 interface TooltipData {
@@ -85,15 +85,25 @@ interface TooltipData {
   subtext?: string
 }
 
+function isVisible(coords: [number, number], rotation: [number, number, number]): boolean {
+  const projection = geoOrthographic()
+    .rotate(rotation)
+    .translate([0, 0])
+    .scale(1)
+  return projection(coords) !== null
+}
+
 export function TravelMap({
   countries,
   flightRoutes = [],
   selectedYear,
-  showFlights = false,
-  showCountries = true
+  showFlights = false
 }: TravelMapProps) {
   const [tooltip, setTooltip] = useState<TooltipData | null>(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [rotation, setRotation] = useState<[number, number, number]>([0, -20, 0])
+  const [isDragging, setIsDragging] = useState(false)
+  const dragStart = useRef<{ x: number; y: number; rotation: [number, number, number] } | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
   const displayedCountries = selectedYear
@@ -129,6 +139,27 @@ export function TravelMap({
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     setMousePos({ x: e.clientX, y: e.clientY })
+
+    if (isDragging && dragStart.current) {
+      const dx = e.clientX - dragStart.current.x
+      const dy = e.clientY - dragStart.current.y
+      const sensitivity = 0.3
+      setRotation([
+        dragStart.current.rotation[0] + dx * sensitivity,
+        Math.max(-90, Math.min(90, dragStart.current.rotation[1] - dy * sensitivity)),
+        0
+      ])
+    }
+  }, [isDragging])
+
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    setIsDragging(true)
+    dragStart.current = { x: e.clientX, y: e.clientY, rotation: [...rotation] as [number, number, number] }
+  }, [rotation])
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false)
+    dragStart.current = null
   }, [])
 
   const showCountryTooltip = useCallback((isoCode: string) => {
@@ -161,7 +192,13 @@ export function TravelMap({
       ref={containerRef}
       className="relative w-full bg-surface-1 rounded-xl border border-border overflow-hidden"
       onMouseMove={handleMouseMove}
-      onMouseLeave={hideTooltip}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={() => {
+        hideTooltip()
+        handleMouseUp()
+      }}
+      style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
     >
       {tooltip && (
         <div
@@ -179,48 +216,62 @@ export function TravelMap({
       )}
 
       <ComposableMap
-        projection="geoMercator"
-        projectionConfig={{ scale: 140, center: [0, 20] }}
+        projection="geoOrthographic"
+        projectionConfig={{ scale: 250, rotate: rotation }}
         style={{ width: '100%', height: 'auto' }}
+        width={500}
+        height={500}
       >
-        <ZoomableGroup>
-          <Geographies geography={geoUrl}>
-            {({ geographies }) =>
-              geographies.map(geo => {
-                const isoCode = geo.id as string
-                const isVisited = showCountries && visitedIsoCodesSet.has(isoCode)
+        <Sphere
+          id="globe-sphere"
+          fill="#0a0f1a"
+          stroke="#1a1a1a"
+          strokeWidth={0.5}
+        />
+        <Geographies geography={geoUrl}>
+          {({ geographies }) =>
+            geographies.map(geo => {
+              const isoCode = geo.id as string
+              const isVisited = visitedIsoCodesSet.has(isoCode)
 
-                return (
-                  <Geography
-                    key={`${geo.rsmKey}-${showCountries}`}
-                    geography={geo}
-                    fill={isVisited ? '#b8922f' : '#2a2a2a'}
-                    stroke="#1a1a1a"
-                    strokeWidth={0.5}
-                    style={{
-                      default: { outline: 'none' },
-                      hover: {
-                        fill: isVisited ? '#d4a847' : '#3a3a3a',
-                        outline: 'none',
-                        cursor: isVisited ? 'pointer' : 'default'
-                      },
-                      pressed: { outline: 'none' }
-                    }}
-                    onMouseEnter={() => {
-                      if (isVisited) showCountryTooltip(isoCode)
-                    }}
-                    onMouseLeave={hideTooltip}
-                  />
-                )
-              })
-            }
-          </Geographies>
+              return (
+                <Geography
+                  key={geo.rsmKey}
+                  geography={geo}
+                  fill={isVisited ? '#b8922f' : '#2a2a2a'}
+                  stroke="#1a1a1a"
+                  strokeWidth={0.5}
+                  style={{
+                    default: { outline: 'none' },
+                    hover: {
+                      fill: isVisited ? '#d4a847' : '#3a3a3a',
+                      outline: 'none',
+                      cursor: isVisited ? 'pointer' : 'default'
+                    },
+                    pressed: { outline: 'none' }
+                  }}
+                  onMouseEnter={() => {
+                    if (isVisited) showCountryTooltip(isoCode)
+                  }}
+                  onMouseLeave={hideTooltip}
+                />
+              )
+            })
+          }
+        </Geographies>
 
-          {showFlights && flightRoutes.map((route, idx) => (
+        {showFlights && flightRoutes.map((route, idx) => {
+          const from: [number, number] = [route.fromCoords[1], route.fromCoords[0]]
+          const to: [number, number] = [route.toCoords[1], route.toCoords[0]]
+          const fromVisible = isVisible(from, rotation)
+          const toVisible = isVisible(to, rotation)
+          if (!fromVisible && !toVisible) return null
+
+          return (
             <Line
               key={`flight-${route.from}-${route.to}-${idx}`}
-              from={[route.fromCoords[1], route.fromCoords[0]]}
-              to={[route.toCoords[1], route.toCoords[0]]}
+              from={from}
+              to={to}
               stroke="rgba(212, 168, 71, 0.6)"
               strokeWidth={Math.min(0.8 + route.count * 0.15, 3)}
               strokeLinecap="round"
@@ -228,12 +279,17 @@ export function TravelMap({
               onMouseEnter={() => showFlightTooltip(route.from, route.to, route.count)}
               onMouseLeave={hideTooltip}
             />
-          ))}
+          )
+        })}
 
-          {showFlights && airports.map(airport => (
+        {showFlights && airports.map(airport => {
+          const coords: [number, number] = [airport.coords[1], airport.coords[0]]
+          if (!isVisible(coords, rotation)) return null
+
+          return (
             <Marker
               key={`airport-${airport.code}`}
-              coordinates={[airport.coords[1], airport.coords[0]]}
+              coordinates={coords}
               onMouseEnter={() => showAirportTooltip(airport.code)}
               onMouseLeave={hideTooltip}
             >
@@ -245,8 +301,8 @@ export function TravelMap({
                 style={{ cursor: 'pointer' }}
               />
             </Marker>
-          ))}
-        </ZoomableGroup>
+          )
+        })}
       </ComposableMap>
     </div>
   )
