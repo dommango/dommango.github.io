@@ -5,6 +5,7 @@ import { ChatBot } from "@/components/chat/ChatBot";
 import "./globals.css";
 
 const GOATCOUNTER_SITE = process.env.NEXT_PUBLIC_GOATCOUNTER_SITE;
+const SITE_URL = "https://dommango.github.io";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,8 +18,29 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dom Mangonon",
-  description: "Personal website of Dom Mangonon",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Dom Mangonon",
+    template: "%s | Dom Mangonon",
+  },
+  description:
+    "Personal website of Dom Mangonon — technology leader specializing in enterprise transformation, AI strategy, and financial services.",
+  openGraph: {
+    title: "Dom Mangonon",
+    description:
+      "Technology leader specializing in enterprise transformation, AI strategy, and financial services.",
+    url: SITE_URL,
+    siteName: "Dom Mangonon",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary",
+    creator: "@CollapseContext",
+  },
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function RootLayout({
@@ -28,6 +50,29 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Dom Mangonon",
+              url: SITE_URL,
+              jobTitle: "SVP, Transformation Senior Lead",
+              worksFor: {
+                "@type": "Organization",
+                name: "Citi",
+              },
+              sameAs: [
+                "https://linkedin.com/in/dommangonon",
+                "https://x.com/collapsecontext",
+                "https://dommangonon.substack.com",
+              ],
+            }),
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

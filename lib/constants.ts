@@ -5,7 +5,7 @@
 // Site metadata
 export const SITE_NAME = 'Personal Portfolio'
 export const SITE_DESCRIPTION = 'My professional portfolio and career journey'
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com'
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://dommango.github.io'
 
 // Navigation links
 export const NAV_LINKS = [
@@ -18,10 +18,10 @@ export const NAV_LINKS = [
 
 // Social media links
 export const SOCIAL_LINKS = {
-  github: 'https://github.com/yourusername',
-  linkedin: 'https://linkedin.com/in/yourusername',
-  twitter: 'https://twitter.com/yourusername',
-  email: 'you@example.com'
+  github: 'https://github.com/dommango',
+  linkedin: 'https://linkedin.com/in/dommangonon',
+  twitter: 'https://x.com/collapsecontext',
+  email: 'dom.mangonon@gmail.com'
 } as const
 
 // Skills categories

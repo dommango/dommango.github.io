@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import ReCAPTCHA from 'react-google-recaptcha'
 import dynamic from 'next/dynamic'
-import { LinkedinLogo, XLogo, FileText } from '@phosphor-icons/react'
+import { LinkedinLogo, XLogo, GithubLogo, ChartBar, FileText } from '@phosphor-icons/react'
 import { getTravelData, getFlightRoutes, getFlightStats } from '@/lib/content/travel'
 
 const TravelMap = dynamic(
@@ -14,7 +14,7 @@ const TravelMap = dynamic(
     ssr: false,
     loading: () => (
       <div className="w-full bg-surface-1 rounded-xl border border-border overflow-hidden">
-        <div className="aspect-[2/1] flex items-center justify-center">
+        <div className="aspect-square flex items-center justify-center">
           <p className="text-text-muted text-sm">Loading map...</p>
         </div>
       </div>
@@ -31,7 +31,6 @@ export default function Home() {
   const flightStats = getFlightStats()
   const [showResumeForm, setShowResumeForm] = useState(false)
   const [showFlights, setShowFlights] = useState(true)
-  const [showCountries, setShowCountries] = useState(true)
   const [formData, setFormData] = useState({ name: '', email: '' })
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [formMessage, setFormMessage] = useState('')
@@ -233,34 +232,21 @@ export default function Home() {
             <h2 className="text-lg font-semibold text-text-primary">
               My Travel Map
             </h2>
-            <div className="flex gap-2">
-              <button
-                onClick={() => setShowCountries(!showCountries)}
-                className={`text-xs px-2 py-1 rounded border transition-colors ${
-                  showCountries
-                    ? 'border-accent-gold text-accent-gold'
-                    : 'border-border text-text-muted hover:border-text-muted'
-                }`}
-              >
-                Countries Visited
-              </button>
-              <button
-                onClick={() => setShowFlights(!showFlights)}
-                className={`text-xs px-2 py-1 rounded border transition-colors ${
-                  showFlights
-                    ? 'border-accent-gold text-accent-gold'
-                    : 'border-border text-text-muted hover:border-text-muted'
-                }`}
-              >
-                Flight History
-              </button>
-            </div>
+            <button
+              onClick={() => setShowFlights(!showFlights)}
+              className={`text-xs px-2 py-1 rounded border transition-colors ${
+                showFlights
+                  ? 'border-accent-gold text-accent-gold'
+                  : 'border-border text-text-muted hover:border-text-muted'
+              }`}
+            >
+              Flight History
+            </button>
           </div>
           <TravelMap
             countries={countries}
             flightRoutes={flightRoutes}
             showFlights={showFlights}
-            showCountries={showCountries}
           />
           <p className="text-center text-text-muted text-sm mt-3">
             {stats.totalCountries} countries across {stats.continents} continents
