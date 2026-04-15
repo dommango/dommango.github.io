@@ -1,1317 +1,725 @@
 {
-  "totalFlights": 211,
+  "totalFlights": 213,
   "routes": [
+    {
+      "from": "EWR",
+      "to": "SJU",
+      "fromCoords": [40.6895, -74.1745],
+      "toCoords": [18.4394, -66.0018],
+      "count": 1
+    },
+    {
+      "from": "SJU",
+      "to": "EWR",
+      "fromCoords": [18.4394, -66.0018],
+      "toCoords": [40.6895, -74.1745],
+      "count": 1
+    },
     {
       "from": "DEN",
       "to": "MSP",
-      "fromCoords": [
-        39.8561,
-        -104.6737
-      ],
-      "toCoords": [
-        44.8848,
-        -93.2223
-      ],
+      "fromCoords": [39.8561, -104.6737],
+      "toCoords": [44.8848, -93.2223],
       "count": 4
     },
     {
       "from": "MDW",
       "to": "MSP",
-      "fromCoords": [
-        41.7868,
-        -87.7522
-      ],
-      "toCoords": [
-        44.8848,
-        -93.2223
-      ],
+      "fromCoords": [41.7868, -87.7522],
+      "toCoords": [44.8848, -93.2223],
       "count": 56
     },
     {
       "from": "EWR",
       "to": "MSP",
-      "fromCoords": [
-        40.6895,
-        -74.1745
-      ],
-      "toCoords": [
-        44.8848,
-        -93.2223
-      ],
+      "fromCoords": [40.6895, -74.1745],
+      "toCoords": [44.8848, -93.2223],
       "count": 5
     },
     {
       "from": "YYZ",
       "to": "BCN",
-      "fromCoords": [
-        43.6777,
-        -79.6248
-      ],
-      "toCoords": [
-        41.2974,
-        2.0833
-      ],
+      "fromCoords": [43.6777, -79.6248],
+      "toCoords": [41.2974, 2.0833],
       "count": 1
     },
     {
       "from": "MSP",
       "to": "LAX",
-      "fromCoords": [
-        44.8848,
-        -93.2223
-      ],
-      "toCoords": [
-        33.9416,
-        -118.4085
-      ],
+      "fromCoords": [44.8848, -93.2223],
+      "toCoords": [33.9416, -118.4085],
       "count": 2
     },
     {
       "from": "ATL",
       "to": "LGA",
-      "fromCoords": [
-        33.6407,
-        -84.4277
-      ],
-      "toCoords": [
-        40.7769,
-        -73.874
-      ],
+      "fromCoords": [33.6407, -84.4277],
+      "toCoords": [40.7769, -73.874],
       "count": 2
     },
     {
       "from": "CMN",
       "to": "JFK",
-      "fromCoords": [
-        33.3675,
-        -7.5898
-      ],
-      "toCoords": [
-        40.6413,
-        -73.7781
-      ],
+      "fromCoords": [33.3675, -7.5898],
+      "toCoords": [40.6413, -73.7781],
       "count": 2
     },
     {
       "from": "JFK",
       "to": "MNL",
-      "fromCoords": [
-        40.6413,
-        -73.7781
-      ],
-      "toCoords": [
-        14.5086,
-        121.0194
-      ],
+      "fromCoords": [40.6413, -73.7781],
+      "toCoords": [14.5086, 121.0194],
       "count": 1
     },
     {
       "from": "YWG",
       "to": "YVR",
-      "fromCoords": [
-        49.91,
-        -97.2399
-      ],
-      "toCoords": [
-        49.1967,
-        -123.1815
-      ],
+      "fromCoords": [49.91, -97.2399],
+      "toCoords": [49.1967, -123.1815],
       "count": 1
     },
     {
       "from": "BOS",
       "to": "PIT",
-      "fromCoords": [
-        42.3656,
-        -71.0096
-      ],
-      "toCoords": [
-        40.4915,
-        -80.2329
-      ],
+      "fromCoords": [42.3656, -71.0096],
+      "toCoords": [40.4915, -80.2329],
       "count": 2
     },
     {
       "from": "MSP",
       "to": "LGA",
-      "fromCoords": [
-        44.8848,
-        -93.2223
-      ],
-      "toCoords": [
-        40.7769,
-        -73.874
-      ],
+      "fromCoords": [44.8848, -93.2223],
+      "toCoords": [40.7769, -73.874],
       "count": 9
     },
     {
       "from": "MDW",
       "to": "EWR",
-      "fromCoords": [
-        41.7868,
-        -87.7522
-      ],
-      "toCoords": [
-        40.6895,
-        -74.1745
-      ],
+      "fromCoords": [41.7868, -87.7522],
+      "toCoords": [40.6895, -74.1745],
       "count": 2
     },
     {
       "from": "DOH",
       "to": "SGN",
-      "fromCoords": [
-        25.2609,
-        51.6138
-      ],
-      "toCoords": [
-        10.8188,
-        106.652
-      ],
+      "fromCoords": [25.2609, 51.6138],
+      "toCoords": [10.8188, 106.652],
       "count": 1
     },
     {
       "from": "LGA",
       "to": "ORD",
-      "fromCoords": [
-        40.7769,
-        -73.874
-      ],
-      "toCoords": [
-        41.9742,
-        -87.9073
-      ],
+      "fromCoords": [40.7769, -73.874],
+      "toCoords": [41.9742, -87.9073],
       "count": 4
     },
     {
       "from": "MSY",
       "to": "ATL",
-      "fromCoords": [
-        29.9934,
-        -90.258
-      ],
-      "toCoords": [
-        33.6407,
-        -84.4277
-      ],
+      "fromCoords": [29.9934, -90.258],
+      "toCoords": [33.6407, -84.4277],
       "count": 2
     },
     {
       "from": "JFK",
       "to": "SLC",
-      "fromCoords": [
-        40.6413,
-        -73.7781
-      ],
-      "toCoords": [
-        40.7899,
-        -111.9791
-      ],
+      "fromCoords": [40.6413, -73.7781],
+      "toCoords": [40.7899, -111.9791],
       "count": 1
     },
     {
       "from": "SLC",
       "to": "DEN",
-      "fromCoords": [
-        40.7899,
-        -111.9791
-      ],
-      "toCoords": [
-        39.8561,
-        -104.6737
-      ],
+      "fromCoords": [40.7899, -111.9791],
+      "toCoords": [39.8561, -104.6737],
       "count": 3
     },
     {
       "from": "BCN",
       "to": "EAS",
-      "fromCoords": [
-        41.2974,
-        2.0833
-      ],
-      "toCoords": [
-        43.3565,
-        -1.7906
-      ],
+      "fromCoords": [41.2974, 2.0833],
+      "toCoords": [43.3565, -1.7906],
       "count": 1
     },
     {
       "from": "LGA",
       "to": "MDW",
-      "fromCoords": [
-        40.7769,
-        -73.874
-      ],
-      "toCoords": [
-        41.7868,
-        -87.7522
-      ],
+      "fromCoords": [40.7769, -73.874],
+      "toCoords": [41.7868, -87.7522],
       "count": 2
     },
     {
       "from": "EWR",
       "to": "LHR",
-      "fromCoords": [
-        40.6895,
-        -74.1745
-      ],
-      "toCoords": [
-        51.47,
-        -0.4543
-      ],
+      "fromCoords": [40.6895, -74.1745],
+      "toCoords": [51.47, -0.4543],
       "count": 1
     },
     {
       "from": "MNL",
       "to": "ENI",
-      "fromCoords": [
-        14.5086,
-        121.0194
-      ],
-      "toCoords": [
-        11.2296,
-        125.2593
-      ],
+      "fromCoords": [14.5086, 121.0194],
+      "toCoords": [11.2296, 125.2593],
       "count": 2
     },
     {
       "from": "JFK",
       "to": "CUN",
-      "fromCoords": [
-        40.6413,
-        -73.7781
-      ],
-      "toCoords": [
-        21.0365,
-        -86.8771
-      ],
+      "fromCoords": [40.6413, -73.7781],
+      "toCoords": [21.0365, -86.8771],
       "count": 2
     },
     {
       "from": "LIS",
       "to": "EWR",
-      "fromCoords": [
-        38.7756,
-        -9.1354
-      ],
-      "toCoords": [
-        40.6895,
-        -74.1745
-      ],
+      "fromCoords": [38.7756, -9.1354],
+      "toCoords": [40.6895, -74.1745],
       "count": 1
     },
     {
       "from": "ORD",
       "to": "KEF",
-      "fromCoords": [
-        41.9742,
-        -87.9073
-      ],
-      "toCoords": [
-        63.985,
-        -22.6056
-      ],
+      "fromCoords": [41.9742, -87.9073],
+      "toCoords": [63.985, -22.6056],
       "count": 1
     },
     {
       "from": "DTW",
       "to": "LEX",
-      "fromCoords": [
-        42.2162,
-        -83.3554
-      ],
-      "toCoords": [
-        38.0365,
-        -84.6059
-      ],
+      "fromCoords": [42.2162, -83.3554],
+      "toCoords": [38.0365, -84.6059],
       "count": 1
     },
     {
       "from": "DEN",
       "to": "ORD",
-      "fromCoords": [
-        39.8561,
-        -104.6737
-      ],
-      "toCoords": [
-        41.9742,
-        -87.9073
-      ],
+      "fromCoords": [39.8561, -104.6737],
+      "toCoords": [41.9742, -87.9073],
       "count": 1
     },
     {
       "from": "KEF",
       "to": "AMS",
-      "fromCoords": [
-        63.985,
-        -22.6056
-      ],
-      "toCoords": [
-        52.3105,
-        4.7683
-      ],
+      "fromCoords": [63.985, -22.6056],
+      "toCoords": [52.3105, 4.7683],
       "count": 1
     },
     {
       "from": "SJO",
       "to": "EWR",
-      "fromCoords": [
-        9.9939,
-        -84.2088
-      ],
-      "toCoords": [
-        40.6895,
-        -74.1745
-      ],
+      "fromCoords": [9.9939, -84.2088],
+      "toCoords": [40.6895, -74.1745],
       "count": 2
     },
     {
       "from": "EWR",
       "to": "SLC",
-      "fromCoords": [
-        40.6895,
-        -74.1745
-      ],
-      "toCoords": [
-        40.7899,
-        -111.9791
-      ],
+      "fromCoords": [40.6895, -74.1745],
+      "toCoords": [40.7899, -111.9791],
       "count": 1
     },
     {
       "from": "MBJ",
       "to": "JFK",
-      "fromCoords": [
-        18.5037,
-        -77.9134
-      ],
-      "toCoords": [
-        40.6413,
-        -73.7781
-      ],
+      "fromCoords": [18.5037, -77.9134],
+      "toCoords": [40.6413, -73.7781],
       "count": 2
     },
     {
       "from": "MSP",
       "to": "SFO",
-      "fromCoords": [
-        44.8848,
-        -93.2223
-      ],
-      "toCoords": [
-        37.6213,
-        -122.379
-      ],
+      "fromCoords": [44.8848, -93.2223],
+      "toCoords": [37.6213, -122.379],
       "count": 2
     },
     {
       "from": "MSY",
       "to": "EWR",
-      "fromCoords": [
-        29.9934,
-        -90.258
-      ],
-      "toCoords": [
-        40.6895,
-        -74.1745
-      ],
+      "fromCoords": [29.9934, -90.258],
+      "toCoords": [40.6895, -74.1745],
       "count": 1
     },
     {
       "from": "MSP",
       "to": "YWG",
-      "fromCoords": [
-        44.8848,
-        -93.2223
-      ],
-      "toCoords": [
-        49.91,
-        -97.2399
-      ],
+      "fromCoords": [44.8848, -93.2223],
+      "toCoords": [49.91, -97.2399],
       "count": 1
     },
     {
       "from": "BIO",
       "to": "LIS",
-      "fromCoords": [
-        43.3011,
-        -2.9106
-      ],
-      "toCoords": [
-        38.7756,
-        -9.1354
-      ],
+      "fromCoords": [43.3011, -2.9106],
+      "toCoords": [38.7756, -9.1354],
       "count": 1
     },
     {
       "from": "TPA",
       "to": "LGA",
-      "fromCoords": [
-        27.9756,
-        -82.5333
-      ],
-      "toCoords": [
-        40.7769,
-        -73.874
-      ],
+      "fromCoords": [27.9756, -82.5333],
+      "toCoords": [40.7769, -73.874],
       "count": 2
     },
     {
       "from": "MNL",
       "to": "TPE",
-      "fromCoords": [
-        14.5086,
-        121.0194
-      ],
-      "toCoords": [
-        25.0797,
-        121.2342
-      ],
+      "fromCoords": [14.5086, 121.0194],
+      "toCoords": [25.0797, 121.2342],
       "count": 1
     },
     {
       "from": "CLT",
       "to": "MSY",
-      "fromCoords": [
-        35.214,
-        -80.9431
-      ],
-      "toCoords": [
-        29.9934,
-        -90.258
-      ],
+      "fromCoords": [35.214, -80.9431],
+      "toCoords": [29.9934, -90.258],
       "count": 1
     },
     {
       "from": "HKG",
       "to": "JFK",
-      "fromCoords": [
-        22.308,
-        113.9185
-      ],
-      "toCoords": [
-        40.6413,
-        -73.7781
-      ],
+      "fromCoords": [22.308, 113.9185],
+      "toCoords": [40.6413, -73.7781],
       "count": 2
     },
     {
       "from": "DEN",
       "to": "RNO",
-      "fromCoords": [
-        39.8561,
-        -104.6737
-      ],
-      "toCoords": [
-        39.4991,
-        -119.7681
-      ],
+      "fromCoords": [39.8561, -104.6737],
+      "toCoords": [39.4991, -119.7681],
       "count": 1
     },
     {
       "from": "RNO",
       "to": "SFO",
-      "fromCoords": [
-        39.4991,
-        -119.7681
-      ],
-      "toCoords": [
-        37.6213,
-        -122.379
-      ],
+      "fromCoords": [39.4991, -119.7681],
+      "toCoords": [37.6213, -122.379],
       "count": 1
     },
     {
       "from": "KRK",
       "to": "STN",
-      "fromCoords": [
-        50.0777,
-        19.7848
-      ],
-      "toCoords": [
-        51.885,
-        0.235
-      ],
+      "fromCoords": [50.0777, 19.7848],
+      "toCoords": [51.885, 0.235],
       "count": 2
     },
     {
       "from": "KTM",
       "to": "BOM",
-      "fromCoords": [
-        27.6966,
-        85.3591
-      ],
-      "toCoords": [
-        19.0896,
-        72.8656
-      ],
+      "fromCoords": [27.6966, 85.3591],
+      "toCoords": [19.0896, 72.8656],
       "count": 1
     },
     {
       "from": "ORD",
       "to": "PVR",
-      "fromCoords": [
-        41.9742,
-        -87.9073
-      ],
-      "toCoords": [
-        20.6801,
-        -105.2543
-      ],
+      "fromCoords": [41.9742, -87.9073],
+      "toCoords": [20.6801, -105.2543],
       "count": 2
     },
     {
       "from": "AEP",
       "to": "FTE",
-      "fromCoords": [
-        -34.5592,
-        -58.4156
-      ],
-      "toCoords": [
-        -50.2803,
-        -72.0531
-      ],
+      "fromCoords": [-34.5592, -58.4156],
+      "toCoords": [-50.2803, -72.0531],
       "count": 2
     },
     {
       "from": "YTZ",
       "to": "MDW",
-      "fromCoords": [
-        43.6275,
-        -79.3962
-      ],
-      "toCoords": [
-        41.7868,
-        -87.7522
-      ],
+      "fromCoords": [43.6275, -79.3962],
+      "toCoords": [41.7868, -87.7522],
       "count": 2
     },
     {
       "from": "AEP",
       "to": "GIG",
-      "fromCoords": [
-        -34.5592,
-        -58.4156
-      ],
-      "toCoords": [
-        -22.8099,
-        -43.2505
-      ],
+      "fromCoords": [-34.5592, -58.4156],
+      "toCoords": [-22.8099, -43.2505],
       "count": 1
     },
     {
       "from": "HAV",
       "to": "MIA",
-      "fromCoords": [
-        22.9892,
-        -82.4091
-      ],
-      "toCoords": [
-        25.7959,
-        -80.287
-      ],
+      "fromCoords": [22.9892, -82.4091],
+      "toCoords": [25.7959, -80.287],
       "count": 2
     },
     {
       "from": "ORD",
       "to": "YYZ",
-      "fromCoords": [
-        41.9742,
-        -87.9073
-      ],
-      "toCoords": [
-        43.6777,
-        -79.6248
-      ],
+      "fromCoords": [41.9742, -87.9073],
+      "toCoords": [43.6777, -79.6248],
       "count": 5
     },
     {
       "from": "MDE",
       "to": "MIA",
-      "fromCoords": [
-        6.1645,
-        -75.4231
-      ],
-      "toCoords": [
-        25.7959,
-        -80.287
-      ],
+      "fromCoords": [6.1645, -75.4231],
+      "toCoords": [25.7959, -80.287],
       "count": 1
     },
     {
       "from": "SFO",
       "to": "YVR",
-      "fromCoords": [
-        37.6213,
-        -122.379
-      ],
-      "toCoords": [
-        49.1967,
-        -123.1815
-      ],
+      "fromCoords": [37.6213, -122.379],
+      "toCoords": [49.1967, -123.1815],
       "count": 1
     },
     {
       "from": "EWR",
       "to": "PTY",
-      "fromCoords": [
-        40.6895,
-        -74.1745
-      ],
-      "toCoords": [
-        9.0714,
-        -79.3835
-      ],
+      "fromCoords": [40.6895, -74.1745],
+      "toCoords": [9.0714, -79.3835],
       "count": 2
     },
     {
       "from": "EWR",
       "to": "MEX",
-      "fromCoords": [
-        40.6895,
-        -74.1745
-      ],
-      "toCoords": [
-        19.4363,
-        -99.0721
-      ],
+      "fromCoords": [40.6895, -74.1745],
+      "toCoords": [19.4363, -99.0721],
       "count": 2
     },
     {
       "from": "SEA",
       "to": "EWR",
-      "fromCoords": [
-        47.4502,
-        -122.3088
-      ],
-      "toCoords": [
-        40.6895,
-        -74.1745
-      ],
+      "fromCoords": [47.4502, -122.3088],
+      "toCoords": [40.6895, -74.1745],
       "count": 1
     },
     {
       "from": "PIT",
       "to": "DEN",
-      "fromCoords": [
-        40.4915,
-        -80.2329
-      ],
-      "toCoords": [
-        39.8561,
-        -104.6737
-      ],
+      "fromCoords": [40.4915, -80.2329],
+      "toCoords": [39.8561, -104.6737],
       "count": 2
     },
     {
       "from": "EWR",
       "to": "YYZ",
-      "fromCoords": [
-        40.6895,
-        -74.1745
-      ],
-      "toCoords": [
-        43.6777,
-        -79.6248
-      ],
+      "fromCoords": [40.6895, -74.1745],
+      "toCoords": [43.6777, -79.6248],
       "count": 1
     },
     {
       "from": "EWR",
       "to": "MIA",
-      "fromCoords": [
-        40.6895,
-        -74.1745
-      ],
-      "toCoords": [
-        25.7959,
-        -80.287
-      ],
+      "fromCoords": [40.6895, -74.1745],
+      "toCoords": [25.7959, -80.287],
       "count": 2
     },
     {
       "from": "ICN",
       "to": "DTW",
-      "fromCoords": [
-        37.4602,
-        126.4407
-      ],
-      "toCoords": [
-        42.2162,
-        -83.3554
-      ],
+      "fromCoords": [37.4602, 126.4407],
+      "toCoords": [42.2162, -83.3554],
       "count": 1
     },
     {
       "from": "BKK",
       "to": "DOH",
-      "fromCoords": [
-        13.69,
-        100.7501
-      ],
-      "toCoords": [
-        25.2609,
-        51.6138
-      ],
+      "fromCoords": [13.69, 100.7501],
+      "toCoords": [25.2609, 51.6138],
       "count": 1
     },
     {
       "from": "LIM",
       "to": "PTY",
-      "fromCoords": [
-        -12.0219,
-        -77.1143
-      ],
-      "toCoords": [
-        9.0714,
-        -79.3835
-      ],
+      "fromCoords": [-12.0219, -77.1143],
+      "toCoords": [9.0714, -79.3835],
       "count": 1
     },
     {
       "from": "MSP",
       "to": "IAH",
-      "fromCoords": [
-        44.8848,
-        -93.2223
-      ],
-      "toCoords": [
-        29.9902,
-        -95.3368
-      ],
+      "fromCoords": [44.8848, -93.2223],
+      "toCoords": [29.9902, -95.3368],
       "count": 2
     },
     {
       "from": "EWR",
       "to": "LAS",
-      "fromCoords": [
-        40.6895,
-        -74.1745
-      ],
-      "toCoords": [
-        36.084,
-        -115.1537
-      ],
+      "fromCoords": [40.6895, -74.1745],
+      "toCoords": [36.084, -115.1537],
       "count": 2
     },
     {
       "from": "EWR",
       "to": "PDX",
-      "fromCoords": [
-        40.6895,
-        -74.1745
-      ],
-      "toCoords": [
-        45.5898,
-        -122.5951
-      ],
+      "fromCoords": [40.6895, -74.1745],
+      "toCoords": [45.5898, -122.5951],
       "count": 1
     },
     {
       "from": "AMS",
       "to": "DMM",
-      "fromCoords": [
-        52.3105,
-        4.7683
-      ],
-      "toCoords": [
-        26.4712,
-        49.7979
-      ],
+      "fromCoords": [52.3105, 4.7683],
+      "toCoords": [26.4712, 49.7979],
       "count": 1
     },
     {
       "from": "ATL",
       "to": "PIT",
-      "fromCoords": [
-        33.6407,
-        -84.4277
-      ],
-      "toCoords": [
-        40.4915,
-        -80.2329
-      ],
+      "fromCoords": [33.6407, -84.4277],
+      "toCoords": [40.4915, -80.2329],
       "count": 1
     },
     {
       "from": "PNH",
       "to": "HKG",
-      "fromCoords": [
-        11.5466,
-        104.8441
-      ],
-      "toCoords": [
-        22.308,
-        113.9185
-      ],
+      "fromCoords": [11.5466, 104.8441],
+      "toCoords": [22.308, 113.9185],
       "count": 2
     },
     {
       "from": "JFK",
       "to": "EZE",
-      "fromCoords": [
-        40.6413,
-        -73.7781
-      ],
-      "toCoords": [
-        -34.8222,
-        -58.5358
-      ],
+      "fromCoords": [40.6413, -73.7781],
+      "toCoords": [-34.8222, -58.5358],
       "count": 1
     },
     {
       "from": "LGA",
       "to": "DTW",
-      "fromCoords": [
-        40.7769,
-        -73.874
-      ],
-      "toCoords": [
-        42.2162,
-        -83.3554
-      ],
+      "fromCoords": [40.7769, -73.874],
+      "toCoords": [42.2162, -83.3554],
       "count": 1
     },
     {
       "from": "OAX",
       "to": "PXM",
-      "fromCoords": [
-        16.9999,
-        -96.7266
-      ],
-      "toCoords": [
-        15.8769,
-        -97.0891
-      ],
+      "fromCoords": [16.9999, -96.7266],
+      "toCoords": [15.8769, -97.0891],
       "count": 1
     },
     {
       "from": "BOM",
       "to": "GOI",
-      "fromCoords": [
-        19.0896,
-        72.8656
-      ],
-      "toCoords": [
-        15.3808,
-        73.8314
-      ],
+      "fromCoords": [19.0896, 72.8656],
+      "toCoords": [15.3808, 73.8314],
       "count": 1
     },
     {
       "from": "BKK",
       "to": "USM",
-      "fromCoords": [
-        13.69,
-        100.7501
-      ],
-      "toCoords": [
-        9.5478,
-        100.0623
-      ],
+      "fromCoords": [13.69, 100.7501],
+      "toCoords": [9.5478, 100.0623],
       "count": 1
     },
     {
       "from": "LHR",
       "to": "MSP",
-      "fromCoords": [
-        51.47,
-        -0.4543
-      ],
-      "toCoords": [
-        44.8848,
-        -93.2223
-      ],
+      "fromCoords": [51.47, -0.4543],
+      "toCoords": [44.8848, -93.2223],
       "count": 1
     },
     {
       "from": "HKG",
       "to": "HAN",
-      "fromCoords": [
-        22.308,
-        113.9185
-      ],
-      "toCoords": [
-        21.2187,
-        105.8042
-      ],
+      "fromCoords": [22.308, 113.9185],
+      "toCoords": [21.2187, 105.8042],
       "count": 1
     },
     {
       "from": "HAN",
       "to": "SGN",
-      "fromCoords": [
-        21.2187,
-        105.8042
-      ],
-      "toCoords": [
-        10.8188,
-        106.652
-      ],
+      "fromCoords": [21.2187, 105.8042],
+      "toCoords": [10.8188, 106.652],
       "count": 1
     },
     {
       "from": "SGN",
       "to": "ICN",
-      "fromCoords": [
-        10.8188,
-        106.652
-      ],
-      "toCoords": [
-        37.4602,
-        126.4407
-      ],
+      "fromCoords": [10.8188, 106.652],
+      "toCoords": [37.4602, 126.4407],
       "count": 1
     },
     {
       "from": "LGA",
       "to": "YYZ",
-      "fromCoords": [
-        40.7769,
-        -73.874
-      ],
-      "toCoords": [
-        43.6777,
-        -79.6248
-      ],
+      "fromCoords": [40.7769, -73.874],
+      "toCoords": [43.6777, -79.6248],
       "count": 2
     },
     {
       "from": "PHL",
       "to": "MSY",
-      "fromCoords": [
-        39.8729,
-        -75.2437
-      ],
-      "toCoords": [
-        29.9934,
-        -90.258
-      ],
+      "fromCoords": [39.8729, -75.2437],
+      "toCoords": [29.9934, -90.258],
       "count": 1
     },
     {
       "from": "DTW",
       "to": "ORD",
-      "fromCoords": [
-        42.2162,
-        -83.3554
-      ],
-      "toCoords": [
-        41.9742,
-        -87.9073
-      ],
+      "fromCoords": [42.2162, -83.3554],
+      "toCoords": [41.9742, -87.9073],
       "count": 2
     },
     {
       "from": "LGA",
       "to": "DEN",
-      "fromCoords": [
-        40.7769,
-        -73.874
-      ],
-      "toCoords": [
-        39.8561,
-        -104.6737
-      ],
+      "fromCoords": [40.7769, -73.874],
+      "toCoords": [39.8561, -104.6737],
       "count": 3
     },
     {
       "from": "MIA",
       "to": "LPB",
-      "fromCoords": [
-        25.7959,
-        -80.287
-      ],
-      "toCoords": [
-        -16.5133,
-        -68.1923
-      ],
+      "fromCoords": [25.7959, -80.287],
+      "toCoords": [-16.5133, -68.1923],
       "count": 1
     },
     {
       "from": "GIG",
       "to": "ATL",
-      "fromCoords": [
-        -22.8099,
-        -43.2505
-      ],
-      "toCoords": [
-        33.6407,
-        -84.4277
-      ],
+      "fromCoords": [-22.8099, -43.2505],
+      "toCoords": [33.6407, -84.4277],
       "count": 1
     },
     {
       "from": "TPE",
       "to": "JFK",
-      "fromCoords": [
-        25.0797,
-        121.2342
-      ],
-      "toCoords": [
-        40.6413,
-        -73.7781
-      ],
+      "fromCoords": [25.0797, 121.2342],
+      "toCoords": [40.6413, -73.7781],
       "count": 1
     },
     {
       "from": "SGN",
       "to": "HKT",
-      "fromCoords": [
-        10.8188,
-        106.652
-      ],
-      "toCoords": [
-        8.1132,
-        98.3169
-      ],
+      "fromCoords": [10.8188, 106.652],
+      "toCoords": [8.1132, 98.3169],
       "count": 1
     },
     {
       "from": "COK",
       "to": "KUL",
-      "fromCoords": [
-        10.152,
-        76.4019
-      ],
-      "toCoords": [
-        2.7456,
-        101.7099
-      ],
+      "fromCoords": [10.152, 76.4019],
+      "toCoords": [2.7456, 101.7099],
       "count": 1
     },
     {
       "from": "DMM",
       "to": "MCT",
-      "fromCoords": [
-        26.4712,
-        49.7979
-      ],
-      "toCoords": [
-        23.5933,
-        58.2844
-      ],
+      "fromCoords": [26.4712, 49.7979],
+      "toCoords": [23.5933, 58.2844],
       "count": 1
     },
     {
       "from": "HKT",
       "to": "BKK",
-      "fromCoords": [
-        8.1132,
-        98.3169
-      ],
-      "toCoords": [
-        13.69,
-        100.7501
-      ],
+      "fromCoords": [8.1132, 98.3169],
+      "toCoords": [13.69, 100.7501],
       "count": 1
     },
     {
       "from": "PXM",
       "to": "MEX",
-      "fromCoords": [
-        15.8769,
-        -97.0891
-      ],
-      "toCoords": [
-        19.4363,
-        -99.0721
-      ],
+      "fromCoords": [15.8769, -97.0891],
+      "toCoords": [19.4363, -99.0721],
       "count": 1
     },
     {
       "from": "PIT",
       "to": "JFK",
-      "fromCoords": [
-        40.4915,
-        -80.2329
-      ],
-      "toCoords": [
-        40.6413,
-        -73.7781
-      ],
+      "fromCoords": [40.4915, -80.2329],
+      "toCoords": [40.6413, -73.7781],
       "count": 1
     },
     {
       "from": "KUL",
       "to": "SGN",
-      "fromCoords": [
-        2.7456,
-        101.7099
-      ],
-      "toCoords": [
-        10.8188,
-        106.652
-      ],
+      "fromCoords": [2.7456, 101.7099],
+      "toCoords": [10.8188, 106.652],
       "count": 1
     },
     {
       "from": "JFK",
       "to": "BOG",
-      "fromCoords": [
-        40.6413,
-        -73.7781
-      ],
-      "toCoords": [
-        4.7016,
-        -74.1469
-      ],
+      "fromCoords": [40.6413, -73.7781],
+      "toCoords": [4.7016, -74.1469],
       "count": 1
     },
     {
       "from": "JFK",
       "to": "CLT",
-      "fromCoords": [
-        40.6413,
-        -73.7781
-      ],
-      "toCoords": [
-        35.214,
-        -80.9431
-      ],
+      "fromCoords": [40.6413, -73.7781],
+      "toCoords": [35.214, -80.9431],
       "count": 1
     },
     {
       "from": "EWR",
       "to": "ATL",
-      "fromCoords": [
-        40.6895,
-        -74.1745
-      ],
-      "toCoords": [
-        33.6407,
-        -84.4277
-      ],
+      "fromCoords": [40.6895, -74.1745],
+      "toCoords": [33.6407, -84.4277],
       "count": 1
     },
     {
       "from": "MEX",
       "to": "OAX",
-      "fromCoords": [
-        19.4363,
-        -99.0721
-      ],
-      "toCoords": [
-        16.9999,
-        -96.7266
-      ],
+      "fromCoords": [19.4363, -99.0721],
+      "toCoords": [16.9999, -96.7266],
       "count": 1
     },
     {
       "from": "DOH",
       "to": "JFK",
-      "fromCoords": [
-        25.2609,
-        51.6138
-      ],
-      "toCoords": [
-        40.6413,
-        -73.7781
-      ],
+      "fromCoords": [25.2609, 51.6138],
+      "toCoords": [40.6413, -73.7781],
       "count": 2
     },
     {
       "from": "YYZ",
       "to": "DTW",
-      "fromCoords": [
-        43.6777,
-        -79.6248
-      ],
-      "toCoords": [
-        42.2162,
-        -83.3554
-      ],
+      "fromCoords": [43.6777, -79.6248],
+      "toCoords": [42.2162, -83.3554],
       "count": 1
     },
     {
       "from": "PTY",
       "to": "MDE",
-      "fromCoords": [
-        9.0714,
-        -79.3835
-      ],
-      "toCoords": [
-        6.1645,
-        -75.4231
-      ],
+      "fromCoords": [9.0714, -79.3835],
+      "toCoords": [6.1645, -75.4231],
       "count": 1
     },
     {
       "from": "YVR",
       "to": "JFK",
-      "fromCoords": [
-        49.1967,
-        -123.1815
-      ],
-      "toCoords": [
-        40.6413,
-        -73.7781
-      ],
+      "fromCoords": [49.1967, -123.1815],
+      "toCoords": [40.6413, -73.7781],
       "count": 1
     },
     {
       "from": "PIT",
       "to": "ORD",
-      "fromCoords": [
-        40.4915,
-        -80.2329
-      ],
-      "toCoords": [
-        41.9742,
-        -87.9073
-      ],
+      "fromCoords": [40.4915, -80.2329],
+      "toCoords": [41.9742, -87.9073],
       "count": 1
     },
     {
       "from": "MDW",
       "to": "DEN",
-      "fromCoords": [
-        41.7868,
-        -87.7522
-      ],
-      "toCoords": [
-        39.8561,
-        -104.6737
-      ],
+      "fromCoords": [41.7868, -87.7522],
+      "toCoords": [39.8561, -104.6737],
       "count": 1
     },
     {
       "from": "LEX",
       "to": "ATL",
-      "fromCoords": [
-        38.0365,
-        -84.6059
-      ],
-      "toCoords": [
-        33.6407,
-        -84.4277
-      ],
+      "fromCoords": [38.0365, -84.6059],
+      "toCoords": [33.6407, -84.4277],
       "count": 1
     },
     {
       "from": "ORD",
       "to": "NRT",
-      "fromCoords": [
-        41.9742,
-        -87.9073
-      ],
-      "toCoords": [
-        35.772,
-        140.3929
-      ],
+      "fromCoords": [41.9742, -87.9073],
+      "toCoords": [35.772, 140.3929],
       "count": 1
     },
     {
       "from": "MCT",
       "to": "KTM",
-      "fromCoords": [
-        23.5933,
-        58.2844
-      ],
-      "toCoords": [
-        27.6966,
-        85.3591
-      ],
+      "fromCoords": [23.5933, 58.2844],
+      "toCoords": [27.6966, 85.3591],
       "count": 1
     }
   ],
