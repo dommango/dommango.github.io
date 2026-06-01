@@ -1,305 +1,516 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dominic Mangonon - Resume</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
-      font-size: 10.5pt;
-      line-height: 1.25;
-      color: #000;
-      max-width: 8.5in;
-      margin: 0 auto;
-      padding: 0.4in 0.5in;
-      background: #fff;
-    }
-    @media print {
-      body { padding: 0.4in 0.5in; }
-    }
-    a { color: #0066cc; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dominic Mangonon - Resume</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Calibri", "Segoe UI", Arial, sans-serif;
+        font-size: 10.5pt;
+        line-height: 1.25;
+        color: #000;
+        max-width: 8.5in;
+        margin: 0 auto;
+        padding: 0.4in 0.5in;
+        background: #fff;
+      }
+      @media print {
+        body {
+          padding: 0.4in 0.5in;
+        }
+      }
+      a {
+        color: #0066cc;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
 
-    header {
-      text-align: center;
-      margin-bottom: 8px;
-    }
-    h1 {
-      font-size: 18pt;
-      font-weight: bold;
-      margin-bottom: 4px;
-    }
-    .contact {
-      font-size: 10pt;
-    }
+      header {
+        text-align: center;
+        margin-bottom: 8px;
+      }
+      h1 {
+        font-size: 18pt;
+        font-weight: bold;
+        margin-bottom: 4px;
+      }
+      .contact {
+        font-size: 10pt;
+      }
 
-    .section-header {
-      text-align: center;
-      font-weight: bold;
-      font-size: 10.5pt;
-      border-top: 1px solid #000;
-      border-bottom: 1px solid #000;
-      padding: 2px 0;
-      margin: 8px 0 6px 0;
-    }
+      .section-header {
+        text-align: center;
+        font-weight: bold;
+        font-size: 10.5pt;
+        border-top: 1px solid #000;
+        border-bottom: 1px solid #000;
+        padding: 2px 0;
+        margin: 8px 0 6px 0;
+      }
 
-    .summary {
-      text-align: justify;
-      margin-bottom: 4px;
-    }
+      .summary {
+        text-align: justify;
+        margin-bottom: 4px;
+      }
 
-    .job {
-      margin-bottom: 8px;
-    }
-    .job-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
-    .company {
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-    .location {
-      text-align: right;
-    }
-    .title-line {
-      display: flex;
-      justify-content: space-between;
-      font-style: italic;
-    }
-    .subsection {
-      font-weight: bold;
-      margin-top: 4px;
-      margin-bottom: 2px;
-    }
-    .subsection-inline {
-      font-weight: bold;
-      font-style: italic;
-    }
-    .intro {
-      margin-bottom: 2px;
-    }
+      .job {
+        margin-bottom: 8px;
+      }
+      .job-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+      .company {
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+      .location {
+        text-align: right;
+      }
+      .title-line {
+        display: flex;
+        justify-content: space-between;
+        font-style: italic;
+      }
+      .subsection {
+        font-weight: bold;
+        margin-top: 4px;
+        margin-bottom: 2px;
+      }
+      .subsection-inline {
+        font-weight: bold;
+        font-style: italic;
+      }
+      .intro {
+        margin-bottom: 2px;
+      }
 
-    ul {
-      margin-left: 18px;
-      margin-bottom: 2px;
-    }
-    ul ul {
-      margin-left: 18px;
-      list-style-type: circle;
-    }
-    li {
-      margin-bottom: 1px;
-      text-align: justify;
-    }
+      ul {
+        margin-left: 18px;
+        margin-bottom: 2px;
+      }
+      ul ul {
+        margin-left: 18px;
+        list-style-type: circle;
+      }
+      li {
+        margin-bottom: 1px;
+        text-align: justify;
+      }
 
-    .edu-item {
-      margin-bottom: 8px;
-    }
-    .edu-header {
-      display: flex;
-      justify-content: space-between;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-    .edu-degree {
-      font-style: italic;
-    }
-    .edu-details {
-      margin-top: 1px;
-    }
+      .edu-item {
+        margin-bottom: 8px;
+      }
+      .edu-header {
+        display: flex;
+        justify-content: space-between;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+      .edu-degree {
+        font-style: italic;
+      }
+      .edu-details {
+        margin-top: 1px;
+      }
 
-    .additional {
-      margin-top: 4px;
-    }
-    .additional p {
-      margin-bottom: 2px;
-    }
-  </style>
-</head>
-<body>
+      .additional {
+        margin-top: 4px;
+      }
+      .additional p {
+        margin-bottom: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>DOMINIC MANGONON</h1>
+      <div class="contact">
+        New York Metropolitan Area | +1 (908) 313 - 3302<br />
+        <a href="mailto:dom.mangonon@gmail.com">dom.mangonon@gmail.com</a> |
+        <a href="https://dommango.github.io">dommango.github.io</a> |
+        <a href="https://linkedin.com/in/dominicmangonon"
+          >linkedin.com/in/dominicmangonon</a
+        >
+      </div>
+    </header>
 
-<header>
-  <h1>DOMINIC MANGONON</h1>
-  <div class="contact">
-    New York Metropolitan Area | +1 (908) 313 - 3302<br>
-    <a href="mailto:dom.mangonon@gmail.com">dom.mangonon@gmail.com</a> | <a href="https://dommango.github.io">dommango.github.io</a> | <a href="https://linkedin.com/in/dominicmangonon">linkedin.com/in/dominicmangonon</a>
-  </div>
-</header>
+    <div class="section-header">PROFESSIONAL SUMMARY</div>
+    <p class="summary">
+      Senior financial services executive with 17 years of experience spanning
+      strategy, enterprise transformation, regulatory remediation, and complex
+      operating model change across global institutions. Currently serves as an
+      execution lead for the Citi's highest priority firm-wide initiatives,
+      including critical regulatory commitments and the transformation of the
+      enterprise risk and control framework. Recognized for translating complex
+      challenges into clear governance and delivery models, strengthening
+      execution discipline, and systematically applying AI-enabled solutions to
+      automate workflows, enhance decision making, and scale operational
+      efficiencies.
+    </p>
 
-<div class="section-header">PROFESSIONAL SUMMARY</div>
-<p class="summary">
-Senior financial services executive with 17 years of experience leading enterprise transformation, strategic consulting engagements, and operational excellence at leading financial institutions. Currently leading Citi's highest-priority regulatory remediation and risk/control framework transformation. Known for translating complexity into clarity, driving efficiency through technology, and leveraging AI tools to automate workflows and develop training curricula.
-</p>
+    <div class="section-header">EXPERIENCE</div>
 
-<div class="section-header">EXPERIENCE</div>
-
-<div class="job">
-  <div class="job-header">
-    <span class="company">CITI</span>
-    <span class="location">New York, NY</span>
-  </div>
-  <div class="title-line">
-    <span>Senior Vice President, Citi Transformation Senior Lead (03/2022 – Present)</span>
-    <span>2021 - Present</span>
-  </div>
-  <div class="title-line">
-    <span>Contractor / Consultant via Matrix Resources (09/2021 – 03/2022)</span>
-    <span></span>
-  </div>
-  <p class="intro"><span class="subsection-inline">Enterprise Transformation:</span> Serve as a key execution lead on the firm's <strong>highest-priority strategic initiatives</strong>, from regulatory Consent Order remediation to the transformation of the enterprise risk and control framework</p>
-  <ul>
-    <li>Developed and delivered <strong>three strategic dashboards</strong> for the CEO and Board of Directors, reconciling data sources and taxonomies across Citi's business lines and functions to deliver impactful insights required for executive decision-making</li>
-    <li>Improved the quality and timeliness of regulatory remediation across Citi by designing and launching a <strong>new senior oversight function</strong> and committee to centralize governance and implement standardized requirements for all Matters Requiring Attention (MRAs)</li>
-    <li>Established and oversaw implementation of new global standards for program and project management, strengthening unified oversight and controls for an <strong>enterprise-wide portfolio of 15,000+ projects</strong>
+    <div class="job">
+      <div class="job-header">
+        <span class="company">CITI</span>
+        <span class="location">New York, NY</span>
+      </div>
+      <div class="title-line">
+        <span
+          >Senior Vice President, Citi Transformation Senior Lead (03/2022 –
+          Present)</span
+        >
+        <span>2021 - Present</span>
+      </div>
+      <div class="title-line">
+        <span
+          >Contractor / Consultant via Matrix Resources (09/2021 –
+          03/2022)</span
+        >
+        <span></span>
+      </div>
+      <p class="intro">
+        <span class="subsection-inline">Enterprise Transformation:</span> Serve
+        as a key execution lead on the firm's
+        <strong>highest-priority strategic initiatives</strong>, from regulatory
+        Consent Order remediation to the transformation of the enterprise risk
+        and control framework
+      </p>
       <ul>
-        <li>Recruited and managed a team of two direct reports and led cross-functional working groups to define and implement the standardized requirements for reporting and quality assurance</li>
-        <li>Secured on-time closure of <strong>4+ critical regulatory commitments</strong> by successfully validating sustainability of new and enhanced controls with firm risk and audit partners</li>
+        <li>
+          Developed and delivered
+          <strong>three strategic dashboards</strong> for the CEO and Board of
+          Directors, reconciling data sources and taxonomies across Citi's
+          business lines and functions to deliver impactful insights required
+          for executive decision-making
+        </li>
+        <li>
+          Improved the quality and timeliness of regulatory remediation across
+          Citi by designing and launching a
+          <strong>new senior oversight function</strong> and committee to
+          centralize governance and implement standardized requirements for all
+          Matters Requiring Attention (MRAs)
+        </li>
+        <li>
+          Established and oversaw implementation of new global standards for
+          program and project management, strengthening unified oversight and
+          controls for an
+          <strong>enterprise-wide portfolio of 15,000+ projects</strong>
+          <ul>
+            <li>
+              Recruited and managed a team of two direct reports and led
+              cross-functional working groups to define and implement the
+              standardized requirements for reporting and quality assurance
+            </li>
+            <li>
+              Secured on-time closure of
+              <strong>4+ critical regulatory commitments</strong> by
+              successfully validating sustainability of new and enhanced
+              controls with firm risk and audit partners
+            </li>
+          </ul>
+        </li>
+        <li>
+          Overhauled the financial governance framework for a
+          <strong>$9B technology and business investment portfolio</strong>
+          through the design and implementation of new standardized requirements
+          for cost estimation, tracking, and variance analysis, directly
+          improving on-budget project delivery
+          <ul>
+            <li>
+              Led efforts to re-engineer data architecture for over 150
+              strategic investments to provide visibility into
+              <strong>~$1.1B of investment spend</strong>
+            </li>
+            <li>
+              Leveraged <strong>AI-powered tools</strong> to "vibecode"
+              solutions to manual End User Computing (EUC) processes,
+              streamlining execution and report of controls including generation
+              of supporting procedures and guidance materials
+            </li>
+          </ul>
+        </li>
+        <li>
+          Developed 3 module <strong>AI @ Citi 102</strong> learning series
+          covering advanced enterprise AI topics including context engineering,
+          workflow automation, and multi-tool integration across Citi's AI
+          platforms
+        </li>
       </ul>
-    </li>
-    <li>Overhauled the financial governance framework for a <strong>~$7.1B technology and business investment portfolio</strong> through the design and implementation of new standardized requirements for cost estimation, tracking, and variance analysis, directly improving on-budget project delivery
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span class="company">MORGAN STANLEY</span>
+        <span class="location">New York, NY</span>
+      </div>
+      <div class="title-line">
+        <span
+          >Assistant Vice President, Corporate & Institutional Solutions</span
+        >
+        <span>2019 – 2020</span>
+      </div>
+      <p class="intro">
+        <span class="subsection-inline">Business Unit Strategy:</span> Led a
+        portfolio of projects to build and pilot a new business model targeted
+        to the firm's ultra-high-net-worth end family office client segment,
+        resulting in <strong>~$15B of new assets under management</strong> (AUM)
+      </p>
       <ul>
-        <li>Lead efforts to re-engineer data architecture for over 150 strategic investments to provide visibility into <strong>~$1.1B of investment spend</strong></li>
-        <li>Leveraged <strong>AI-powered tools</strong> to code and automate previously manual End User Computing (EUC) processes and author new streamlined procedures and guidance material</li>
+        <li>
+          Designed and <strong>launched a concierge service model</strong> to
+          meet the complex needs (e.g., onboarding, analytics, reporting) of the
+          firm's largest wealth management clients
+        </li>
+        <li>
+          Aligned leadership on the need for expanded trading products and
+          capabilities; <strong>advised on strategic decisioning</strong> to
+          build solutions "in-house" vs. via a third-party partnership
+        </li>
+        <li>
+          Led efforts to pursue a strategic partnership with a leading global
+          custodian bank; outlined partnership business requirements and oversaw
+          the <strong>RFP / third-party vendor</strong> selection process
+        </li>
+        <li>
+          Conducted field and interviews with the firm's top Financial Advisors
+          to understand client pain points and prioritize firm resources towards
+          key strategic opportunities and other critical matters
+        </li>
+        <li>
+          Served as a
+          <strong>relationship manager to an early-stage startup</strong> and
+          technology partner, providing recommendations on app development and
+          advising on business, risk, and regulatory considerations
+        </li>
       </ul>
-    </li>
-    <li>Developed <strong>AI-powered Citi Workspaces 102 training course</strong> tailored to enterprise tool adoption, with automated scheduled tasks to check for tool updates and refresh content</li>
-  </ul>
-</div>
+    </div>
 
-<div class="job">
-  <div class="job-header">
-    <span class="company">MORGAN STANLEY</span>
-    <span class="location">New York, NY</span>
-  </div>
-  <div class="title-line">
-    <span>Assistant Vice President, Corporate & Institutional Solutions</span>
-    <span>2019 – 2020</span>
-  </div>
-  <p class="intro"><span class="subsection-inline">Business Unit Strategy:</span> Led a portfolio of projects to build and pilot a new business model targeted to the firm's ultra-high-net-worth end family office client segment, resulting in <strong>~$15B of new assets under management</strong> (AUM)</p>
-  <ul>
-    <li>Designed and <strong>launched a concierge service model</strong> to meet the complex needs (e.g., onboarding, analytics, reporting) of the firm's largest wealth management clients</li>
-    <li>Aligned leadership on the need for expanded trading products and capabilities; <strong>advised on strategic decisioning</strong> to build solutions "in-house" vs. via a third-party partnership</li>
-    <li>Led efforts to pursue a strategic partnership with a leading global custodian bank; outlined partnership business requirements and oversaw the <strong>RFP / third-party vendor</strong> selection process</li>
-    <li>Conducted field and interviews with the firm's top Financial Advisors to understand client pain points and prioritize firm resources towards key strategic opportunities and other critical matters</li>
-    <li>Served as a <strong>relationship manager to an early-stage startup</strong> and technology partner, providing recommendations on app development and advising on business, risk, and regulatory considerations</li>
-  </ul>
-</div>
+    <div class="job">
+      <div class="job-header">
+        <span class="company">TRELIANT, LLC</span>
+        <span class="location">New York, NY</span>
+      </div>
+      <div class="title-line">
+        <span>Senior Consultant, Wealth & Asset Management Advisory</span>
+        <span>2018 – 2019</span>
+      </div>
+      <p class="intro">
+        <span class="subsection-inline">Business Development:</span> Worked with
+        leadership to develop and launch an advisory practice for a PE-backed
+        boutique consulting firm
+      </p>
+      <ul>
+        <li>
+          <strong>Co-authored 3 white-papers</strong> and identified 10
+          "go-to-market" campaigns for prospecting new business
+        </li>
+        <li>
+          Managed risk and regulatory engagements which included oversight of
+          over <strong>40 contracted workers</strong>
+        </li>
+      </ul>
+    </div>
 
-<div class="job">
-  <div class="job-header">
-    <span class="company">TRELIANT, LLC</span>
-    <span class="location">New York, NY</span>
-  </div>
-  <div class="title-line">
-    <span>Senior Consultant, Wealth & Asset Management Advisory</span>
-    <span>2018 – 2019</span>
-  </div>
-  <p class="intro"><span class="subsection-inline">Business Development:</span> Worked with leadership to develop and launch an advisory practice for a PE-backed boutique consulting firm</p>
-  <ul>
-    <li><strong>Co-authored 3 white-papers</strong> and identified 10 "go-to-market" campaigns for prospecting new business</li>
-    <li>Managed risk and regulatory engagements which included oversight of over <strong>40 contracted workers</strong></li>
-  </ul>
-</div>
+    <div class="job">
+      <div class="job-header">
+        <span class="company"
+          >STRATEGY& (formerly BOOZ & CO.) — Part of the PWC Network</span
+        >
+        <span class="location">Chicago, IL</span>
+      </div>
+      <div class="title-line">
+        <span
+          >Senior Associate, Financial Services Strategy Consulting (07/2015 –
+          10/2017)</span
+        >
+        <span>2014 – 2017</span>
+      </div>
+      <div class="title-line">
+        <span
+          >MBA Intern, Banking & Capital Markets Management Consulting (06/2014
+          – 08/2014)</span
+        >
+        <span></span>
+      </div>
 
-<div class="job">
-  <div class="job-header">
-    <span class="company">STRATEGY& (formerly BOOZ & CO.) — Part of the PWC Network</span>
-    <span class="location">Chicago, IL</span>
-  </div>
-  <div class="title-line">
-    <span>Senior Associate, Financial Services Strategy Consulting (07/2015 – 10/2017)</span>
-    <span>2014 – 2017</span>
-  </div>
-  <div class="title-line">
-    <span>MBA Intern, Banking & Capital Markets Management Consulting (06/2014 – 08/2014)</span>
-    <span></span>
-  </div>
+      <p class="intro">
+        <span class="subsection-inline">Target Operating Model:</span>
+        Identified <strong>~$14M in run rate savings</strong> for an
+        international subsidiary of a leading insurance broker as part of a
+        global cost and organizational restructuring effort
+      </p>
+      <ul>
+        <li>
+          Worked closely alongside the CFO and other senior leadership to
+          construct a business case which modeled cost savings & investment
+          required to centralize operations in both near and offshore sites
+        </li>
+        <li>
+          Led multiple branch workshops to understand business process pain
+          points and identify both "quick win" and technology-enabled solutions
+          to optimize operations and increase savings
+        </li>
+      </ul>
 
-  <p class="intro"><span class="subsection-inline">Target Operating Model:</span> Identified <strong>~$14M in run rate savings</strong> for an international subsidiary of a leading insurance broker as part of a global cost and organizational restructuring effort</p>
-  <ul>
-    <li>Worked closely alongside the CFO and other senior leadership to construct a business case which modeled cost savings & investment required to centralize operations in both near and offshore sites</li>
-    <li>Led multiple branch workshops to understand business process pain points and identify both "quick win" and technology-enabled solutions to optimize operations and increase savings</li>
-  </ul>
+      <p class="intro">
+        <span class="subsection-inline">Market Segmentation:</span> Created a
+        customer segmentation and migration strategy for a large wealth
+        management client, increasing advisor capacity & productivity by
+        <strong>~5%</strong> and reducing fiduciary risk by
+        <strong>$465M</strong>
+      </p>
+      <ul>
+        <li>
+          Led working sessions with leadership to align on strategic objectives
+          and define key guiding principles
+        </li>
+        <li>
+          Designed processes, reporting and tools for financial advisors to
+          review books-of-business, identify migration exceptions and maximize
+          cross-sell opportunities to other areas within the bank
+        </li>
+        <li>
+          Successfully executed the migration of
+          <strong>32,000 low-balance clients</strong> to self-directed service
+          channels
+        </li>
+      </ul>
 
-  <p class="intro"><span class="subsection-inline">Market Segmentation:</span> Created a customer segmentation and migration strategy for a large wealth management client, increasing advisor capacity & productivity by <strong>~5%</strong> and reducing fiduciary risk by <strong>$465M</strong></p>
-  <ul>
-    <li>Led working sessions with leadership to align on strategic objectives and define key guiding principles</li>
-    <li>Designed processes, reporting and tools for financial advisors to review books-of-business, identify migration exceptions and maximize cross-sell opportunities to other areas within the bank</li>
-    <li>Successfully executed the migration of <strong>32,000 low-balance clients</strong> to self-directed service channels</li>
-  </ul>
+      <p class="intro">
+        <span class="subsection-inline"
+          >Client Experience & Change Management:</span
+        >
+        Designed an end-to-end experience across the client lifecycle for a
+        large wealth management firm, working with leadership to create
+        stakeholder personas, customer journey maps and use cases
+      </p>
+      <ul>
+        <li>
+          Accelerated strategic objectives through the creation of a learning &
+          development curriculum and segmentation of the financial advisory
+          population, enabling more-targeted coaching and training
+        </li>
+        <li>
+          Designed an oversight structure to strengthen accountability and align
+          incentives to goals and metrics
+        </li>
+      </ul>
 
-  <p class="intro"><span class="subsection-inline">Client Experience & Change Management:</span> Designed an end-to-end experience across the client lifecycle for a large wealth management firm, working with leadership to create stakeholder personas, customer journey maps and use cases</p>
-  <ul>
-    <li>Accelerated strategic objectives through the creation of a learning & development curriculum and segmentation of the financial advisory population, enabling more-targeted coaching and training</li>
-    <li>Designed an oversight structure to strengthen accountability and align incentives to goals and metrics</li>
-  </ul>
+      <p class="intro">
+        <span class="subsection-inline">Growth Strategy:</span> Evaluated
+        organic and M&A related growth opportunities for a leading online
+        brokerage
+      </p>
+      <ul>
+        <li>
+          Conducted research and analysis to size an opportunity to capture
+          <strong>~$2T in AUM</strong> resulting from an industry shift of
+          investible assets towards online and independent brokerage models
+        </li>
+        <li>
+          Identified a preliminary list of potential acquisition targets to
+          complement existing business capabilities and unlock additional
+          growth, ultimately leading to the
+          <strong>$4B acquisition of a competitor</strong>
+        </li>
+      </ul>
+    </div>
 
-  <p class="intro"><span class="subsection-inline">Growth Strategy:</span> Evaluated organic and M&A related growth opportunities for a leading online brokerage</p>
-  <ul>
-    <li>Conducted research and analysis to size an opportunity to capture <strong>~$2T in AUM</strong> resulting from an industry shift of investible assets towards online and independent brokerage models</li>
-    <li>Identified a preliminary list of potential acquisition targets to complement existing business capabilities and unlock additional growth, ultimately leading to the <strong>$4B acquisition of a competitor</strong></li>
-  </ul>
-</div>
+    <div class="job">
+      <div class="job-header">
+        <span class="company"
+          >BNP PARIBAS CORPORATE & INSTITUTIONAL BANKING</span
+        >
+        <span class="location">New York, NY</span>
+      </div>
+      <div class="title-line">
+        <span
+          >Client Services Analyst, Commodities Brokerage (07/2010 –
+          05/2013)</span
+        >
+        <span>2008 – 2013</span>
+      </div>
+      <div class="title-line">
+        <span>Rotational Analyst, Trading Operations (07/2008 – 07/2010)</span>
+        <span></span>
+      </div>
+      <p class="intro">
+        <span class="subsection-inline"
+          >Operations & Process Optimization:</span
+        >
+        Supported various trading desks middle / back-office functions as a new
+        graduate rotational analyst
+      </p>
+      <ul>
+        <li>
+          Facilitated workshops for a Six Sigma initiative resulting in a
+          realignment of the organizational structure of the Fixed Income
+          Documentation Team, improving
+          <strong>trade processing time by ~10%</strong>
+        </li>
+        <li>
+          Developed process controls and VBA macros to reconcile erroneous
+          trades, eliminating potential overnight risk exposure and
+          standardizing reporting procedures to meet with regulatory standards
+        </li>
+      </ul>
+    </div>
 
-<div class="job">
-  <div class="job-header">
-    <span class="company">BNP PARIBAS CORPORATE & INSTITUTIONAL BANKING</span>
-    <span class="location">New York, NY</span>
-  </div>
-  <div class="title-line">
-    <span>Client Services Analyst, Commodities Brokerage (07/2010 – 05/2013)</span>
-    <span>2008 – 2013</span>
-  </div>
-  <div class="title-line">
-    <span>Rotational Analyst, Trading Operations (07/2008 – 07/2010)</span>
-    <span></span>
-  </div>
-  <p class="intro"><span class="subsection-inline">Operations & Process Optimization:</span> Supported various trading desks middle / back-office functions as a new graduate rotational analyst</p>
-  <ul>
-    <li>Facilitated workshops for a Six Sigma initiative resulting in a realignment of the organizational structure of the Fixed Income Documentation Team, improving <strong>trade processing time by ~10%</strong></li>
-    <li>Developed process controls and VBA macros to reconcile erroneous trades, eliminating potential overnight risk exposure and standardizing reporting procedures to meet with regulatory standards</li>
-  </ul>
-</div>
+    <div class="section-header">EDUCATION</div>
 
-<div class="section-header">EDUCATION</div>
+    <div class="edu-item">
+      <div class="edu-header">
+        <span>CARNEGIE MELLON UNIVERSITY, TEPPER SCHOOL OF BUSINESS</span>
+        <span>Pittsburgh, PA</span>
+      </div>
+      <div style="display: flex; justify-content: space-between">
+        <span class="edu-degree"
+          >Master of Business Administration (MBA), Concentrations: Information
+          Systems, Finance</span
+        >
+        <span>2013 – 2015</span>
+      </div>
+      <div class="edu-details">
+        Leadership: Consulting Club (V.P., Member Development), Graduate Student
+        Assembly (Class Representative), Consortium Fellow, Merit Scholar
+      </div>
+    </div>
 
-<div class="edu-item">
-  <div class="edu-header">
-    <span>CARNEGIE MELLON UNIVERSITY, TEPPER SCHOOL OF BUSINESS</span>
-    <span>Pittsburgh, PA</span>
-  </div>
-  <div style="display: flex; justify-content: space-between;">
-    <span class="edu-degree">Master of Business Administration (MBA), Concentrations: Information Systems, Finance</span>
-    <span>2013 – 2015</span>
-  </div>
-  <div class="edu-details">Leadership: Consulting Club (V.P., Member Development), Graduate Student Assembly (Class Representative), Consortium Fellow, Merit Scholar</div>
-</div>
+    <div class="edu-item">
+      <div class="edu-header">
+        <span>RUTGERS UNIVERSITY, RUTGERS BUSINESS SCHOOL</span>
+        <span>New Brunswick, NJ</span>
+      </div>
+      <div style="display: flex; justify-content: space-between">
+        <span class="edu-degree">Bachelor of Science (BS), Major: Finance</span>
+        <span>2004 – 2008</span>
+      </div>
+    </div>
 
-<div class="edu-item">
-  <div class="edu-header">
-    <span>RUTGERS UNIVERSITY, RUTGERS BUSINESS SCHOOL</span>
-    <span>New Brunswick, NJ</span>
-  </div>
-  <div style="display: flex; justify-content: space-between;">
-    <span class="edu-degree">Bachelor of Science (BS), Major: Finance</span>
-    <span>2004 – 2008</span>
-  </div>
-</div>
+    <div class="section-header">ADDITIONAL INFORMATION</div>
 
-<div class="section-header">ADDITIONAL INFORMATION</div>
-
-<div class="additional">
-  <p><strong>Technical Skillsets:</strong> MS Office 365 (Expert), Data modeling tools (PowerQuery, SQL), Large language models and AI (e.g., Google AI Studio, Anthropic Claude, Notion AI)</p>
-  <p><strong>Interests:</strong> Travelling (visited over 55 countries / 5 continents); trekking, snowboarding, live music; DIY electronics & circuitry, NY sports teams</p>
-</div>
-
-</body>
+    <div class="additional">
+      <p>
+        <strong>Technical Skillsets:</strong> MS Office 365 (Expert), Data
+        modeling tools (PowerQuery, SQL), Large language models and AI (e.g.,
+        Google AI Studio, Anthropic Claude, Notion AI)
+      </p>
+      <p>
+        <strong>Interests:</strong> Travelling (visited over 55 countries / 5
+        continents); trekking, snowboarding, live music; DIY electronics &
+        circuitry, NY sports teams
+      </p>
+    </div>
+  </body>
 </html>
