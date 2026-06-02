@@ -1,6 +1,39 @@
-// Hero — display headline, headshot, about copy, career arc.
+// Hero — display headline, headshot, about copy, career arc, six career themes.
 import Image from 'next/image'
 import { BinaryRule } from './BinaryRule'
+
+const THEMES = [
+  {
+    num: '01',
+    title: 'Translating complex into simple',
+    desc: 'Translator by instinct: regulatory mandates, executive questions, and fragmented data become dashboards, BRDs, and decisions teams act on.',
+  },
+  {
+    num: '02',
+    title: 'Building the machines, not just running them',
+    desc: 'Systems over tasks: reusable pipelines, governance frameworks, and data architectures designed to outlast individual involvement.',
+  },
+  {
+    num: '03',
+    title: 'Executing in the Grey',
+    desc: 'Ambiguity-native: unmapped requirements, missing enterprise systems, and shifting deadlines are the environment of choice.',
+  },
+  {
+    num: '04',
+    title: 'Quantitatively curious',
+    desc: 'Evidence-first: every framework built on traceable data, documented logic, and defensible assumptions, not opinion.',
+  },
+  {
+    num: '05',
+    title: 'Ship under pressure',
+    desc: 'Gap-closer: fixed deadlines and missing solutions trigger building the working artifact, documenting it, and handing it off cleanly.',
+  },
+  {
+    num: '06',
+    title: 'Human-AI collaboration',
+    desc: 'AI-native operator: repeatable human-AI workflows that multiply output without multiplying headcount.',
+  },
+]
 
 const CAREER_ARC = [
   { label: 'Rutgers · BS Finance', meta: 'FINANCE · 2004–08' },
@@ -72,6 +105,21 @@ export function Hero() {
               </li>
             ))}
           </ul>
+        </div>
+      </div>
+
+      <BinaryRule seed={17} />
+
+      <div className="hero-themes">
+        <span className="ds-eyebrow">Career themes · what compounds</span>
+        <div className="themes-grid">
+          {THEMES.map((theme) => (
+            <div key={theme.num} className="theme">
+              <span className="theme-num">{theme.num}</span>
+              <h3 className="theme-title">{theme.title}</h3>
+              <p className="theme-desc">{theme.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
