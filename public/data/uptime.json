@@ -1,13 +1,13 @@
 {
-  "lastUpdated": "2026-06-16T02:46:27.828Z",
+  "lastUpdated": "2026-06-16T10:52:57.292Z",
   "monitors": [
     {
       "name": "dommango.github.io",
       "url": "https://dommango.github.io",
       "status": "up",
       "uptimePercentage": 100,
-      "avgResponseTime": 35,
-      "lastCheckTime": "2026-06-15T02:50:00.000Z"
+      "avgResponseTime": 11,
+      "lastCheckTime": "2026-06-15T10:55:00.000Z"
     }
   ],
   "incidents": []
