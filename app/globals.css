@@ -1124,3 +1124,15 @@ input,
   .continent-row { grid-template-columns: 120px 1fr 36px; }
   .hero-portrait { max-width: 100%; justify-self: stretch; }
 }
+
+/* reCAPTCHA renders a fixed 304px iframe that Google gives no way to resize,
+   so below ~360px it pushes the whole page sideways. Scale it to fit; the
+   height override keeps the shrunken widget from leaving a gap, since a
+   transform doesn't shrink the layout box. */
+@media (max-width: 359px) {
+  .form-captcha {
+    transform: scale(0.85);
+    transform-origin: left top;
+    height: 66px;
+  }
+}
