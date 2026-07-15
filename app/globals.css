@@ -460,7 +460,10 @@ input,
   width: 100%;
   height: auto;
   display: block;
-  aspect-ratio: 1 / 1;
+  /* The portrait's drawn frame is part of the artwork, so it must not be
+     cropped — a square crop cuts the frame's top and bottom and clips the
+     head. Matches the source's 2:3 ratio. */
+  aspect-ratio: 2 / 3;
   object-fit: cover;
 }
 .hero-portrait-cap {
