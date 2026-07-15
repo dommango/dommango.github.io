@@ -8,6 +8,9 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
+    // Without this, vitest's default glob also picks up e2e/*.spec.ts and tries
+    // to run Playwright specs, which fails on the @playwright/test import.
+    include: ['__tests__/**/*.test.{ts,tsx}'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
