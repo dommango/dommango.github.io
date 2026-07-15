@@ -474,7 +474,10 @@ input,
 }
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(48px, 7.2vw, 116px);
+  /* Floor is 32px, not 48px: below ~667px the vw term stops binding and the
+     floor takes over, and "Unapologetically" is long enough to overflow the
+     viewport at 48px. Only affects <667px; wider screens are unchanged. */
+  font-size: clamp(32px, 7.2vw, 116px);
   line-height: 0.88;
   letter-spacing: -0.04em;
   color: var(--fg);
@@ -494,7 +497,7 @@ input,
 .hero-kicker-alt { color: var(--accent); }
 .hero-meta {
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
+  grid-template-columns: minmax(0, 1.4fr);
   gap: var(--s-8);
   margin-top: var(--s-7);
 }
@@ -508,77 +511,6 @@ input,
   margin: 0;
 }
 .hero-about-secondary { font-size: var(--fs-400); color: var(--fg-muted); }
-.awards-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-}
-.awards-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 11px 0;
-  border-bottom: 1px solid var(--rule);
-  font-family: var(--font-sans);
-  font-size: 14px;
-}
-.awards-list li:last-child { border-bottom: 0; }
-.awards-count {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--fg-muted);
-  letter-spacing: 0.08em;
-}
-
-/* ---- Career themes grid ---------------------------------- */
-.hero-themes {
-  margin-top: var(--s-7);
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-5);
-}
-.themes-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  border-top: 1px solid var(--rule);
-}
-.theme {
-  padding: var(--s-5) var(--s-4) var(--s-5) 0;
-  border-bottom: 1px solid var(--rule);
-  border-right: 1px solid var(--rule);
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.theme:nth-child(3n) { border-right: 0; padding-right: 0; }
-.theme:nth-child(n + 4) { padding-left: var(--s-4); }
-.theme:nth-child(3n + 1) { padding-left: 0; }
-.themes-grid > .theme:nth-last-child(-n + 3) { border-bottom: 0; }
-.theme-num {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  color: var(--accent);
-  text-transform: uppercase;
-}
-.theme-title {
-  font-family: var(--font-sans);
-  font-weight: 700;
-  font-size: 17px;
-  color: var(--fg);
-  margin: 0;
-}
-.theme-desc {
-  font-family: var(--font-sans);
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--fg-muted);
-  margin: 0;
-}
-
 /* ---- Travel ---------------------------------------------- */
 .travel-head {
   display: flex;
@@ -723,10 +655,15 @@ input,
 }
 .projects-title {
   font-family: var(--font-display);
-  font-size: clamp(48px, 7vw, 100px);
+  /* Floor is 32px for the same reason as .hero-title: below ~686px the vw term
+     stops binding. "Context//Collapse." is one unbreakable token, so at 48px it
+     spilled out of its box on phones. break-word is the backstop for any future
+     long title. Unchanged above ~686px. */
+  font-size: clamp(32px, 7vw, 100px);
   line-height: 0.9;
   letter-spacing: -0.04em;
   margin: 0;
+  overflow-wrap: break-word;
 }
 .projects-blurb {
   font-family: var(--font-sans);
@@ -810,6 +747,47 @@ input,
   left: 0;
   color: var(--accent);
 }
+/* Cards that link out are anchors — strip link styling, restore keyboard focus. */
+.work-card.is-linked {
+  text-decoration: none;
+  color: inherit;
+}
+.work-card.is-linked:focus-visible {
+  outline: var(--bw-2) solid var(--accent);
+  outline-offset: 3px;
+  border-color: var(--accent);
+}
+.work-card.is-linked:focus-visible .work-name { color: var(--accent); }
+.work-link {
+  margin-top: auto;
+  padding-top: var(--s-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-low);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.work-card.is-linked:hover .work-link,
+.work-card.is-linked:focus-visible .work-link { color: var(--accent); }
+
+/* ---- Writing --------------------------------------------- */
+.writing-all {
+  display: inline-block;
+  margin-top: var(--s-6);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  text-decoration: none;
+  border-bottom: var(--bw-1) solid var(--rule);
+  padding-bottom: 4px;
+  transition: color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+.writing-all:hover,
+.writing-all:focus-visible { color: var(--accent); border-color: var(--accent); }
 
 /* ---- Contact --------------------------------------------- */
 .contact-grid {
@@ -830,7 +808,10 @@ input,
 }
 .contact-tracked {
   font-family: var(--font-mono);
-  font-size: 14px;
+  /* Wide tracking makes this ~370px at 14px, which a narrow grid column can't
+     shrink below — it pushed the whole page into horizontal scroll on phones.
+     Scales below ~540px; identical at 14px on anything wider. */
+  font-size: clamp(9px, 2.6vw, 14px);
   letter-spacing: 0.42em;
   color: var(--accent);
   text-transform: uppercase;
@@ -1117,14 +1098,41 @@ input,
   .resume-body,
   .projects-grid,
   .travel-grid { grid-template-columns: 1fr; gap: var(--s-6); }
-  .themes-grid { grid-template-columns: 1fr; }
-  .theme {
-    border-right: 0 !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+  /* Grid items default to min-width:auto and refuse to shrink below their
+     content — one wide child then pushes the page into horizontal scroll. */
+  .hero-head > *,
+  .hero-meta > *,
+  .contact-grid > *,
+  .resume-body > *,
+  .projects-grid > *,
+  .travel-grid > * { min-width: 0; }
+  /* Nav links used to be display:none here, which left mobile with no way
+     to reach any section. Scroll them horizontally instead. */
+  .site-nav { flex-wrap: wrap; gap: var(--s-3); }
+  .nav-links {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
   }
-  .nav-links { display: none; }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-link { white-space: nowrap; }
   .timeline-row { grid-template-columns: 1fr; gap: 6px; }
   .continent-row { grid-template-columns: 120px 1fr 36px; }
   .hero-portrait { max-width: 100%; justify-self: stretch; }
+}
+
+/* reCAPTCHA renders a fixed 304px iframe that Google gives no way to resize,
+   so below ~360px it pushes the whole page sideways. Scale it to fit; the
+   height override keeps the shrunken widget from leaving a gap, since a
+   transform doesn't shrink the layout box. */
+@media (max-width: 359px) {
+  .form-captcha {
+    transform: scale(0.85);
+    transform-origin: left top;
+    height: 66px;
+  }
 }
