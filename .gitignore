@@ -50,3 +50,7 @@ public/assets/*.pdf
 content/career/source-docs/
 content/career/_processing/
 content/career/package.json
+
+# Playwright
+test-results/
+playwright-report/

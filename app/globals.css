@@ -474,7 +474,10 @@ input,
 }
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(48px, 7.2vw, 116px);
+  /* Floor is 32px, not 48px: below ~667px the vw term stops binding and the
+     floor takes over, and "Unapologetically" is long enough to overflow the
+     viewport at 48px. Only affects <667px; wider screens are unchanged. */
+  font-size: clamp(32px, 7.2vw, 116px);
   line-height: 0.88;
   letter-spacing: -0.04em;
   color: var(--fg);
@@ -800,7 +803,10 @@ input,
 }
 .contact-tracked {
   font-family: var(--font-mono);
-  font-size: 14px;
+  /* Wide tracking makes this ~370px at 14px, which a narrow grid column can't
+     shrink below — it pushed the whole page into horizontal scroll on phones.
+     Scales below ~540px; identical at 14px on anything wider. */
+  font-size: clamp(9px, 2.6vw, 14px);
   letter-spacing: 0.42em;
   color: var(--accent);
   text-transform: uppercase;
@@ -1087,6 +1093,14 @@ input,
   .resume-body,
   .projects-grid,
   .travel-grid { grid-template-columns: 1fr; gap: var(--s-6); }
+  /* Grid items default to min-width:auto and refuse to shrink below their
+     content — one wide child then pushes the page into horizontal scroll. */
+  .hero-head > *,
+  .hero-meta > *,
+  .contact-grid > *,
+  .resume-body > *,
+  .projects-grid > *,
+  .travel-grid > * { min-width: 0; }
   /* Nav links used to be display:none here, which left mobile with no way
      to reach any section. Scroll them horizontally instead. */
   .site-nav { flex-wrap: wrap; gap: var(--s-3); }
