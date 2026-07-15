@@ -32,8 +32,6 @@ jobs:
 
       - name: Build Next.js
         run: npm run build
-        env:
-          CAREER_DIR: ${{ github.workspace }}/content/career
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
