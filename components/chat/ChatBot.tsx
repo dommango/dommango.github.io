@@ -17,7 +17,8 @@ export function ChatBot() {
     {
       id: 'welcome',
       role: 'assistant',
-      content: "Hi! I'm Dom's AI assistant. Ask me about his career, skills, travel adventures, or this website!",
+      content:
+        "Hi — I'm Dom's AI assistant. Ask me about anything he's built (SousIQ, Bracketeer, the Claude Code Placemat), his writing, or the travel map.",
       timestamp: new Date()
     }
   ])

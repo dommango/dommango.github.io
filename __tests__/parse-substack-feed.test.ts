@@ -1,5 +1,4 @@
 import { describe, it, expect } from 'vitest'
-// @ts-expect-error — CommonJS script module, shared with the build script.
 import { parseSubstackFeed } from '../scripts/lib/parse-substack-feed'
 
 const feed = (items: string) => `<?xml version="1.0" encoding="UTF-8"?>
@@ -100,7 +99,9 @@ describe('parseSubstackFeed', () => {
   it('returns [] for empty, non-string, or feedless input', () => {
     expect(parseSubstackFeed('')).toEqual([])
     expect(parseSubstackFeed('   ')).toEqual([])
-    expect(parseSubstackFeed(undefined)).toEqual([])
+    // Guards the runtime contract: the script calls this with whatever the
+    // network returned, which TypeScript can't police.
+    expect(parseSubstackFeed(undefined as unknown as string)).toEqual([])
     expect(parseSubstackFeed('<html><body>not a feed</body></html>')).toEqual([])
     expect(parseSubstackFeed(feed(''))).toEqual([])
   })

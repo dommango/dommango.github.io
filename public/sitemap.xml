@@ -1,27 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- The site is a single page. /career, /skills, /education, /travel and
+     /contact were listed here but have 404'd since the single-page redesign. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://dommango.github.io/</loc>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://dommango.github.io/career</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dommango.github.io/skills</loc>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://dommango.github.io/education</loc>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://dommango.github.io/travel</loc>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://dommango.github.io/contact</loc>
-    <priority>0.6</priority>
   </url>
 </urlset>
