@@ -1,40 +1,52 @@
-  on:
-    schedule:
-      - cron: '0 */6 * * *'
-    workflow_dispatch:
+name: Update dashboard data
 
-  permissions:
-    contents: write
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
-  jobs:
-    update-data:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v4
+permissions:
+  contents: write
 
-        - uses: actions/setup-node@v4
-          with:
-            node-version: '20'
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-        - name: Fetch Analytics Data
-          env:
-            GOATCOUNTER_API_KEY: ${{ secrets.GOATCOUNTER_API_KEY }}
-            GOATCOUNTER_SITE: ${{ secrets.GOATCOUNTER_SITE }}
-          run: node scripts/fetch-analytics.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-        - name: Fetch Performance Data
-          env:
-            SITE_URL: ${{ vars.SITE_URL }}
-          run: node scripts/fetch-performance.js
+      - name: Fetch Analytics Data
+        env:
+          GOATCOUNTER_API_KEY: ${{ secrets.GOATCOUNTER_API_KEY }}
+          GOATCOUNTER_SITE: ${{ secrets.GOATCOUNTER_SITE }}
+        run: node scripts/fetch-analytics.js
 
-        - name: Fetch Uptime Data
-          env:
-            UPTIMEROBOT_API_KEY: ${{ secrets.UPTIMEROBOT_API_KEY }}
-          run: node scripts/fetch-uptime.js
+      - name: Fetch Performance Data
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+        run: node scripts/fetch-performance.js
 
-        - name: Commit updated data
-          run: |
-            git config user.name "github-actions[bot]"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add public/data/
-            git diff --staged --quiet || git commit -m "chore: update dashboard data" && git push
+      - name: Fetch Uptime Data
+        env:
+          UPTIMEROBOT_API_KEY: ${{ secrets.UPTIMEROBOT_API_KEY }}
+        run: node scripts/fetch-uptime.js
+
+      # Note: this commit uses the default GITHUB_TOKEN, so the push does NOT
+      # trigger deploy.yml. The dashboard reads /data/*.json at runtime, so the
+      # fresh data is picked up by deploy.yml's own daily schedule.
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/data/
+          # `a || b && c` is left-associative: the old one-liner pushed even
+          # when there was nothing to commit.
+          if git diff --staged --quiet; then
+            echo "No dashboard data changes."
+          else
+            git commit -m "chore: update dashboard data"
+            git push
+          fi

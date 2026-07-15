@@ -49,11 +49,11 @@ export const metadata: Metadata = {
     template: "%s | Dom Mangonon",
   },
   description:
-    "Personal website of Dom Mangonon — technology leader specializing in enterprise transformation, AI strategy, and financial services.",
+    "Dom Mangonon builds software with AI — SousIQ, Bracketeer, the Claude Code Placemat, and more. Projects, writing, and a travel map.",
   openGraph: {
     title: "Dom Mangonon",
     description:
-      "Technology leader specializing in enterprise transformation, AI strategy, and financial services.",
+      "Building software with AI. Projects, writing, and a travel map.",
     url: SITE_URL,
     siteName: "Dom Mangonon",
     type: "website",
@@ -84,15 +84,12 @@ export default function RootLayout({
               "@type": "Person",
               name: "Dom Mangonon",
               url: SITE_URL,
-              jobTitle: "SVP, Transformation Senior Lead",
-              worksFor: {
-                "@type": "Organization",
-                name: "Citi",
-              },
+              description: "Builds software with AI.",
               sameAs: [
                 "https://linkedin.com/in/dommangonon",
                 "https://x.com/collapsecontext",
                 "https://dommangonon.substack.com",
+                "https://github.com/dommango",
               ],
             }),
           }}
