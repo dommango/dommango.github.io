@@ -4,7 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Personal portfolio site built with Next.js 16, React 19, TypeScript, and Tailwind CSS 4. Static export (no server runtime).
+Dom Mangonon's personal site: a **single-page** portfolio built with Next.js 16, React 19,
+TypeScript, and Tailwind CSS 4. Static export (no server runtime), deployed to GitHub Pages
+at https://dommango.github.io.
+
+The page leads with the **project portfolio**, then writing, with career compressed to context.
 
 ## Commands
 
@@ -13,96 +17,113 @@ npm run dev          # Start dev server (localhost:3000)
 npm run build        # Build static site (output: out/)
 npm test             # Run Vitest tests (watch mode)
 npm test -- --run    # Run tests once
-npm test -- Button   # Run tests matching "Button"
 npm run lint         # ESLint check
-npm run lint -- --fix # Auto-fix lint issues
-tsc --noEmit         # Type check without emitting
+npx tsc --noEmit     # Type check
+npx playwright test  # E2E
 ```
 
-## Build Process
-
-The `prebuild` script runs automatically before `npm run build`:
-1. **sync-career-content.js** - Copies career markdown from `$CAREER_DIR` (default: `/home/dom/personal/career`) to `content/career/`
-2. **generate-resume-pdf.js** - Uses Puppeteer to generate PDF from HTML resume (gracefully skips if Chrome unavailable)
-
-Static export config in `next.config.ts`: `output: 'export'` with `images.unoptimized: true`.
+Note: `npm install` needs `--legacy-peer-deps` (react-simple-maps declares a React <19 peer).
+CI uses it too.
 
 ## Architecture
 
+The whole site is **one page**. `app/page.tsx` is a server component that loads data at build
+time and hands it to `components/landing/BrutalistLanding.tsx`, a client shell holding theme +
+scroll-spy state and composing every section.
+
 ```
-app/                      # Next.js App Router pages
-├── layout.tsx            # Root layout with Header, Footer, ChatBot
-├── page.tsx              # Home - ProfileHero, ProfileSummary, CareerThemes
-├── career/               # Career timeline page
-├── education/            # Education page
-├── skills/               # Skills grid page
-├── travel/               # Travel map page
-├── blog/                 # Blog listing/posts
-├── contact/              # Contact form (uses EmailJS)
-└── api/contact/          # Contact API route
+app/
+├── layout.tsx            # Root layout, fonts, metadata/JSON-LD, ChatBot
+├── page.tsx              # Loads projects/writing/travel data -> BrutalistLanding
+├── globals.css           # All styles (see Design System below)
+└── dashboard-m7x9k2/     # Private-ish analytics dashboard (obscure URL, not linked)
 
-components/
-├── layout/               # Header, Footer
-├── profile/              # ProfileHero, ProfileSummary, CareerThemes
-├── chat/                 # ChatBot widget
-├── timeline/             # Career timeline
-├── skills/               # Skills grid
-├── education/            # Education section
-├── travel/               # Travel map (react-simple-maps)
-├── contact/              # Contact form
-└── ui/                   # Reusable primitives (Card, Badge, Section, Button)
+components/landing/       # The page, in DOM order:
+├── Nav.tsx               # Sticky nav + theme cycler
+├── Availability.tsx      # Status strip under nav
+├── Hero.tsx              # Headline, portrait, bio
+├── Projects.tsx          # THE MAIN SECTION — project cards
+├── Writing.tsx           # Substack posts; renders only when posts exist
+├── Resume.tsx            # Compressed career timeline
+├── Travel.tsx            # Continent bars + globe
+├── Contact.tsx           # EmailJS-wired form
+├── Footer.tsx
+└── BinaryRule.tsx        # Decorative divider (seeded PRNG — see below)
 
-lib/
-├── content/              # Content loaders parsing markdown with gray-matter
-│   ├── profile.ts        # getProfile() - parses profile.md frontmatter
-│   ├── roles.ts          # getRoles() - career positions
-│   ├── education.ts      # getEducation()
-│   ├── skills.ts         # getSkills()
-│   ├── blog.ts           # getBlogPosts()
-│   └── travel.ts         # getCountries()
-├── constants.ts          # Shared constants
-├── utils.ts              # Utility functions
-└── services/             # External service integrations
+components/travel/TravelMap.tsx   # Heavy globe, dynamically imported by landing/Travel
+components/chat/ChatBot.tsx       # Assistant widget
+components/ui/                    # Card, Skeleton, ProgressBar — dashboard only
 
-content/                  # Markdown content (synced from CAREER_DIR)
-├── career/               # Career entries with frontmatter
-├── blog/                 # Blog posts
-└── travel/               # Travel data (JSON)
+lib/content/              # Build-time data (no fs, no runtime fetch)
+├── projects.ts           # Hand-authored PROJECTS array
+├── writing.ts            # Substack posts
+└── travel.ts             # Transforms content/travel/*.json
+lib/services/             # emailjs.ts, chat.ts
 ```
 
-## Content System
+## Adding or changing a section
 
-Career content lives in markdown files with gray-matter frontmatter:
-- Source: `$CAREER_DIR` environment variable (default: `/home/dom/personal/career`)
-- Build destination: `content/career/`
-- Profile data parsed from `profile.md` frontmatter + content sections
+Four places must stay in sync or the scroll-spy breaks silently:
 
-Content loaders in `lib/content/` read files synchronously at build time for static generation.
+1. `components/landing/<Section>.tsx` — the component
+2. `SectionId` union in `Nav.tsx`
+3. `SECTION_IDS` in `BrutalistLanding.tsx` — **must match DOM order**; the spy takes the last
+   element with `offsetTop <= scrollY`, so wrong order = wrong active link
+4. The `link()` calls in `Nav.tsx`
 
-## Environment Variables
+Conditional sections (Writing) need the nav link gated by the same predicate as the section,
+or the link scrolls to nothing.
 
-```bash
-# EmailJS for contact form
-NEXT_PUBLIC_EMAILJS_SERVICE_ID=
-NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=
-NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=
+## Design System
 
-# Career content source (optional, defaults to /home/dom/personal/career)
-CAREER_DIR=/path/to/career
-```
+All styles live in `app/globals.css` (~1130 lines). Two disjoint token systems:
 
-## Key Dependencies
+- **`:root` (lines 1-121)** — legacy tokens + Tailwind bridge. Used by the dashboard/ChatBot only.
+- **`.brutalist-root` (128-239)** — the landing. Everything is scoped here.
 
-- **gray-matter** - Parse markdown frontmatter
-- **react-simple-maps** / **d3-geo** / **topojson-client** - Travel map visualization
-- **@emailjs/browser** - Contact form email delivery
-- **date-fns** - Date formatting
-- **clsx** - Conditional class composition
+**Build new sections from semantic tokens only** — `var(--accent)`, `var(--fg)`, `var(--fg-muted)`,
+`var(--fg-low)`, `var(--rule)`, `var(--s-N)` spacing, `var(--font-display|sans|mono)`. Do that and
+all three themes (Gold / Oxblood / High Contrast) work for free, since the theme cycler only swaps
+token values via `[data-accent]` / `[data-contrast]` attributes.
+
+The landing is **dark-only by design** — the `prefers-color-scheme: light` block only touches
+`:root`, which `.brutalist-root` shadows.
+
+**Responsive: one breakpoint**, `@media (max-width: 900px)` at the bottom. Any new multi-column
+grid must be added there manually; nothing is automatic.
+
+Structure convention: `.section` > `<BinaryRule/>` > `.*-head`. The adjacent-sibling rule
+`.section > .binary-rule + *` supplies the top margin, so keep that order.
+
+`BinaryRule`'s `seed` prop drives a deterministic sine-hash PRNG — it exists for **hydration
+safety** (server and client must render identical digits), not aesthetics. Give new sections an
+arbitrary unused seed.
+
+## Content
+
+Hand-authored TypeScript in `lib/content/`, not markdown. Prefer typed TS modules over JSON:
+`resolveJsonModule` is on, and importing an empty `[]` JSON file infers `never[]`, which fails
+typecheck under `strict`.
+
+Travel data is the exception — script-generated JSON in `content/travel/`, produced by
+`scripts/process-travel-data.js` and `scripts/fetch-flights.js` (both manual).
+
+**Career content is deliberately NOT in this repo** — it's gitignored. This repo is public; the
+source of record is `~/personal/career`. Don't re-add it or reintroduce a sync step.
+
+## Deployment
+
+`.github/workflows/deploy.yml` — on push to `main` (+ manual), builds and pushes `out/` to Pages.
+
+**Gotcha:** pushes made by `github-actions[bot]` with the default `GITHUB_TOKEN` do **not**
+trigger workflows. So a cron that commits data cannot make the site rebuild. Anything needing
+fresh data at deploy time must fetch **during the build**, not commit-then-rebuild.
+
+`update-dashboard-data.yml` crons analytics/uptime/performance JSON into `public/data/`.
 
 ## Testing
 
-Vitest with jsdom environment. Setup in `vitest.setup.ts` includes mocks for:
-- `window.matchMedia`
-- `IntersectionObserver`
+Vitest + jsdom for units (`__tests__/`), Playwright for E2E (`e2e/`). `vitest.setup.ts` mocks
+`matchMedia` and `IntersectionObserver`.
 
-Tests located in `__tests__/` directory. Use `@testing-library/react` for component tests.
+Test nontrivial logic (parsers, transforms, conditional-render invariants). Skip ceremony tests.

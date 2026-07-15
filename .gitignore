@@ -43,7 +43,14 @@ next-env.d.ts
 # Windows NTFS zone identifiers
 *:Zone.Identifier
 
-# Career source docs and processing
+# Career content — kept out of this public repo entirely.
+# The site no longer reads it; source of record is ~/personal/career.
+content/career/
+public/assets/*.pdf
 content/career/source-docs/
 content/career/_processing/
 content/career/package.json
+
+# Playwright
+test-results/
+playwright-report/

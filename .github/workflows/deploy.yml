@@ -3,6 +3,13 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # Picks up newly published Substack posts without a human push. The feed is
+  # fetched during the build (below) rather than committed by a cron, because
+  # pushes from github-actions[bot] with the default GITHUB_TOKEN do not
+  # trigger workflows — a commit-then-rebuild loop silently never rebuilds.
+  # Note: GitHub disables scheduled workflows after 60 days of repo inactivity.
+  schedule:
+    - cron: '0 11 * * *'
   workflow_dispatch:
 
 permissions:
@@ -30,10 +37,13 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
+      # Rewrites lib/content/writing.ts in the workspace only — never committed.
+      # Failures are warnings: the committed posts are used instead.
+      - name: Fetch Substack posts
+        run: node scripts/fetch-substack.js
+
       - name: Build Next.js
         run: npm run build
-        env:
-          CAREER_DIR: ${{ github.workspace }}/content/career
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -55,7 +55,7 @@ export function Travel({
     <section id="travel" className="travel section">
       <BinaryRule seed={33} />
       <div className="travel-head">
-        <span className="ds-eyebrow">Section / 04 — Travel</span>
+        <span className="ds-eyebrow">Travel</span>
         <h2 className="travel-title">
           {totalCountries}+ countries.
           <br />

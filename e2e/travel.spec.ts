@@ -3,7 +3,9 @@ import { test, expect } from "@playwright/test";
 test.describe("Travel map", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
-    await page.getByText("My Travel Map").scrollIntoViewIfNeeded();
+    // "My Travel Map" was pre-brutalist copy and no longer exists, so this
+    // hook failed on every test. Scroll to the section itself instead.
+    await page.locator("#travel").scrollIntoViewIfNeeded();
   });
 
   test("renders the travel map globe", async ({ page }) => {

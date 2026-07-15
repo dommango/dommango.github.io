@@ -2,7 +2,7 @@
 // toggle that cycles Gold (default) → Oxblood → High Contrast.
 
 export type ThemeMode = 'gold' | 'oxblood' | 'contrast'
-export type SectionId = 'hero' | 'resume' | 'contact' | 'travel'
+export type SectionId = 'hero' | 'projects' | 'writing' | 'resume' | 'travel' | 'contact'
 
 const MODE_LABEL: Record<ThemeMode, string> = {
   gold: 'Gold',
@@ -15,9 +15,11 @@ interface NavProps {
   mode: ThemeMode
   onCycleMode: () => void
   onNavigate: (id: SectionId) => void
+  /** Writing renders only when there are posts; its link must be gated the same way. */
+  showWriting: boolean
 }
 
-export function Nav({ section, mode, onCycleMode, onNavigate }: NavProps) {
+export function Nav({ section, mode, onCycleMode, onNavigate, showWriting }: NavProps) {
   const link = (id: SectionId, label: string) => (
     <a
       href={`#${id}`}
@@ -47,9 +49,11 @@ export function Nav({ section, mode, onCycleMode, onNavigate }: NavProps) {
       </a>
       <div className="nav-links">
         {link('hero', 'Intro')}
-        {link('resume', 'Resume')}
-        {link('contact', 'Contact')}
+        {link('projects', 'Projects')}
+        {showWriting && link('writing', 'Writing')}
+        {link('resume', 'Career')}
         {link('travel', 'Travel')}
+        {link('contact', 'Contact')}
       </div>
       <div className="nav-right">
         <button
