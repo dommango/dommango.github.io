@@ -22,10 +22,10 @@ export function Hero() {
         </div>
         <div className="hero-portrait">
           <Image
-            src="/images/cartoon-headshot.jpg"
+            src="/images/portrait-skyline.webp"
             alt="Dom Mangonon"
-            width={320}
-            height={320}
+            width={640}
+            height={960}
             priority
           />
           <span className="hero-portrait-cap">Dom · NJ → NYC · 2026</span>
