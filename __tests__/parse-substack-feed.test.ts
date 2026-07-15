@@ -52,7 +52,7 @@ describe('parseSubstackFeed', () => {
     )
 
     expect(posts).toHaveLength(1)
-    expect(posts[0].title).toBe('A real post')
+    expect(posts?.[0].title).toBe('A real post')
   })
 
   it('returns newest first', () => {
@@ -63,7 +63,7 @@ describe('parseSubstackFeed', () => {
       )
     )
 
-    expect(posts.map((p: { title: string }) => p.title)).toEqual(['Newer', 'Older'])
+    expect(posts?.map((p: { title: string }) => p.title)).toEqual(['Newer', 'Older'])
   })
 
   it('handles a single-item feed (parser returns an object, not an array)', () => {
@@ -90,19 +90,61 @@ describe('parseSubstackFeed', () => {
     expect(posts).toEqual([])
   })
 
-  // A Substack outage must degrade to an empty section, never break the build.
-  it('returns [] for malformed XML instead of throwing', () => {
+  // A Substack outage must degrade gracefully, never break the build.
+  it('does not throw on malformed XML', () => {
     expect(() => parseSubstackFeed('<rss><channel><item>broken')).not.toThrow()
-    expect(parseSubstackFeed('<rss><channel><item>broken')).toEqual([])
   })
 
-  it('returns [] for empty, non-string, or feedless input', () => {
-    expect(parseSubstackFeed('')).toEqual([])
-    expect(parseSubstackFeed('   ')).toEqual([])
+  // The distinction the caller depends on: [] may overwrite the committed
+  // POSTS, null may not. Collapsing them lets a 200-with-an-HTML-body wipe
+  // the Writing section on an unattended cron build.
+  it('returns [] for a real feed that has no posts', () => {
+    expect(parseSubstackFeed(feed(''))).toEqual([])
+  })
+
+  it('returns null when the body is not a feed at all', () => {
+    // Every one of these arrives as a 200 in the wild.
+    expect(parseSubstackFeed('<html><body>not a feed</body></html>')).toBeNull()
+    expect(
+      parseSubstackFeed('<!DOCTYPE html><html><head><title>Just a moment...</title></head></html>')
+    ).toBeNull()
+    expect(parseSubstackFeed('')).toBeNull()
+    expect(parseSubstackFeed('   ')).toBeNull()
     // Guards the runtime contract: the script calls this with whatever the
     // network returned, which TypeScript can't police.
-    expect(parseSubstackFeed(undefined as unknown as string)).toEqual([])
-    expect(parseSubstackFeed('<html><body>not a feed</body></html>')).toEqual([])
-    expect(parseSubstackFeed(feed(''))).toEqual([])
+    expect(parseSubstackFeed(undefined as unknown as string)).toBeNull()
+  })
+
+  // Substack puts HTML in <description>; unstripped it renders as visible tag
+  // soup on the card (React escapes it, so it is not an XSS vector).
+  it('strips HTML markup out of the subtitle', () => {
+    const posts = parseSubstackFeed(
+      feed(
+        item(
+          'Post',
+          'https://x.substack.com/p/a',
+          'Mon, 06 Jul 2026 12:00:00 GMT',
+          '<p>Hello <em>world</em>&nbsp;— a subtitle</p>'
+        )
+      )
+    )
+
+    expect(posts?.[0].subtitle).toBe('Hello world — a subtitle')
+  })
+
+  it('keeps prose that merely contains a bare angle bracket', () => {
+    const posts = parseSubstackFeed(
+      feed(item('Post', 'https://x.substack.com/p/a', 'Mon, 06 Jul 2026 12:00:00 GMT', 'when a < b holds'))
+    )
+
+    expect(posts?.[0].subtitle).toBe('when a < b holds')
+  })
+
+  it('omits the subtitle entirely when the description is only markup', () => {
+    const posts = parseSubstackFeed(
+      feed(item('Post', 'https://x.substack.com/p/a', 'Mon, 06 Jul 2026 12:00:00 GMT', '<p></p>'))
+    )
+
+    expect(posts?.[0]).not.toHaveProperty('subtitle')
   })
 })
