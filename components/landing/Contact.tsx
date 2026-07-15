@@ -58,7 +58,7 @@ export function Contact() {
 
       <div className="contact-grid">
         <div className="contact-headline">
-          <span className="ds-eyebrow">Section / 03 — Contact</span>
+          <span className="ds-eyebrow">Contact</span>
           <h2 className="contact-title">
             Let&apos;s
             <br />

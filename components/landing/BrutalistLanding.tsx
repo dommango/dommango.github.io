@@ -6,10 +6,13 @@ import { useEffect, useState } from 'react'
 import { Nav, type ThemeMode, type SectionId } from './Nav'
 import { Availability } from './Availability'
 import { Hero } from './Hero'
+import { Projects } from './Projects'
+import { Writing } from './Writing'
 import { Travel, type ContinentBar } from './Travel'
 import { Contact } from './Contact'
 import { Resume } from './Resume'
 import { Footer } from './Footer'
+import { hasPosts } from '@/lib/content/writing'
 import type { Country, FlightRoute } from '@/lib/content/travel'
 
 export interface LandingTravelData {
@@ -21,7 +24,11 @@ export interface LandingTravelData {
   totalFlights: number
 }
 
-const SECTION_IDS: SectionId[] = ['hero', 'resume', 'contact', 'travel']
+// Must match DOM order: the scroll-spy below takes the LAST section whose
+// offsetTop has passed, so a mismatch misreports the active link silently.
+// 'writing' is absent from the DOM when there are no posts; the spy's
+// null-check handles that, and Nav gates its link on the same predicate.
+const SECTION_IDS: SectionId[] = ['hero', 'projects', 'writing', 'resume', 'travel', 'contact']
 
 function scrollToSection(id: SectionId) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -57,15 +64,24 @@ export function BrutalistLanding({ travel }: { travel: LandingTravelData }) {
     scrollToSection(id)
   }
 
+  const showWriting = hasPosts()
+
   return (
     <div className="brutalist-root" data-accent={accentAttr} data-contrast={contrastAttr}>
       <div className="page">
-        <Nav section={section} mode={mode} onCycleMode={cycleMode} onNavigate={navigate} />
+        <Nav
+          section={section}
+          mode={mode}
+          onCycleMode={cycleMode}
+          onNavigate={navigate}
+          showWriting={showWriting}
+        />
         <Availability available onGetInTouch={() => navigate('contact')} />
         <main>
           <Hero />
+          <Projects />
+          {showWriting && <Writing />}
           <Resume />
-          <Contact />
           <Travel
             continents={travel.continents}
             totalCountries={travel.totalCountries}
@@ -74,6 +90,7 @@ export function BrutalistLanding({ travel }: { travel: LandingTravelData }) {
             flightRoutes={travel.flightRoutes}
             totalFlights={travel.totalFlights}
           />
+          <Contact />
         </main>
         <Footer onHome={() => navigate('hero')} />
       </div>
