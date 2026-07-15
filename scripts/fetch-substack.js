@@ -14,6 +14,10 @@ const FEED_URL = 'https://dommangonon.substack.com/feed'
 const TARGET = path.join(__dirname, '../lib/content/writing.ts')
 const MAX_POSTS = 6
 const MARKER = '// GENERATED — do not edit by hand. See scripts/fetch-substack.js.'
+// Anchored on newlines so it can never match inside a generated post title:
+// serialize() runs every field through JSON.stringify, which escapes real
+// newlines, so no string literal it emits can contain one.
+const END_MARKER = '\n// END GENERATED\n'
 
 const serialize = (posts) => {
   if (posts.length === 0) return 'export const POSTS: WritingPost[] = []'
@@ -55,16 +59,20 @@ async function main() {
 
   const source = fs.readFileSync(TARGET, 'utf8')
   const markerIndex = source.indexOf(MARKER)
+  const endIndex = source.indexOf(END_MARKER)
 
-  if (markerIndex === -1) {
-    console.warn('[substack] generated marker missing in writing.ts; leaving file alone')
+  // Bail rather than write a half-file: a bare indexOf(...) === -1 would flow
+  // into slice(-1), which returns the last character instead of throwing and
+  // would silently truncate writing.ts.
+  if (markerIndex === -1 || endIndex === -1 || endIndex < markerIndex) {
+    console.warn('[substack] generated markers missing or out of order in writing.ts; leaving file alone')
     return
   }
 
   const head = source.slice(0, markerIndex + MARKER.length)
-  const tail = source.slice(source.indexOf('export const hasPosts'))
+  const tail = source.slice(endIndex)
 
-  fs.writeFileSync(TARGET, `${head}\n${serialize(posts)}\n\n${tail}`)
+  fs.writeFileSync(TARGET, `${head}\n${serialize(posts)}${tail}`)
   console.log(`[substack] wrote ${posts.length} post(s) to lib/content/writing.ts`)
 }
 
