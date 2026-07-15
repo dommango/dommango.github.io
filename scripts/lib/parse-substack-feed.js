@@ -1,6 +1,12 @@
 // Pure RSS -> posts transform. Kept separate from the fetch so it can be
-// tested without network. Never throws: a broken feed must degrade to an
-// empty Writing section, not fail the build.
+// tested without network. Never throws.
+//
+// Two different "no posts" outcomes, and the caller must tell them apart:
+//   null -> the body isn't an RSS feed at all (HTML interstitial, login
+//           redirect, maintenance page — all of which arrive as a 200).
+//   []   -> a real feed that currently has no publishable posts.
+// Only the second may overwrite the committed POSTS; collapsing both to []
+// lets a Cloudflare splash page silently empty the Writing section.
 
 const { XMLParser } = require('fast-xml-parser')
 
@@ -26,22 +32,39 @@ const text = (value) => {
   return ''
 }
 
+// Substack puts HTML in <description>. React escapes it rather than executing
+// it, so the risk isn't XSS — it's a card rendering "<p>Hello <em>world</em></p>"
+// as visible tag soup. Only strip things shaped like a tag, so prose such as
+// "a < b" survives.
+const stripHtml = (value) =>
+  value
+    .replace(/<\/?[a-zA-Z][^>]*>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+
 /**
  * @param {string} xml Raw RSS feed body.
- * @returns {Array<{title: string, url: string, date: string, subtitle?: string}>}
- *   Real posts, newest first. Empty on malformed input or placeholder-only feeds.
+ * @returns {Array<{title: string, url: string, date: string, subtitle?: string}>|null}
+ *   Real posts newest first, [] for a feed with none, or null if the body
+ *   isn't a feed at all.
  */
 function parseSubstackFeed(xml) {
-  if (typeof xml !== 'string' || xml.trim() === '') return []
+  if (typeof xml !== 'string' || xml.trim() === '') return null
 
   let parsed
   try {
     parsed = new XMLParser({ ignoreAttributes: false, trimValues: true }).parse(xml)
   } catch {
-    return []
+    return null
   }
 
-  const rawItems = parsed?.rss?.channel?.item
+  // The channel element is what makes this a feed. An HTML error page parses
+  // fine but lands under `html`, so it can't be mistaken for an empty feed.
+  const channel = parsed?.rss?.channel
+  if (!channel) return null
+
+  const rawItems = channel.item
   if (!rawItems) return []
 
   const items = Array.isArray(rawItems) ? rawItems : [rawItems]
@@ -51,7 +74,7 @@ function parseSubstackFeed(xml) {
       const title = text(item?.title)
       const url = text(item?.link)
       const date = toIsoDate(text(item?.pubDate))
-      const subtitle = text(item?.description)
+      const subtitle = stripHtml(text(item?.description))
 
       if (!title || !url || !date) return null
       if (isPlaceholder(title)) return null

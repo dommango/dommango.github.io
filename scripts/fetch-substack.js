@@ -51,7 +51,17 @@ async function main() {
       return
     }
 
-    posts = parseSubstackFeed(await response.text()).slice(0, MAX_POSTS)
+    const parsed = parseSubstackFeed(await response.text())
+
+    // null means the body wasn't a feed — a 200 carrying an interstitial or a
+    // login page. Writing [] there would silently empty the Writing section on
+    // a cron build nobody is watching, so treat it like any other outage.
+    if (parsed === null) {
+      console.warn('[substack] response was not an RSS feed; keeping committed posts')
+      return
+    }
+
+    posts = parsed.slice(0, MAX_POSTS)
   } catch (error) {
     console.warn(`[substack] fetch failed (${error.message}); keeping committed posts`)
     return
@@ -76,4 +86,10 @@ async function main() {
   console.log(`[substack] wrote ${posts.length} post(s) to lib/content/writing.ts`)
 }
 
-main()
+// An unreadable/unwritable writing.ts is not a "fetch failure" and should fail
+// the build — but surface it in the same voice as the warnings above rather
+// than as a bare unhandled-rejection stack trace.
+main().catch((error) => {
+  console.error(`[substack] ${error.stack || error.message}`)
+  process.exit(1)
+})
