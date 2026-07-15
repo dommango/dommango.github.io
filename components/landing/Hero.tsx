@@ -1,51 +1,7 @@
-// Hero — display headline, headshot, about copy, career arc, six career themes.
+// Hero — headline, headshot, and a short bio. Everything else moved out:
+// the projects below make the case that a themes grid used to assert.
 import Image from 'next/image'
 import { BinaryRule } from './BinaryRule'
-
-const THEMES = [
-  {
-    num: '01',
-    title: 'Translating complex into simple',
-    desc: 'Translator by instinct: regulatory mandates, executive questions, and fragmented data become dashboards, BRDs, and decisions teams act on.',
-  },
-  {
-    num: '02',
-    title: 'Building the machines, not just running them',
-    desc: 'Systems over tasks: reusable pipelines, governance frameworks, and data architectures designed to outlast individual involvement.',
-  },
-  {
-    num: '03',
-    title: 'Executing in the Grey',
-    desc: 'Ambiguity-native: unmapped requirements, missing enterprise systems, and shifting deadlines are the environment of choice.',
-  },
-  {
-    num: '04',
-    title: 'Quantitatively curious',
-    desc: 'Evidence-first: every framework built on traceable data, documented logic, and defensible assumptions, not opinion.',
-  },
-  {
-    num: '05',
-    title: 'Ship under pressure',
-    desc: 'Gap-closer: fixed deadlines and missing solutions trigger building the working artifact, documenting it, and handing it off cleanly.',
-  },
-  {
-    num: '06',
-    title: 'Human-AI collaboration',
-    desc: 'AI-native operator: repeatable human-AI workflows that multiply output without multiplying headcount.',
-  },
-]
-
-const CAREER_ARC = [
-  { label: 'Rutgers · BS Finance', meta: 'FINANCE · 2004–08' },
-  { label: 'Bear Stearns', meta: 'SALES INTERN · 2006' },
-  { label: 'Viacom', meta: 'CORP FINANCE · 2007' },
-  { label: 'BNP Paribas', meta: 'OPERATIONS · 2008–13' },
-  { label: 'CMU Tepper · MBA', meta: '3.68 · 2013–15' },
-  { label: 'PwC / Strategy&', meta: 'STRATEGY · 2014–17' },
-  { label: 'Treliant', meta: 'ADVISORY · 2018–19' },
-  { label: 'Morgan Stanley', meta: 'WM STRATEGY · 2019–20' },
-  { label: 'Citi', meta: 'SVP TRANSFORM · 2021→' },
-]
 
 export function Hero() {
   return (
@@ -53,17 +9,15 @@ export function Hero() {
       <BinaryRule seed={3} />
       <div className="hero-head">
         <div className="hero-head-text">
-          <span className="ds-eyebrow">Section / 01 — Intro</span>
+          <span className="ds-eyebrow">Intro</span>
           <h1 className="hero-title">
-            <span className="hero-title-alt">Harnessing AI</span>
+            <span className="hero-title-alt">Unapologetically</span>
             <br />
-            in financial
-            <br />
-            services.
+            AI-pilled.
           </h1>
           <p className="hero-kicker">
-            17 Years in Strategy &amp; Operations,{' '}
-            <span className="hero-kicker-alt">Now Building at the Frontier</span>
+            Growing enterprise AI adoption at Citi by day,{' '}
+            <span className="hero-kicker-alt">doing my best to keep up at the frontier by night</span>
           </p>
         </div>
         <div className="hero-portrait">
@@ -83,43 +37,15 @@ export function Hero() {
         <div className="hero-meta-col">
           <span className="ds-eyebrow">About</span>
           <p className="hero-about">
-            Senior financial-services executive with 17 years across enterprise transformation,
-            strategy consulting, and trading operations. Currently SVP at Citi, leading
-            enterprise transformation and risk/control framework work.
+            Seventeen years in financial services — operations at BNP Paribas through 2008, an MBA
+            at CMU Tepper, consulting at PwC, and now SVP at Citi.
           </p>
           <p className="hero-about hero-about-secondary">
-            Started in operations at BNP Paribas through the 2008 crisis, MBA at CMU Tepper,
-            consulting at PwC/Strategy&amp;, wealth-management strategy at Morgan Stanley, and now
-            Citi. Long-time builder — VBA macros, Hot Keys workshops, automation at every stop. In
-            2025 I went all in on AI: 9 measured Claude projects, 33.9 hours saved, and this site
-            built end to end with Claude Code.
+            In 2025 I went all in on AI and started shipping actual software: a restaurant cost
+            tracker, a tournament bracket engine, an SEC filings pipeline. All built with Claude
+            Code, including this site. The projects below are real, deployed, and mostly still
+            running.
           </p>
-        </div>
-        <div className="hero-meta-col hero-meta-right">
-          <span className="ds-eyebrow">Career arc</span>
-          <ul className="awards-list">
-            {CAREER_ARC.map((row) => (
-              <li key={row.label}>
-                <span>{row.label}</span>
-                <span className="awards-count">{row.meta}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      <BinaryRule seed={17} />
-
-      <div className="hero-themes">
-        <span className="ds-eyebrow">Career themes · what compounds</span>
-        <div className="themes-grid">
-          {THEMES.map((theme) => (
-            <div key={theme.num} className="theme">
-              <span className="theme-num">{theme.num}</span>
-              <h3 className="theme-title">{theme.title}</h3>
-              <p className="theme-desc">{theme.desc}</p>
-            </div>
-          ))}
         </div>
       </div>
     </section>

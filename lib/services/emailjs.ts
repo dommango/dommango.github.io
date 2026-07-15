@@ -1,10 +1,5 @@
 import emailjs from '@emailjs/browser'
 
-export interface ResumeRequestParams {
-  toName: string
-  toEmail: string
-}
-
 export interface ContactMessageParams {
   fromName: string
   fromEmail: string
@@ -31,60 +26,10 @@ export function initEmailJS(): void {
 }
 
 /**
- * Send resume request email via EmailJS
- */
-export async function sendResumeEmail({
-  toName,
-  toEmail
-}: ResumeRequestParams): Promise<EmailResponse> {
-  const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
-  const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID
-
-  if (!serviceId || !templateId) {
-    return {
-      success: false,
-      message: 'Email service not configured'
-    }
-  }
-
-  try {
-    const response = await emailjs.send(
-      serviceId,
-      templateId,
-      {
-        to_name: toName,
-        to_email: toEmail,
-        reply_to: toEmail
-      }
-    )
-
-    if (response.status === 200) {
-      return {
-        success: true,
-        message: 'Resume sent successfully! Check your inbox.'
-      }
-    }
-
-    return {
-      success: false,
-      message: 'Failed to send email. Please try again.'
-    }
-  } catch (error) {
-    console.error('EmailJS error:', error)
-
-    return {
-      success: false,
-      message: error instanceof Error
-        ? `Email error: ${error.message}`
-        : 'An unexpected error occurred'
-    }
-  }
-}
-
-/**
  * Send a general contact message via EmailJS.
  * Uses NEXT_PUBLIC_EMAILJS_CONTACT_TEMPLATE_ID when configured, otherwise
- * falls back to the resume template id so the message still reaches the inbox.
+ * falls back to NEXT_PUBLIC_EMAILJS_TEMPLATE_ID so the message still reaches
+ * the inbox.
  */
 export async function sendContactEmail({
   fromName,
