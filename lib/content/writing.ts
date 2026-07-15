@@ -19,5 +19,6 @@ export const SUBSTACK_URL = 'https://dommangonon.substack.com'
 
 // GENERATED — do not edit by hand. See scripts/fetch-substack.js.
 export const POSTS: WritingPost[] = []
+// END GENERATED
 
 export const hasPosts = (): boolean => POSTS.length > 0
