@@ -16,15 +16,14 @@ test.describe("Custom 404", () => {
     await expect(page.locator("#resume")).toBeInViewport();
   });
 
-  test("old /blog URL gets a plain 404 when there are no posts yet", async ({ page }) => {
-    // There's no Writing section to rescue this to until a post ships
-    // (see lib/content/writing.ts POSTS), so it must not redirect to a
-    // dangling #writing anchor.
+  test("old /blog URL redirects to the writing section now that a post exists", async ({ page }) => {
+    // lib/content/writing.ts POSTS is non-empty as of plan 01, so /blog is a
+    // real redirect target, not the dangling-anchor case this used to guard.
     await page.goto("/blog");
-    await expect(page.getByRole("heading", { name: /nothing here/i })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Writing →" })).toHaveCount(0);
-    await page.waitForTimeout(1500);
-    expect(page.url()).toContain("/blog");
+    await expect(page.getByRole("heading", { name: /that page moved/i })).toBeVisible();
+    await expect(page.getByRole("status")).toContainText(/redirecting to writing/i);
+    await page.waitForURL(/\/#writing$/, { timeout: 10000 });
+    await expect(page.locator("#writing")).toBeInViewport();
   });
 
   test("unknown paths get a plain 404 with no redirect", async ({ page }) => {
