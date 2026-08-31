@@ -33,7 +33,7 @@ scroll-spy state and composing every section.
 
 ```
 app/
-├── layout.tsx            # Root layout, fonts, metadata/JSON-LD, ChatBot
+├── layout.tsx            # Root layout, fonts, metadata/JSON-LD, ChatBot (only if NEXT_PUBLIC_CHAT_API_URL is set)
 ├── page.tsx              # Loads projects/writing/travel data -> BrutalistLanding
 ├── globals.css           # All styles (see Design System below)
 └── dashboard-m7x9k2/     # Private-ish analytics dashboard (obscure URL, not linked)

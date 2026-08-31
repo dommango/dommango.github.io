@@ -11,10 +11,13 @@ const path = require('path')
 const { parseSubstackFeed } = require('./lib/parse-substack-feed')
 const { parseSubstackJson } = require('./lib/parse-substack-json')
 
-const FEED_URLS = [
-  'https://dommangonon.substack.com/feed',
+// Each source pairs its URL with the parser that understands its body, so
+// the two can never drift apart the way a separate `url.includes(...)`
+// dispatch could.
+const SOURCES = [
+  { url: 'https://dommangonon.substack.com/feed', parse: parseSubstackFeed },
   // Substack's JSON API sometimes answers when the RSS route is challenged.
-  'https://dommangonon.substack.com/api/v1/posts?limit=6',
+  { url: 'https://dommangonon.substack.com/api/v1/posts?limit=6', parse: parseSubstackJson },
 ]
 const HEADERS = {
   'user-agent': 'Mozilla/5.0 (compatible; dommango.github.io build; +https://dommango.github.io)',
@@ -49,7 +52,7 @@ const serialize = (posts) => {
 // Fetches and parses a single source. Returns null (try the next source) on
 // any failure — non-2xx, unparseable body, or a body that isn't actually a
 // posts list (see parseSubstackFeed/parseSubstackJson doc comments).
-async function fetchPosts(url) {
+async function fetchPosts(url, parse) {
   const response = await fetch(url, { headers: HEADERS, signal: AbortSignal.timeout(15000) })
 
   if (!response.ok) {
@@ -57,8 +60,7 @@ async function fetchPosts(url) {
     return null
   }
 
-  const body = await response.text()
-  const parsed = url.includes('/api/v1/posts') ? parseSubstackJson(body) : parseSubstackFeed(body)
+  const parsed = parse(await response.text())
 
   if (parsed === null) {
     console.warn(`[substack] ${url} response was not a posts feed`)
@@ -71,9 +73,9 @@ async function fetchPosts(url) {
 async function main() {
   let posts = null
 
-  for (const url of FEED_URLS) {
+  for (const { url, parse } of SOURCES) {
     try {
-      posts = await fetchPosts(url)
+      posts = await fetchPosts(url, parse)
     } catch (error) {
       console.warn(`[substack] fetch failed for ${url} (${error.message})`)
       posts = null

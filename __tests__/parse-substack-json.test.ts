@@ -60,10 +60,12 @@ describe('parseSubstackJson', () => {
     expect(posts?.[0]).not.toHaveProperty('subtitle')
   })
 
-  // The distinction the caller depends on: [] may overwrite the committed
-  // POSTS, null may not.
-  it('returns [] for a real empty list', () => {
-    expect(parseSubstackJson('[]')).toEqual([])
+  // Unlike the RSS parser, this path has no way to tell "the publication has
+  // zero posts" from "the endpoint drifted into some other empty shape" — it
+  // only ever runs after RSS already failed. So a bare [] must not be treated
+  // as authoritative enough to overwrite the committed POSTS.
+  it('returns null for a bare empty array, not []', () => {
+    expect(parseSubstackJson('[]')).toBeNull()
   })
 
   it('returns null when the body is not a posts list at all', () => {

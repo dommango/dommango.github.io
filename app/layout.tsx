@@ -7,7 +7,7 @@ import {
   Space_Grotesk,
   JetBrains_Mono,
 } from "next/font/google";
-import { ChatBot } from "@/components/chat/ChatBot";
+import { ChatBotGate } from "@/components/chat/ChatBotGate";
 import "./globals.css";
 
 const GOATCOUNTER_SITE = process.env.NEXT_PUBLIC_GOATCOUNTER_SITE;
@@ -100,7 +100,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${archivoBlack.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased`}
       >
         {children}
-        {CHAT_API_URL && <ChatBot />}
+        <ChatBotGate enabled={Boolean(CHAT_API_URL)} />
         {GOATCOUNTER_SITE && (
           <Script
             data-goatcounter={`https://${GOATCOUNTER_SITE}.goatcounter.com/count`}

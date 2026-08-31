@@ -140,6 +140,25 @@ describe('parseSubstackFeed', () => {
     expect(posts?.[0].subtitle).toBe('when a < b holds')
   })
 
+  // Substack's CDATA description carries numeric entities (an em dash comes
+  // through as &#8212;), and the fetch-substack pipeline JSON-stringifies the
+  // result, which would double-escape an undecoded "&#8212;" into visible
+  // tag soup on the card.
+  it('decodes numeric and named HTML entities in the subtitle', () => {
+    const posts = parseSubstackFeed(
+      feed(
+        item(
+          'Post',
+          'https://x.substack.com/p/a',
+          'Mon, 06 Jul 2026 12:00:00 GMT',
+          'Before &#8212; after &amp; done'
+        )
+      )
+    )
+
+    expect(posts?.[0].subtitle).toBe('Before — after & done')
+  })
+
   it('omits the subtitle entirely when the description is only markup', () => {
     const posts = parseSubstackFeed(
       feed(item('Post', 'https://x.substack.com/p/a', 'Mon, 06 Jul 2026 12:00:00 GMT', '<p></p>'))

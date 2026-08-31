@@ -25,7 +25,12 @@ function parseSubstackJson(body) {
     return null
   }
 
-  if (!Array.isArray(parsed)) return null
+  // This path only runs after RSS already failed, so there's no corroborating
+  // signal for "the publication genuinely has zero posts" the way the RSS
+  // parser gets from a present-but-empty <channel>. Treat a bare [] as
+  // inconclusive (like any other shape this endpoint might drift into)
+  // rather than let it overwrite the committed POSTS.
+  if (!Array.isArray(parsed) || parsed.length === 0) return null
 
   return parsed
     .map((item) => {
