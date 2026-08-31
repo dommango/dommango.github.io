@@ -18,7 +18,14 @@ export interface WritingPost {
 export const SUBSTACK_URL = 'https://dommangonon.substack.com'
 
 // GENERATED — do not edit by hand. See scripts/fetch-substack.js.
-export const POSTS: WritingPost[] = []
+export const POSTS: WritingPost[] = [
+  {
+    title: "The game had already started",
+    url: "https://dommangonon.substack.com/p/the-game-had-already-started",
+    date: "2026-08-04T15:49:40.000Z",
+    subtitle: "What I learned shipping a bracket-pool app for my friends' World Cup pool &#8212; while the World Cup was being played.",
+  },
+]
 // END GENERATED
 
 export const hasPosts = (): boolean => POSTS.length > 0
