@@ -9,8 +9,17 @@
 const fs = require('fs')
 const path = require('path')
 const { parseSubstackFeed } = require('./lib/parse-substack-feed')
+const { parseSubstackJson } = require('./lib/parse-substack-json')
 
-const FEED_URL = 'https://dommangonon.substack.com/feed'
+const FEED_URLS = [
+  'https://dommangonon.substack.com/feed',
+  // Substack's JSON API sometimes answers when the RSS route is challenged.
+  'https://dommangonon.substack.com/api/v1/posts?limit=6',
+]
+const HEADERS = {
+  'user-agent': 'Mozilla/5.0 (compatible; dommango.github.io build; +https://dommango.github.io)',
+  accept: 'application/rss+xml, application/xml, application/json;q=0.9, */*;q=0.8',
+}
 const TARGET = path.join(__dirname, '../lib/content/writing.ts')
 const MAX_POSTS = 6
 const MARKER = '// GENERATED — do not edit by hand. See scripts/fetch-substack.js.'
@@ -37,35 +46,51 @@ const serialize = (posts) => {
   return `export const POSTS: WritingPost[] = [\n${entries}\n]`
 }
 
+// Fetches and parses a single source. Returns null (try the next source) on
+// any failure — non-2xx, unparseable body, or a body that isn't actually a
+// posts list (see parseSubstackFeed/parseSubstackJson doc comments).
+async function fetchPosts(url) {
+  const response = await fetch(url, { headers: HEADERS, signal: AbortSignal.timeout(15000) })
+
+  if (!response.ok) {
+    console.warn(`[substack] ${url} returned ${response.status}`)
+    return null
+  }
+
+  const body = await response.text()
+  const parsed = url.includes('/api/v1/posts') ? parseSubstackJson(body) : parseSubstackFeed(body)
+
+  if (parsed === null) {
+    console.warn(`[substack] ${url} response was not a posts feed`)
+    return null
+  }
+
+  return parsed
+}
+
 async function main() {
-  let posts = []
+  let posts = null
 
-  try {
-    const response = await fetch(FEED_URL, {
-      headers: { 'user-agent': 'dommango.github.io build' },
-      signal: AbortSignal.timeout(15000),
-    })
-
-    if (!response.ok) {
-      console.warn(`[substack] feed returned ${response.status}; keeping committed posts`)
-      return
+  for (const url of FEED_URLS) {
+    try {
+      posts = await fetchPosts(url)
+    } catch (error) {
+      console.warn(`[substack] fetch failed for ${url} (${error.message})`)
+      posts = null
     }
+    if (posts !== null) break
+  }
 
-    const parsed = parseSubstackFeed(await response.text())
-
-    // null means the body wasn't a feed — a 200 carrying an interstitial or a
-    // login page. Writing [] there would silently empty the Writing section on
-    // a cron build nobody is watching, so treat it like any other outage.
-    if (parsed === null) {
-      console.warn('[substack] response was not an RSS feed; keeping committed posts')
-      return
-    }
-
-    posts = parsed.slice(0, MAX_POSTS)
-  } catch (error) {
-    console.warn(`[substack] fetch failed (${error.message}); keeping committed posts`)
+  // null after every source means an outage — a 200 carrying an interstitial
+  // or a login page counts too. Writing [] there would silently empty the
+  // Writing section on a cron build nobody is watching, so keep committed
+  // posts instead, same as any other failure.
+  if (posts === null) {
+    console.warn('[substack] all sources failed; keeping committed posts')
     return
   }
+
+  posts = posts.slice(0, MAX_POSTS)
 
   const source = fs.readFileSync(TARGET, 'utf8')
   const markerIndex = source.indexOf(MARKER)

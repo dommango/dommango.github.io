@@ -11,6 +11,7 @@ import { ChatBot } from "@/components/chat/ChatBot";
 import "./globals.css";
 
 const GOATCOUNTER_SITE = process.env.NEXT_PUBLIC_GOATCOUNTER_SITE;
+const CHAT_API_URL = process.env.NEXT_PUBLIC_CHAT_API_URL;
 const SITE_URL = "https://dommango.github.io";
 
 const geistSans = Geist({
@@ -99,7 +100,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${archivoBlack.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased`}
       >
         {children}
-        <ChatBot />
+        {CHAT_API_URL && <ChatBot />}
         {GOATCOUNTER_SITE && (
           <Script
             data-goatcounter={`https://${GOATCOUNTER_SITE}.goatcounter.com/count`}

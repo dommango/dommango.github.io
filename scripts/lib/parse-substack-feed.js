@@ -85,4 +85,4 @@ function parseSubstackFeed(xml) {
     .sort((a, b) => b.date.localeCompare(a.date))
 }
 
-module.exports = { parseSubstackFeed }
+module.exports = { parseSubstackFeed, isPlaceholder }
