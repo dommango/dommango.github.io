@@ -37,4 +37,11 @@ describe('not-found redirect table', () => {
       expect(REDIRECTS.find((r) => r.test.test('/blog'))).toBeUndefined()
     }
   })
+
+  it('offers and redirects to Writing once a post exists', () => {
+    if (hasPosts()) {
+      expect(SECTIONS.some(([label]) => label === 'Writing')).toBe(true)
+      expect(REDIRECTS.find((r) => r.test.test('/blog'))?.to).toBe('/#writing')
+    }
+  })
 })

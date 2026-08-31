@@ -55,8 +55,6 @@ export async function sendContactEmail({
       {
         from_name: fromName,
         from_email: fromEmail,
-        to_name: fromName,
-        to_email: fromEmail,
         reply_to: fromEmail,
         message
       }

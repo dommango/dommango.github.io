@@ -36,10 +36,25 @@ const text = (value) => {
 // it, so the risk isn't XSS — it's a card rendering "<p>Hello <em>world</em></p>"
 // as visible tag soup. Only strip things shaped like a tag, so prose such as
 // "a < b" survives.
-const stripHtml = (value) =>
+const stripTags = (value) => value.replace(/<\/?[a-zA-Z][^>]*>/g, ' ')
+
+// Runs after stripTags, on purpose: a literal "&lt;" that survived tag
+// stripping (it never had a raw "<") should decode to display text, not be
+// mistaken for a tag boundary. Decode &amp; last so "&amp;#8212;" doesn't
+// double-decode into a literal "&#8212;".
+const decodeEntities = (value) =>
   value
-    .replace(/<\/?[a-zA-Z][^>]*>/g, ' ')
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
     .replace(/&nbsp;/g, ' ')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, '&')
+
+const stripHtml = (value) =>
+  decodeEntities(stripTags(value))
     .replace(/\s+/g, ' ')
     .trim()
 
@@ -85,4 +100,4 @@ function parseSubstackFeed(xml) {
     .sort((a, b) => b.date.localeCompare(a.date))
 }
 
-module.exports = { parseSubstackFeed }
+module.exports = { parseSubstackFeed, isPlaceholder }

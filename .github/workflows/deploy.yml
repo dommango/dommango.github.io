@@ -42,8 +42,17 @@ jobs:
       - name: Fetch Substack posts
         run: node scripts/fetch-substack.js
 
+      # One env block feeding both the guard and the build: a var added to
+      # only one of them would either let a real gap through the guard or
+      # make the guard block a build that would have had everything it needs.
       - name: Build Next.js
-        run: npm run build
+        env:
+          NEXT_PUBLIC_EMAILJS_SERVICE_ID: ${{ secrets.NEXT_PUBLIC_EMAILJS_SERVICE_ID }}
+          NEXT_PUBLIC_EMAILJS_TEMPLATE_ID: ${{ secrets.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID }}
+          NEXT_PUBLIC_EMAILJS_PUBLIC_KEY: ${{ secrets.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY }}
+          NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}
+          NEXT_PUBLIC_GOATCOUNTER_SITE: ${{ secrets.GOATCOUNTER_SITE }}
+        run: node scripts/check-build-env.js && npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
