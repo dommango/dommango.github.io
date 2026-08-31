@@ -31,10 +31,10 @@ describe('not-found redirect table', () => {
     }
   })
 
-  it('does not offer a Writing link when there are no posts to show', () => {
+  it('does not offer or redirect to Writing when there are no posts to show', () => {
     if (!hasPosts()) {
       expect(SECTIONS.some(([label]) => label === 'Writing')).toBe(false)
-      expect(REDIRECTS.find((r) => r.test.test('/blog'))?.to).toBe('/')
+      expect(REDIRECTS.find((r) => r.test.test('/blog'))).toBeUndefined()
     }
   })
 })

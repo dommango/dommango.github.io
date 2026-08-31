@@ -10,16 +10,16 @@ import { BinaryRule } from '@/components/landing/BinaryRule'
 import { hasPosts } from '@/lib/content/writing'
 
 // Writing only renders on the page (and only gets an #writing anchor) once
-// there's a post to show — same predicate BrutalistLanding/Nav use. Route
-// old blog URLs to the front page instead of a dead anchor until then.
-const WRITING_TARGET = hasPosts() ? '/#writing' : '/'
-const WRITING_LABEL = hasPosts() ? 'Writing' : 'the front page'
-
+// there's a post to show — same predicate BrutalistLanding/Nav use. Until
+// then there's nowhere to rescue a blog URL to, so it isn't a "match" at
+// all: it falls through to the plain, no-guessing 404 below.
 export const REDIRECTS: Array<{ test: RegExp; to: string; label: string }> = [
   { test: /^\/(career|skills|education|resume)\/?$/i, to: '/#resume', label: 'Career' },
   { test: /^\/travel\/?$/i, to: '/#travel', label: 'Travel' },
   { test: /^\/contact\/?$/i, to: '/#contact', label: 'Contact' },
-  { test: /^\/(blog|writing|posts)(\/.*)?$/i, to: WRITING_TARGET, label: WRITING_LABEL },
+  ...(hasPosts()
+    ? [{ test: /^\/(blog|writing|posts)(\/.*)?$/i, to: '/#writing', label: 'Writing' }]
+    : []),
   { test: /^\/projects?(\/.*)?$/i, to: '/#projects', label: 'Projects' },
 ]
 

@@ -16,12 +16,15 @@ test.describe("Custom 404", () => {
     await expect(page.locator("#resume")).toBeInViewport();
   });
 
-  test("old /blog URL falls back to the front page when there are no posts yet", async ({ page }) => {
+  test("old /blog URL gets a plain 404 when there are no posts yet", async ({ page }) => {
+    // There's no Writing section to rescue this to until a post ships
+    // (see lib/content/writing.ts POSTS), so it must not redirect to a
+    // dangling #writing anchor.
     await page.goto("/blog");
-    await expect(page.getByRole("heading", { name: /that page moved/i })).toBeVisible();
-    await page.waitForURL(/\/$/, { timeout: 10000 });
-    // No dangling #writing anchor — there's nothing on the page to scroll to yet.
-    await expect(page).not.toHaveURL(/#writing/);
+    await expect(page.getByRole("heading", { name: /nothing here/i })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Writing →" })).toHaveCount(0);
+    await page.waitForTimeout(1500);
+    expect(page.url()).toContain("/blog");
   });
 
   test("unknown paths get a plain 404 with no redirect", async ({ page }) => {
