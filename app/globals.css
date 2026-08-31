@@ -793,13 +793,28 @@ input,
 .writing-all:focus-visible { color: var(--accent); border-color: var(--accent); }
 
 /* ---- 404 --------------------------------------------------- */
-.nf { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: var(--s-6); align-items: start; margin-top: var(--s-7); padding-bottom: var(--s-8); }
+.nf { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: var(--s-6); align-items: start; }
 .nf-title { font-family: var(--font-display); font-size: clamp(44px, 8vw, 110px); line-height: .88; letter-spacing: -.04em; margin: 10px 0 0; }
-.nf-lead { font-family: var(--font-mono); font-size: 13px; line-height: 1.6; letter-spacing: .04em; color: var(--fg-muted); max-width: 52ch; margin: var(--s-4) 0 0; }
-.nf-lead code { color: var(--fg); background: var(--bg-elevated); padding: 2px 6px; }
-.nf-count { font-family: var(--font-mono); font-size: 13px; color: var(--accent); letter-spacing: .06em; margin: var(--s-3) 0 0; }
-.nf-actions { margin-top: var(--s-5); }
+.nf-lead { font-family: var(--font-mono); font-size: 13px; line-height: 1.6; letter-spacing: .04em; color: var(--fg-muted); max-width: 52ch; margin: var(--s-4) 0 0; overflow-wrap: anywhere; }
+.nf-lead code { display: inline-block; max-width: 100%; overflow-wrap: anywhere; color: var(--fg); background: var(--bg-elevated); padding: 2px 4px; }
+.nf-count { font-family: var(--font-mono); font-size: 13px; color: var(--accent); letter-spacing: .06em; margin: var(--s-3) 0 0; min-height: 1.6em; }
+.nf-actions { margin-top: var(--s-5); display: flex; align-items: center; gap: var(--s-4); flex-wrap: wrap; }
+.nf-stay {
+  background: none;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+.nf-stay:hover,
+.nf-stay:focus-visible { color: var(--accent); }
 .nf-map { list-style: none; margin: 0; padding: var(--s-5); border: 1px solid var(--rule); display: flex; flex-direction: column; gap: var(--s-3); }
+.nf-map .writing-all { margin-top: 0; }
 
 /* ---- Contact --------------------------------------------- */
 .contact-grid {
