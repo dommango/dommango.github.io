@@ -12,7 +12,9 @@ import {
 import { geoOrthographic } from "d3-geo";
 import { Country, FlightRoute } from "@/lib/content/travel";
 
-const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+// Served locally so a CDN hiccup can't blank the globe — the site otherwise
+// has no runtime third-party dependency.
+const geoUrl = "/data/world-110m.json";
 
 // world-atlas@2 countries-110m.json uses zero-padded numeric ISO 3166-1 codes as geo.id
 const COUNTRY_ISO_MAP: Record<string, string> = {
@@ -159,7 +161,7 @@ export function TravelMap({
   const airports = Array.from(airportsMap.values());
 
   const handleMouseMove = useCallback(
-    (e: React.MouseEvent) => {
+    (e: React.PointerEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
 
       if (isDragging && dragStart.current) {
@@ -180,7 +182,7 @@ export function TravelMap({
   );
 
   const handleMouseDown = useCallback(
-    (e: React.MouseEvent) => {
+    (e: React.PointerEvent) => {
       setIsDragging(true);
       dragStart.current = {
         x: e.clientX,
@@ -196,7 +198,10 @@ export function TravelMap({
     dragStart.current = null;
   }, []);
 
-  const showCountryTooltip = useCallback((isoCode: string) => {
+  // Not wrapped in useCallback: isoToCountryMap is a new Map every render
+  // (built from displayedCountries above), so memoizing this against it would
+  // never actually skip a re-creation.
+  const showCountryTooltip = (isoCode: string) => {
     const country = isoToCountryMap.get(isoCode);
     if (country) {
       setTooltip({
@@ -204,7 +209,7 @@ export function TravelMap({
         subtext: `First visited: ${country.firstVisited}`,
       });
     }
-  }, []);
+  };
 
   const showFlightTooltip = useCallback(
     (from: string, to: string, count: number) => {
@@ -227,28 +232,43 @@ export function TravelMap({
   return (
     <div
       ref={containerRef}
-      className="relative w-full bg-surface-1 rounded-xl border border-border overflow-hidden"
-      onMouseMove={handleMouseMove}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={() => {
+      className="map-frame"
+      onPointerDown={(e) => {
+        e.currentTarget.setPointerCapture(e.pointerId);
+        handleMouseDown(e);
+      }}
+      onPointerMove={handleMouseMove}
+      onPointerUp={handleMouseUp}
+      onPointerCancel={handleMouseUp}
+      onPointerLeave={() => {
         hideTooltip();
         handleMouseUp();
       }}
-      style={{ cursor: isDragging ? "grabbing" : "grab" }}
+      style={{ cursor: isDragging ? "grabbing" : "grab", touchAction: "none" }}
+      tabIndex={0}
+      role="img"
+      aria-label={`Globe showing ${displayedCountries.length} visited countries. Drag or use the arrow keys to rotate.`}
+      onKeyDown={(e) => {
+        const step = 10;
+        const [lon, lat] = rotation;
+        if (e.key === "ArrowLeft") setRotation([lon - step, lat, 0]);
+        else if (e.key === "ArrowRight") setRotation([lon + step, lat, 0]);
+        else if (e.key === "ArrowUp") setRotation([lon, Math.max(-90, lat - step), 0]);
+        else if (e.key === "ArrowDown") setRotation([lon, Math.min(90, lat + step), 0]);
+        else return;
+        e.preventDefault();
+      }}
     >
       {tooltip && (
         <div
-          className="fixed z-[9999] bg-gray-900 border border-yellow-600 rounded px-2 py-1 pointer-events-none shadow-lg text-sm"
+          className="map-tip"
           style={{
             left: mousePos.x + 15,
             top: mousePos.y + 15,
           }}
         >
-          <p className="font-medium text-white">{tooltip.content}</p>
-          {tooltip.subtext && (
-            <p className="text-gray-400 text-xs">{tooltip.subtext}</p>
-          )}
+          {tooltip.content}
+          {tooltip.subtext && <small>{tooltip.subtext}</small>}
         </div>
       )}
 
@@ -261,8 +281,8 @@ export function TravelMap({
       >
         <Sphere
           id="globe-sphere"
-          fill="#0a0f1a"
-          stroke="#1a1a1a"
+          fill="var(--map-sphere)"
+          stroke="var(--map-stroke)"
           strokeWidth={0.5}
         />
         <Geographies geography={geoUrl}>
@@ -275,13 +295,13 @@ export function TravelMap({
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
-                  fill={isVisited ? "#b8922f" : "#2a2a2a"}
-                  stroke="#1a1a1a"
+                  data-visited={isVisited}
+                  stroke="var(--map-stroke)"
                   strokeWidth={0.5}
                   style={{
-                    default: { outline: "none" },
+                    default: { fill: isVisited ? "var(--map-visited)" : "var(--map-land)", outline: "none" },
                     hover: {
-                      fill: isVisited ? "#d4a847" : "#3a3a3a",
+                      fill: isVisited ? "var(--map-visited-hover)" : "var(--map-land-hover)",
                       outline: "none",
                       cursor: isVisited ? "pointer" : "default",
                     },
@@ -313,7 +333,8 @@ export function TravelMap({
                 key={`flight-${route.from}-${route.to}-${idx}`}
                 from={from}
                 to={to}
-                stroke="rgba(212, 168, 71, 0.6)"
+                stroke="var(--accent)"
+                strokeOpacity={0.6}
                 strokeWidth={Math.min(0.8 + route.count * 0.15, 3)}
                 strokeLinecap="round"
                 style={{ cursor: "pointer" }}
@@ -342,10 +363,9 @@ export function TravelMap({
               >
                 <circle
                   r={Math.min(2.5 + airport.count * 0.05, 5)}
-                  fill="#d4a847"
-                  stroke="#1a1a1a"
+                  stroke="var(--map-stroke)"
                   strokeWidth={0.5}
-                  style={{ cursor: "pointer" }}
+                  style={{ fill: "var(--accent)", cursor: "pointer" }}
                 />
               </Marker>
             );

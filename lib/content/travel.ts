@@ -117,6 +117,34 @@ export function getRecentCountries(count: number = 5): Country[] {
     .map(castCountry)
 }
 
+export interface ContinentBar {
+  name: string
+  count: number
+  pct: number
+}
+
+/** Countries first visited on or before `year` (all of them if `year` is omitted). */
+export const countriesUpTo = (countries: Country[], year?: number): Country[] =>
+  year ? countries.filter((c) => c.firstVisited <= year) : countries
+
+/** Continent bars for the countries first visited on or before `year`. */
+export function buildContinentBars(countries: Country[], year?: number): ContinentBar[] {
+  const visible = countriesUpTo(countries, year)
+  const counts = visible.reduce<Record<string, number>>(
+    (acc, c) => ({ ...acc, [c.continent]: (acc[c.continent] ?? 0) + 1 }),
+    {}
+  )
+  const entries = Object.entries(counts).sort(([, a], [, b]) => b - a)
+  const max = entries.length > 0 ? entries[0][1] : 1
+  return entries.map(([name, count]) => ({ name, count, pct: Math.round((count / max) * 100) }))
+}
+
+/** [earliest, latest] firstVisited year across `countries`. */
+export const yearBounds = (countries: Country[]): [number, number] => {
+  const years = countries.map((c) => c.firstVisited)
+  return [Math.min(...years), Math.max(...years)]
+}
+
 // Flight data types and functions
 export interface FlightRoute {
   from: string

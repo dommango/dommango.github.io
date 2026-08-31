@@ -1,9 +1,15 @@
 'use client'
 
 // Travel — brutalist continent bars + the real interactive globe map.
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
-import type { Country, FlightRoute } from '@/lib/content/travel'
+import {
+  buildContinentBars,
+  countriesUpTo,
+  yearBounds,
+  type Country,
+  type FlightRoute,
+} from '@/lib/content/travel'
 import { BinaryRule } from './BinaryRule'
 
 const TravelMap = dynamic(
@@ -18,14 +24,7 @@ const TravelMap = dynamic(
   }
 )
 
-export interface ContinentBar {
-  name: string
-  count: number
-  pct: number
-}
-
 interface TravelProps {
-  continents: ContinentBar[]
   totalCountries: number
   totalContinents: number
   countries: Country[]
@@ -33,16 +32,9 @@ interface TravelProps {
   totalFlights: number
 }
 
-const HIGHLIGHTS = [
-  'Trekking Patagonia',
-  'Southeast Asia',
-  'Live music in Lisbon',
-  'Snowboarding Hokkaido',
-  'Iceland ring road',
-]
+const PLAY_INTERVAL_MS = 260
 
 export function Travel({
-  continents,
   totalCountries,
   totalContinents,
   countries,
@@ -50,6 +42,26 @@ export function Travel({
   totalFlights,
 }: TravelProps) {
   const [showFlights, setShowFlights] = useState(true)
+  const [min, max] = yearBounds(countries)
+  const [year, setYear] = useState(max)
+  const [playing, setPlaying] = useState(false)
+
+  const bars = buildContinentBars(countries, year)
+  const visible = countriesUpTo(countries, year)
+  const continentsVisible = new Set(visible.map((c) => c.continent)).size
+  const newThisYear = countries.filter((c) => c.firstVisited === year)
+
+  useEffect(() => {
+    if (!playing) return
+    const id = setTimeout(() => {
+      if (year >= max) {
+        setPlaying(false)
+        return
+      }
+      setYear((y) => y + 1)
+    }, PLAY_INTERVAL_MS)
+    return () => clearTimeout(id)
+  }, [playing, year, max])
 
   return (
     <section id="travel" className="travel section">
@@ -57,9 +69,10 @@ export function Travel({
       <div className="travel-head">
         <span className="ds-eyebrow">Travel</span>
         <h2 className="travel-title">
-          {totalCountries}+ countries.
+          {visible.length}
+          {year === max ? '+' : ''} countries.
           <br />
-          {totalContinents} continents.
+          {continentsVisible} continents.
         </h2>
         <p className="travel-blurb">
           Less box-checking, more discomfort on purpose. Travel built my tolerance for ambiguity
@@ -69,7 +82,7 @@ export function Travel({
 
       <div className="travel-grid">
         <ul className="continent-list">
-          {continents.map((c) => (
+          {bars.map((c) => (
             <li key={c.name} className="continent-row">
               <span className="continent-name">{c.name}</span>
               <span className="continent-bar">
@@ -80,22 +93,55 @@ export function Travel({
           ))}
         </ul>
 
-        <div className="travel-highlights">
-          <span className="ds-eyebrow">Highlights</span>
-          <ul className="highlight-list">
-            {HIGHLIGHTS.map((h, i) => (
-              <li key={h}>
-                <span className="hl-num">#{String(i + 1).padStart(2, '0')}</span>
-                {h}
-              </li>
-            ))}
-          </ul>
+        <div className="scrub">
+          <span className="ds-eyebrow">Scrub the years</span>
+          <div className="scrub-year" aria-live="polite">
+            {year}
+          </div>
+          <input
+            type="range"
+            min={min}
+            max={max}
+            step={1}
+            value={year}
+            onChange={(e) => {
+              setPlaying(false)
+              setYear(Number(e.target.value))
+            }}
+            aria-label="Show countries first visited up to this year"
+          />
+          <div className="scrub-row">
+            <button
+              type="button"
+              className="travel-map-toggle"
+              onClick={() => {
+                if (year >= max) setYear(min - 1)
+                setPlaying((p) => !p)
+              }}
+            >
+              {playing ? '■ Stop' : '▶ Play'}
+            </button>
+            <span className="scrub-stat">
+              <b>{visible.length}</b> countries · <b>{continentsVisible}</b> continents · by {year}
+            </span>
+          </div>
+          <div className="scrub-new">
+            {newThisYear.length > 0 ? (
+              newThisYear.map((c) => (
+                <span key={c.id} className="scrub-chip">
+                  {c.name}
+                </span>
+              ))
+            ) : (
+              <span className="scrub-chip is-muted">none that year</span>
+            )}
+          </div>
         </div>
       </div>
 
       <div className="travel-map-wrap">
         <div className="travel-map-head">
-          <span className="ds-eyebrow">The map · drag to rotate</span>
+          <span className="ds-eyebrow">The map · drag or use arrow keys</span>
           <button
             type="button"
             className={`travel-map-toggle ${showFlights ? 'is-active' : ''}`}
@@ -105,7 +151,12 @@ export function Travel({
           </button>
         </div>
         <div className="travel-map-frame">
-          <TravelMap countries={countries} flightRoutes={flightRoutes} showFlights={showFlights} />
+          <TravelMap
+            countries={countries}
+            flightRoutes={flightRoutes}
+            showFlights={showFlights}
+            selectedYear={year}
+          />
         </div>
         <p className="travel-map-cap">
           {totalCountries} countries across {totalContinents} continents
