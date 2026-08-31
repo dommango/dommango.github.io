@@ -49,12 +49,19 @@ export async function sendContactEmail({
   }
 
   try {
+    // Stopgap: the EmailJS template's "To email" field is still {{to_email}},
+    // so omitting these makes every send 422 with "recipients address is
+    // empty" (confirmed live 2026-08-31). Routes to the sender, not Dom, until
+    // the template is hard-coded to his address — see docs/plans/01-reconnect-live-plumbing.md
+    // step 3. Remove to_name/to_email again once that's done.
     const response = await emailjs.send(
       serviceId,
       templateId,
       {
         from_name: fromName,
         from_email: fromEmail,
+        to_name: fromName,
+        to_email: fromEmail,
         reply_to: fromEmail,
         message
       }
