@@ -117,6 +117,50 @@ export function getRecentCountries(count: number = 5): Country[] {
     .map(castCountry)
 }
 
+export interface ContinentBar {
+  name: string
+  count: number
+  pct: number
+}
+
+/** Countries first visited on or before `year` (all of them if `year` is omitted). */
+export const countriesUpTo = (countries: Country[], year?: number): Country[] =>
+  year ? countries.filter((c) => c.firstVisited <= year) : countries
+
+/** Continent bars for the countries first visited on or before `year`. */
+export function buildContinentBars(countries: Country[], year?: number): ContinentBar[] {
+  const visible = countriesUpTo(countries, year)
+  const counts = visible.reduce<Record<string, number>>(
+    (acc, c) => ({ ...acc, [c.continent]: (acc[c.continent] ?? 0) + 1 }),
+    {}
+  )
+  const entries = Object.entries(counts).sort(([, a], [, b]) => b - a)
+  const max = entries.length > 0 ? entries[0][1] : 1
+  return entries.map(([name, count]) => ({ name, count, pct: Math.round((count / max) * 100) }))
+}
+
+/** [earliest, latest] firstVisited year across `countries`. */
+export const yearBounds = (countries: Country[]): [number, number] => {
+  const years = countries.map((c) => c.firstVisited)
+  return [Math.min(...years), Math.max(...years)]
+}
+
+export interface PlayState {
+  year: number
+  playing: boolean
+}
+
+/**
+ * Decide the next {year, playing} when the scrubber's Play/Stop button is
+ * clicked. Stop only ever stops. Restarting from `max` resets to `min`, not
+ * `min - 1` — a range input clamps an out-of-bounds value to its own `min`,
+ * which desyncs the rendered year label from the slider thumb.
+ */
+export function nextPlayState(state: PlayState, min: number, max: number): PlayState {
+  if (state.playing) return { year: state.year, playing: false }
+  return { year: state.year >= max ? min : state.year, playing: true }
+}
+
 // Flight data types and functions
 export interface FlightRoute {
   from: string

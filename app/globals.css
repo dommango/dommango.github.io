@@ -170,6 +170,14 @@ input,
   --border-strong: var(--bone-400);
   --rule: color-mix(in srgb, var(--bone-100) 18%, transparent);
 
+  /* ---- Travel globe tokens -------------------------------- */
+  --map-sphere: var(--oxblood-1000);
+  --map-land: #2a2a2a;
+  --map-land-hover: #3a3a3a;
+  --map-visited: var(--accent-press);
+  --map-visited-hover: var(--accent);
+  --map-stroke: #1a1a1a;
+
   /* ---- Font families (next/font variables from layout) ---- */
   --font-display: var(--font-archivo-black), "Helvetica Neue", Arial, sans-serif;
   --font-sans: var(--font-space-grotesk), "Helvetica Neue", Arial, sans-serif;
@@ -257,6 +265,11 @@ input,
   --border-bru: var(--ink-000);
   --border-strong: var(--ink-000);
   --rule: var(--ink-000);
+
+  --map-land: #333;
+  --map-visited: #fff;
+  --map-visited-hover: #ddd;
+  --map-stroke: #000;
 }
 
 .brutalist-root *,
@@ -573,37 +586,15 @@ input,
   color: var(--fg);
   text-align: right;
 }
-.travel-highlights {
-  border: 1px solid var(--rule);
-  padding: var(--s-5);
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-3);
-}
-.highlight-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-.highlight-list li {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  padding: 10px 0;
-  border-top: 1px solid var(--rule);
-  font-family: var(--font-sans);
-  font-size: 14px;
-  color: var(--fg);
-}
-.highlight-list li:first-child { border-top: 0; }
-.hl-num {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--accent);
-  letter-spacing: 0.08em;
-}
+.scrub { border: 1px solid var(--rule); padding: var(--s-5); display: flex; flex-direction: column; gap: var(--s-4); }
+.scrub-year { font-family: var(--font-display); font-size: 64px; line-height: .9; letter-spacing: -.04em; color: var(--accent); }
+.scrub input[type=range] { width: 100%; accent-color: var(--accent); }
+.scrub-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.scrub-stat { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-muted); }
+.scrub-stat b { color: var(--fg); font-weight: 500; }
+.scrub-new { display: flex; flex-wrap: wrap; gap: 6px; }
+.scrub-chip { font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; padding: 4px 8px; border: 1px solid var(--accent); color: var(--accent); }
+.scrub-chip.is-muted { border-color: var(--rule); color: var(--fg-low); }
 
 /* ---- Travel: real globe map embed ------------------------ */
 .travel-map-wrap { margin-top: var(--s-7); }
@@ -620,11 +611,19 @@ input,
   padding: var(--s-4);
   background: var(--bg-elevated);
 }
-.travel-map-frame :where(.relative) {
-  background: transparent !important;
-  border: 0 !important;
-  border-radius: 0 !important;
+.map-frame { position: relative; width: 100%; overflow: hidden; }
+.map-tip {
+  position: fixed;
+  z-index: 60;
+  background: var(--bg-elevated);
+  border: 1px solid var(--accent);
+  padding: 6px 10px;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg);
 }
+.map-tip small { display: block; color: var(--fg-muted); font-size: 11px; }
 .travel-map-toggle {
   font-family: var(--font-mono);
   font-size: 11px;

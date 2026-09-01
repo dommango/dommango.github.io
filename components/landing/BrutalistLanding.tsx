@@ -8,7 +8,7 @@ import { Availability } from './Availability'
 import { Hero } from './Hero'
 import { Projects } from './Projects'
 import { Writing } from './Writing'
-import { Travel, type ContinentBar } from './Travel'
+import { Travel } from './Travel'
 import { Contact } from './Contact'
 import { Resume } from './Resume'
 import { Footer } from './Footer'
@@ -16,7 +16,6 @@ import { hasPosts } from '@/lib/content/writing'
 import type { Country, FlightRoute } from '@/lib/content/travel'
 
 export interface LandingTravelData {
-  continents: ContinentBar[]
   totalCountries: number
   totalContinents: number
   countries: Country[]
@@ -83,7 +82,6 @@ export function BrutalistLanding({ travel }: { travel: LandingTravelData }) {
           {showWriting && <Writing />}
           <Resume />
           <Travel
-            continents={travel.continents}
             totalCountries={travel.totalCountries}
             totalContinents={travel.totalContinents}
             countries={travel.countries}
