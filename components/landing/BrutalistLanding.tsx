@@ -30,7 +30,8 @@ export interface LandingTravelData {
 const SECTION_IDS: SectionId[] = ['hero', 'projects', 'writing', 'resume', 'travel', 'contact']
 
 function scrollToSection(id: SectionId) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  document.getElementById(id)?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' })
 }
 
 export function BrutalistLanding({ travel }: { travel: LandingTravelData }) {
@@ -68,6 +69,7 @@ export function BrutalistLanding({ travel }: { travel: LandingTravelData }) {
   return (
     <div className="brutalist-root" data-accent={accentAttr} data-contrast={contrastAttr}>
       <div className="page">
+        <a className="skip-link" href="#projects">Skip to projects</a>
         <Nav
           section={section}
           mode={mode}

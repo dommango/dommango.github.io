@@ -64,7 +64,7 @@ export function Contact() {
             <br />
             Talk
           </h2>
-          <div className="contact-tracked">L E T &apos; S &nbsp; T A L K</div>
+          <div className="contact-tracked" aria-hidden="true">L E T &apos; S &nbsp; T A L K</div>
           <a className="contact-email" href="mailto:dom.mangonon@gmail.com">
             dom.mangonon@gmail.com →
           </a>

@@ -1,5 +1,8 @@
+'use client'
+
 // Nav — sticky top nav. Brand wordmark + section links + a single theme
 // toggle that cycles Gold (default) → Oxblood → High Contrast.
+import { useEffect, useRef } from 'react'
 
 export type ThemeMode = 'gold' | 'oxblood' | 'contrast'
 export type SectionId = 'hero' | 'projects' | 'writing' | 'resume' | 'travel' | 'contact'
@@ -20,6 +23,28 @@ interface NavProps {
 }
 
 export function Nav({ section, mode, onCycleMode, onNavigate, showWriting }: NavProps) {
+  const navRef = useRef<HTMLElement>(null)
+  const linksRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const links = linksRef.current
+    const nav = navRef.current
+    if (!links || !nav) return
+    const onScroll = () => {
+      const atEnd = links.scrollLeft + links.clientWidth >= links.scrollWidth - 2
+      links.classList.toggle('is-scrolled-end', atEnd)
+      nav.classList.toggle('is-scrolled-end', atEnd)
+    }
+    links.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    document.fonts?.ready.then(onScroll)
+    onScroll()
+    return () => {
+      links.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [])
+
   const link = (id: SectionId, label: string) => (
     <a
       href={`#${id}`}
@@ -34,7 +59,7 @@ export function Nav({ section, mode, onCycleMode, onNavigate, showWriting }: Nav
   )
 
   return (
-    <nav className="site-nav">
+    <nav className="site-nav" aria-label="Main" ref={navRef}>
       <a
         href="#hero"
         className="brand"
@@ -47,7 +72,7 @@ export function Nav({ section, mode, onCycleMode, onNavigate, showWriting }: Nav
         <span className="brand-mark">DM</span>
         <span className="brand-word">Dom Mangonon</span>
       </a>
-      <div className="nav-links">
+      <div className="nav-links" ref={linksRef}>
         {link('hero', 'Intro')}
         {link('projects', 'Projects')}
         {showWriting && link('writing', 'Writing')}
