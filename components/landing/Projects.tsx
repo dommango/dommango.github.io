@@ -29,7 +29,7 @@ function CardBody({ project }: { project: Project }) {
 
 export function Projects() {
   return (
-    <section id="projects" className="projects section">
+    <section id="projects" className="projects section" tabIndex={-1}>
       <BinaryRule seed={57} />
       <div className="projects-head">
         <span className="ds-eyebrow">Projects</span>
