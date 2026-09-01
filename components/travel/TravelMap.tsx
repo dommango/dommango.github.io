@@ -234,27 +234,38 @@ export function TravelMap({
       ref={containerRef}
       className="map-frame"
       onPointerDown={(e) => {
+        // Seed the tooltip position on press — a tap has no preceding
+        // pointermove, so without this the tooltip renders at its stale
+        // (0,0) default the first time a touch lands on a country.
+        setMousePos({ x: e.clientX, y: e.clientY });
         e.currentTarget.setPointerCapture(e.pointerId);
         handleMouseDown(e);
       }}
       onPointerMove={handleMouseMove}
-      onPointerUp={handleMouseUp}
+      onPointerUp={(e) => {
+        // Touch/pen have no hover to dismiss the tooltip on — a mouse gets
+        // one via onMouseLeave/onPointerLeave on the Geography itself.
+        if (e.pointerType !== "mouse") hideTooltip();
+        handleMouseUp();
+      }}
       onPointerCancel={handleMouseUp}
       onPointerLeave={() => {
         hideTooltip();
         handleMouseUp();
       }}
-      style={{ cursor: isDragging ? "grabbing" : "grab", touchAction: "none" }}
+      style={{ cursor: isDragging ? "grabbing" : "grab", touchAction: "pan-y" }}
       tabIndex={0}
-      role="img"
+      role="group"
       aria-label={`Globe showing ${displayedCountries.length} visited countries. Drag or use the arrow keys to rotate.`}
       onKeyDown={(e) => {
         const step = 10;
         const [lon, lat] = rotation;
+        // Match drag: dragging up increases rotation[1] (dy < 0, so
+        // rotation[1] - dy*sensitivity grows), so ArrowUp must also increase it.
         if (e.key === "ArrowLeft") setRotation([lon - step, lat, 0]);
         else if (e.key === "ArrowRight") setRotation([lon + step, lat, 0]);
-        else if (e.key === "ArrowUp") setRotation([lon, Math.max(-90, lat - step), 0]);
-        else if (e.key === "ArrowDown") setRotation([lon, Math.min(90, lat + step), 0]);
+        else if (e.key === "ArrowUp") setRotation([lon, Math.min(90, lat + step), 0]);
+        else if (e.key === "ArrowDown") setRotation([lon, Math.max(-90, lat - step), 0]);
         else return;
         e.preventDefault();
       }}
@@ -290,22 +301,28 @@ export function TravelMap({
             geographies.map((geo) => {
               const isoCode = geo.id as string;
               const isVisited = visitedIsoCodesSet.has(isoCode);
+              const baseFill = isVisited ? "var(--map-visited)" : "var(--map-land)";
 
               return (
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
                   data-visited={isVisited}
+                  // react-simple-maps hardcodes tabIndex=0 on every path; with
+                  // 177+ geographies that turns Tab into a scroll-by-country
+                  // trap after focusing the globe. The group itself is the
+                  // one keyboard target.
+                  tabIndex={-1}
                   stroke="var(--map-stroke)"
                   strokeWidth={0.5}
                   style={{
-                    default: { fill: isVisited ? "var(--map-visited)" : "var(--map-land)", outline: "none" },
+                    default: { fill: baseFill, outline: "none" },
                     hover: {
                       fill: isVisited ? "var(--map-visited-hover)" : "var(--map-land-hover)",
                       outline: "none",
                       cursor: isVisited ? "pointer" : "default",
                     },
-                    pressed: { outline: "none" },
+                    pressed: { fill: baseFill, outline: "none" },
                   }}
                   onMouseEnter={() => {
                     if (isVisited) showCountryTooltip(isoCode);

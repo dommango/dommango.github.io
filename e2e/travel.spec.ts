@@ -112,7 +112,7 @@ test.describe("Travel map", () => {
       () => document.querySelectorAll('#travel svg path[data-visited="true"]').length > 0,
       { timeout: 15000 },
     );
-    const globe = page.getByRole("img", { name: /globe showing/i });
+    const globe = page.getByRole("group", { name: /globe showing/i });
     await globe.focus();
     const country = page.locator('#travel svg path[data-visited="true"]').first();
     const before = await country.getAttribute("d");

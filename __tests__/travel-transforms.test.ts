@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { buildContinentBars, countriesUpTo, yearBounds, type Country } from '../lib/content/travel'
+import { buildContinentBars, countriesUpTo, nextPlayState, yearBounds, type Country } from '../lib/content/travel'
 
 const country = (overrides: Partial<Country> = {}): Country => ({
   id: 'x',
@@ -64,5 +64,33 @@ describe('buildContinentBars', () => {
 describe('yearBounds', () => {
   it('returns the min and max firstVisited years', () => {
     expect(yearBounds(FIXTURE)).toEqual([1986, 2020])
+  })
+})
+
+describe('nextPlayState', () => {
+  const min = 1986
+  const max = 2020
+
+  it('stops without touching the year', () => {
+    expect(nextPlayState({ year: 2000, playing: true }, min, max)).toEqual({
+      year: 2000,
+      playing: false,
+    })
+  })
+
+  it('starts from the current year when not at the end', () => {
+    expect(nextPlayState({ year: 2000, playing: false }, min, max)).toEqual({
+      year: 2000,
+      playing: true,
+    })
+  })
+
+  it('restarts at min — not min - 1 — when starting from max', () => {
+    // min - 1 sits outside a <input type=range min={min}> and gets clamped
+    // by the browser, desyncing the rendered label from the slider thumb.
+    expect(nextPlayState({ year: max, playing: false }, min, max)).toEqual({
+      year: min,
+      playing: true,
+    })
   })
 })

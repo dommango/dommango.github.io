@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 import {
   buildContinentBars,
   countriesUpTo,
+  nextPlayState,
   yearBounds,
   type Country,
   type FlightRoute,
@@ -95,7 +96,8 @@ export function Travel({
 
         <div className="scrub">
           <span className="ds-eyebrow">Scrub the years</span>
-          <div className="scrub-year" aria-live="polite">
+          {/* Silenced while playing — Play announces 39 years in ~10s otherwise. */}
+          <div className="scrub-year" aria-live={playing ? 'off' : 'polite'}>
             {year}
           </div>
           <input
@@ -114,12 +116,14 @@ export function Travel({
             <button
               type="button"
               className="travel-map-toggle"
+              aria-pressed={playing}
               onClick={() => {
-                if (year >= max) setYear(min - 1)
-                setPlaying((p) => !p)
+                const next = nextPlayState({ year, playing }, min, max)
+                setYear(next.year)
+                setPlaying(next.playing)
               }}
             >
-              {playing ? '■ Stop' : '▶ Play'}
+              <span aria-hidden="true">{playing ? '■' : '▶'}</span> {playing ? 'Stop' : 'Play'}
             </button>
             <span className="scrub-stat">
               <b>{visible.length}</b> countries · <b>{continentsVisible}</b> continents · by {year}
@@ -159,7 +163,9 @@ export function Travel({
           />
         </div>
         <p className="travel-map-cap">
-          {totalCountries} countries across {totalContinents} continents
+          {/* All-time total, independent of the scrubber above — the heading
+              tracks `year`, this caption describes the whole dataset. */}
+          All-time: {totalCountries} countries across {totalContinents} continents
           {showFlights ? ` · ${totalFlights} flights` : ''}
         </p>
       </div>

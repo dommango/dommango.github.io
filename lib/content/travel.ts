@@ -145,6 +145,22 @@ export const yearBounds = (countries: Country[]): [number, number] => {
   return [Math.min(...years), Math.max(...years)]
 }
 
+export interface PlayState {
+  year: number
+  playing: boolean
+}
+
+/**
+ * Decide the next {year, playing} when the scrubber's Play/Stop button is
+ * clicked. Stop only ever stops. Restarting from `max` resets to `min`, not
+ * `min - 1` — a range input clamps an out-of-bounds value to its own `min`,
+ * which desyncs the rendered year label from the slider thumb.
+ */
+export function nextPlayState(state: PlayState, min: number, max: number): PlayState {
+  if (state.playing) return { year: state.year, playing: false }
+  return { year: state.year >= max ? min : state.year, playing: true }
+}
+
 // Flight data types and functions
 export interface FlightRoute {
   from: string
