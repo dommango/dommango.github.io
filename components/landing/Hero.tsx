@@ -37,7 +37,7 @@ export function Hero() {
         <div className="hero-meta-col">
           <span className="ds-eyebrow">About</span>
           <p className="hero-about">
-            Seventeen years in financial services — operations at BNP Paribas through 2008, an MBA
+            Seventeen years in financial services: operations at BNP Paribas through 2008, an MBA
             at CMU Tepper, consulting at PwC, and now SVP at Citi.
           </p>
           <p className="hero-about hero-about-secondary">

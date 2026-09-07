@@ -44,7 +44,7 @@ export const PROJECTS: Project[] = [
     impact: 'Live · ran a real World Cup pool',
     points: [
       'Create a pool, invite friends, make bracket picks, watch a leaderboard update from live results',
-      'Knockout seeding follows FIFA Annex C — the tiebreak rules are genuinely gnarly',
+      'Knockout seeding follows FIFA Annex C. The tiebreak rules are genuinely gnarly',
       'Started as a pool for friends, grew into a multi-tenant platform',
     ],
     href: 'https://fifawc26.up.railway.app',
@@ -59,7 +59,7 @@ export const PROJECTS: Project[] = [
     points: [
       'A one-page reference for Claude Code: shortcuts, slash commands, flags, hooks, MCP',
       'A scheduled agent re-reads the latest release every day and opens a PR when anything drifts',
-      'The interesting part is not the page — it is that nobody updates it by hand',
+      'Nobody updates it by hand',
     ],
     href: 'https://dommango.github.io/claude-code-placemat/',
     hrefKind: 'live',
