@@ -33,8 +33,8 @@ export const PROJECTS: Project[] = [
       'A scheduled agent re-reads the latest release every day and opens a PR when anything drifts',
       'Nobody updates it by hand',
     ],
-    href: 'https://dommango.github.io/claude-code-placemat/',
-    hrefKind: 'live',
+    href: 'https://github.com/dommango/claude-code-placemat',
+    hrefKind: 'repo',
   },
   {
     id: '#sous-0002/05',
@@ -61,8 +61,8 @@ export const PROJECTS: Project[] = [
       'Knockout seeding follows FIFA Annex C. The tiebreak rules are genuinely gnarly',
       'Started as a pool for friends, grew into a multi-tenant platform',
     ],
-    href: 'https://fifawc26.up.railway.app',
-    hrefKind: 'live',
+    href: 'https://github.com/dommango/bracketeer',
+    hrefKind: 'repo',
   },
   {
     id: '#modm-0004/05',
