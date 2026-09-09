@@ -33,8 +33,8 @@ export const PROJECTS: Project[] = [
       'A scheduled agent re-reads the latest release every day and opens a PR when anything drifts',
       'Nobody updates it by hand',
     ],
-    href: 'https://github.com/dommango/claude-code-placemat',
-    hrefKind: 'repo',
+    href: 'https://dommango.github.io/claude-code-placemat/',
+    hrefKind: 'live',
   },
   {
     id: '#sous-0002/05',
