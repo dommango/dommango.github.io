@@ -1,15 +1,21 @@
 {
-  "lastUpdated": "2026-09-12T06:05:25.501Z",
+  "lastUpdated": "2026-09-12T12:04:28.080Z",
   "period": {
     "start": "2026-09-05",
     "end": "2026-09-12"
   },
   "summary": {
-    "pageViews": 0,
+    "pageViews": 4,
     "uniqueVisitors": 0,
     "bounceRate": 0
   },
-  "topPages": [],
+  "topPages": [
+    {
+      "path": "/",
+      "views": 4,
+      "visitors": 4
+    }
+  ],
   "trafficSources": [],
   "dailyStats": []
 }
