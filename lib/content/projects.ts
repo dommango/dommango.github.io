@@ -23,7 +23,21 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
-    id: '#sous-0001/05',
+    id: '#plcm-0001/05',
+    name: 'Claude Code Placemat',
+    stack: 'Static HTML · GitHub Actions · scheduled agent',
+    year: '2026 →',
+    impact: 'Maintains itself · MIT',
+    points: [
+      'A one-page reference for Claude Code: shortcuts, slash commands, flags, hooks, MCP',
+      'A scheduled agent re-reads the latest release every day and opens a PR when anything drifts',
+      'Nobody updates it by hand',
+    ],
+    href: 'https://dommango.github.io/claude-code-placemat/',
+    hrefKind: 'live',
+  },
+  {
+    id: '#sous-0002/05',
     name: 'SousIQ',
     stack: 'Express · React 19 · Postgres + pgvector · Claude',
     year: '2025 →',
@@ -37,32 +51,18 @@ export const PROJECTS: Project[] = [
     hrefKind: 'live',
   },
   {
-    id: '#brkt-0002/05',
+    id: '#brkt-0003/05',
     name: 'Bracketeer',
     stack: 'Next 16 · Prisma 7 · Auth.js · Railway',
-    year: '2026 →',
-    impact: 'Live · ran a real World Cup pool',
+    year: '2026',
+    impact: 'Ran a real World Cup pool · 40+ players',
     points: [
       'Create a pool, invite friends, make bracket picks, watch a leaderboard update from live results',
-      'Knockout seeding follows FIFA Annex C — the tiebreak rules are genuinely gnarly',
+      'Knockout seeding follows FIFA Annex C. The tiebreak rules are genuinely gnarly',
       'Started as a pool for friends, grew into a multi-tenant platform',
     ],
-    href: 'https://fifawc26.up.railway.app',
-    hrefKind: 'live',
-  },
-  {
-    id: '#plcm-0003/05',
-    name: 'Claude Code Placemat',
-    stack: 'Static HTML · GitHub Actions · scheduled agent',
-    year: '2026 →',
-    impact: 'Maintains itself · MIT',
-    points: [
-      'A one-page reference for Claude Code: shortcuts, slash commands, flags, hooks, MCP',
-      'A scheduled agent re-reads the latest release every day and opens a PR when anything drifts',
-      'The interesting part is not the page — it is that nobody updates it by hand',
-    ],
-    href: 'https://dommango.github.io/claude-code-placemat/',
-    hrefKind: 'live',
+    href: 'https://github.com/dommango/bracketeer',
+    hrefKind: 'repo',
   },
   {
     id: '#modm-0004/05',

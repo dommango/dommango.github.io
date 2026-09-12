@@ -6,7 +6,7 @@ const TIMELINE = [
   {
     y: '2025 →',
     t: 'Building with AI',
-    d: 'Shipping software nights and weekends with Claude Code — see above',
+    d: 'Shipping software nights and weekends with Claude Code (see above)',
   },
   {
     y: '2021 →',
