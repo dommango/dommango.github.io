@@ -39,7 +39,11 @@ all data loaded at build time) · GitHub Pages deploy via `.github/workflows/dep
 - Content is hand-authored TS in `lib/content/`, not markdown/JSON (`resolveJsonModule` +
   `strict` infers `never[]` from an empty JSON array, which fails typecheck). Travel data is the
   exception — script-generated JSON via `scripts/process-travel-data.js` /
-  `scripts/fetch-flights.js` (both manual, not automated).
+  `scripts/fetch-flights.js` (both manual, not automated). Countries come from a Notion-exported
+  CSV at `~/personal/travel/`; flights from the `Flighty - App Data` Notion DB. Flighty itself was
+  deleted in 2026, so that DB is no longer a sync target — it's the hand-maintained log of record,
+  and new flights get added to it before re-running the script. `generateRoutes` merges A→B with
+  B→A and stores the alphabetical direction, so a re-run is byte-stable apart from `generatedAt`.
 - `github-actions[bot]` pushes with the default `GITHUB_TOKEN` don't trigger workflows, so a cron
   that commits data can't make the site rebuild. Anything needing fresh data at deploy time must
   fetch during the build, not commit-then-rebuild.

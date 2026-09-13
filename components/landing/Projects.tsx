@@ -35,7 +35,7 @@ export function Projects() {
         <span className="ds-eyebrow">Projects</span>
         <h2 className="projects-title">Things I built.</h2>
         <p className="projects-blurb">
-          Mostly nights and weekends, mostly with Claude Code. A couple are running in the wild;
+          Mostly nights and weekends, mostly with coding agents. A couple are running in the wild;
           a couple are pipelines that only ever needed to run once.
         </p>
       </div>

@@ -13,7 +13,7 @@ export function Footer({ onHome }: FooterProps) {
           <span className="brand-word">Dom Mangonon</span>
         </button>
         <div className="footer-socials">
-          <a href="https://linkedin.com/in/dommangonon" target="_blank" rel="noreferrer">
+          <a href="https://www.linkedin.com/in/dominicmangonon/" target="_blank" rel="noreferrer">
             LinkedIn ↗
           </a>
           <a href="https://x.com/collapsecontext" target="_blank" rel="noreferrer">
@@ -28,8 +28,6 @@ export function Footer({ onHome }: FooterProps) {
         </div>
         <div className="footer-legal">
           <span>© 2026 · Dom Mangonon</span>
-          <span>·</span>
-          <span>Built with Claude Code</span>
         </div>
       </div>
     </footer>

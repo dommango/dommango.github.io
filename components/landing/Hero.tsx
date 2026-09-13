@@ -42,9 +42,9 @@ export function Hero() {
           </p>
           <p className="hero-about hero-about-secondary">
             In 2025 I went all in on AI and started shipping actual software: a restaurant cost
-            tracker, a tournament bracket engine, an SEC filings pipeline. All built with Claude
-            Code, including this site. The projects below are real, deployed, and mostly still
-            running.
+            tracker, a tournament bracket engine, an SEC filings pipeline. All built using
+            coding agents, including this site. The projects below are real, deployed, and mostly
+            still running.
           </p>
         </div>
       </div>

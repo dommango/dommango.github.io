@@ -6,7 +6,7 @@ const TIMELINE = [
   {
     y: '2025 →',
     t: 'Building with AI',
-    d: 'Shipping software nights and weekends with Claude Code (see above)',
+    d: 'Shipping software nights and weekends with coding agents (see above)',
   },
   {
     y: '2021 →',
@@ -62,7 +62,7 @@ export function Resume() {
           </p>
           <a
             className="writing-all"
-            href="https://linkedin.com/in/dommangonon"
+            href="https://www.linkedin.com/in/dominicmangonon/"
             target="_blank"
             rel="noreferrer"
           >

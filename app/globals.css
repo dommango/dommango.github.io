@@ -945,6 +945,34 @@ input,
   letter-spacing: 0.04em;
   color: var(--blood-400);
 }
+.form-success {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px var(--s-3);
+  align-items: center;
+  padding: var(--s-4);
+  border: 2px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+.form-success-mark {
+  grid-row: 1 / span 2;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--accent-text);
+}
+.form-success-head {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.form-success-body {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--fg-muted);
+}
 .form-captcha { align-self: flex-start; }
 
 /* ---- Resume ---------------------------------------------- */
