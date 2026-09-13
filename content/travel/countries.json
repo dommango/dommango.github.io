@@ -608,7 +608,7 @@
       "order": 51,
       "continent": "South America",
       "coordinates": [
-        38.4161,
+        -38.4161,
         -63.6167
       ]
     },
@@ -623,10 +623,22 @@
         -14.235,
         -51.9253
       ]
+    },
+    {
+      "id": "aruba",
+      "name": "Aruba",
+      "flag": "🇦🇼",
+      "firstVisited": 2026,
+      "order": 53,
+      "continent": "North America",
+      "coordinates": [
+        12.5211,
+        -69.9683
+      ]
     }
   ],
   "stats": {
-    "totalCountries": 52,
+    "totalCountries": 53,
     "continents": 5,
     "continentNames": [
       "Africa",
@@ -635,14 +647,14 @@
       "North America",
       "South America"
     ],
-    "yearRange": "1986-2024",
+    "yearRange": "1986-2026",
     "firstYear": 1986,
-    "lastYear": 2024,
+    "lastYear": 2026,
     "countriesByContinent": {
       "Africa": 1,
       "Asia": 15,
       "Europe": 21,
-      "North America": 9,
+      "North America": 10,
       "South America": 6
     }
   }

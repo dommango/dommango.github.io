@@ -59,8 +59,9 @@ const COUNTRY_DATA = {
   'Portugal': { continent: 'Europe', coords: [39.3999, -8.2245] },
   'Taiwan': { continent: 'Asia', coords: [23.6978, 120.9605] },
   'Qatar': { continent: 'Asia', coords: [25.3548, 51.1839] },
-  'Argentina': { continent: 'South America', coords: [38.4161, -63.6167] },
-  'Brazil': { continent: 'South America', coords: [-14.2350, -51.9253] }
+  'Argentina': { continent: 'South America', coords: [-38.4161, -63.6167] },
+  'Brazil': { continent: 'South America', coords: [-14.2350, -51.9253] },
+  'Aruba': { continent: 'North America', coords: [12.5211, -69.9683] }
 }
 
 function parseYear(yearStr) {
