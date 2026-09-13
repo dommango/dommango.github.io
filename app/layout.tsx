@@ -102,7 +102,7 @@ export default function RootLayout({
               url: SITE_URL,
               description: "Builds software with AI.",
               sameAs: [
-                "https://linkedin.com/in/dommangonon",
+                "https://www.linkedin.com/in/dominicmangonon/",
                 "https://x.com/collapsecontext",
                 "https://dommangonon.substack.com",
                 "https://github.com/dommango",

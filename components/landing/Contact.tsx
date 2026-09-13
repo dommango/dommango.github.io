@@ -18,8 +18,10 @@ export function Contact() {
   const recaptchaRef = useRef<ReCAPTCHA>(null)
 
   const update =
-    (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setStatus((st) => (st === 'idle' ? st : 'idle'))
       setForm((s) => ({ ...s, [key]: e.target.value }))
+    }
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -45,7 +47,6 @@ export function Contact() {
       setForm({ name: '', email: '', message: '' })
       setCaptchaOk(false)
       recaptchaRef.current?.reset()
-      setTimeout(() => setStatus('idle'), 4000)
     } else {
       setStatus('error')
       setFeedback(result.message)
@@ -69,7 +70,7 @@ export function Contact() {
             dom.mangonon@gmail.com →
           </a>
           <div className="contact-socials">
-            <a href="https://linkedin.com/in/dommangonon" target="_blank" rel="noreferrer">
+            <a href="https://www.linkedin.com/in/dominicmangonon/" target="_blank" rel="noreferrer">
               LinkedIn ↗
             </a>
             <a href="https://x.com/collapsecontext" target="_blank" rel="noreferrer">
@@ -122,6 +123,14 @@ export function Contact() {
           )}
 
           {status === 'error' && <p className="form-error">{feedback}</p>}
+
+          {status === 'success' && (
+            <div className="form-success" role="status">
+              <span className="form-success-mark" aria-hidden="true">✓</span>
+              <span className="form-success-head">Message sent</span>
+              <span className="form-success-body">{feedback}</span>
+            </div>
+          )}
 
           <div className="form-foot">
             <button

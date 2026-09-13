@@ -62,7 +62,7 @@ export function Resume() {
           </p>
           <a
             className="writing-all"
-            href="https://linkedin.com/in/dommangonon"
+            href="https://www.linkedin.com/in/dominicmangonon/"
             target="_blank"
             rel="noreferrer"
           >
