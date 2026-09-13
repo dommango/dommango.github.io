@@ -269,17 +269,20 @@ function generateRoutes(flights) {
     const key = `${flight.from}-${flight.to}`
     const reverseKey = `${flight.to}-${flight.from}`
 
-    // Normalize to always have the same direction
-    const normalizedKey = key < reverseKey ? key : reverseKey
+    // A->B and B->A are one route. Store the canonical (alphabetical) direction
+    // rather than whichever leg happened to come back from Notion first —
+    // otherwise the rendered direction, and the diff, changes on every re-run.
+    const forward = key < reverseKey
+    const normalizedKey = forward ? key : reverseKey
 
     if (routeMap.has(normalizedKey)) {
       routeMap.get(normalizedKey).count++
     } else {
       routeMap.set(normalizedKey, {
-        from: flight.from,
-        to: flight.to,
-        fromCoords: flight.fromCoords,
-        toCoords: flight.toCoords,
+        from: forward ? flight.from : flight.to,
+        to: forward ? flight.to : flight.from,
+        fromCoords: forward ? flight.fromCoords : flight.toCoords,
+        toCoords: forward ? flight.toCoords : flight.fromCoords,
         count: 1
       })
     }
