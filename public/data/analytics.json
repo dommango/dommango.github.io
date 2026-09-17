@@ -1,19 +1,19 @@
 {
-  "lastUpdated": "2026-09-16T18:04:06.918Z",
+  "lastUpdated": "2026-09-17T00:08:52.198Z",
   "period": {
-    "start": "2026-09-09",
-    "end": "2026-09-16"
+    "start": "2026-09-10",
+    "end": "2026-09-17"
   },
   "summary": {
-    "pageViews": 7,
+    "pageViews": 6,
     "uniqueVisitors": 0,
     "bounceRate": 0
   },
   "topPages": [
     {
       "path": "/",
-      "views": 6,
-      "visitors": 6
+      "views": 5,
+      "visitors": 5
     },
     {
       "path": "/assets/Dominic_Mangonon_Resume.pdf",
