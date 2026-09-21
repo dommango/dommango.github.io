@@ -3,7 +3,7 @@
     {
       "id": "usa",
       "name": "USA",
-      "flag": "🇺🇸",
+      "flag": "\ud83c\uddfa\ud83c\uddf8",
       "firstVisited": 1986,
       "order": 1,
       "continent": "North America",
@@ -15,7 +15,7 @@
     {
       "id": "philippines",
       "name": "Philippines",
-      "flag": "🇵🇭",
+      "flag": "\ud83c\uddf5\ud83c\udded",
       "firstVisited": 1994,
       "order": 2,
       "continent": "Asia",
@@ -27,7 +27,7 @@
     {
       "id": "canada",
       "name": "Canada",
-      "flag": "🇨🇦",
+      "flag": "\ud83c\udde8\ud83c\udde6",
       "firstVisited": 1997,
       "order": 3,
       "continent": "North America",
@@ -39,7 +39,7 @@
     {
       "id": "grenada",
       "name": "Grenada",
-      "flag": "🇬🇩",
+      "flag": "\ud83c\uddec\ud83c\udde9",
       "firstVisited": 1998,
       "order": 4,
       "continent": "North America",
@@ -51,7 +51,7 @@
     {
       "id": "sweden",
       "name": "Sweden",
-      "flag": "🇸🇪",
+      "flag": "\ud83c\uddf8\ud83c\uddea",
       "firstVisited": 2000,
       "order": 5,
       "continent": "Europe",
@@ -63,7 +63,7 @@
     {
       "id": "estonia",
       "name": "Estonia",
-      "flag": "🇪🇪",
+      "flag": "\ud83c\uddea\ud83c\uddea",
       "firstVisited": 2000,
       "order": 6,
       "continent": "Europe",
@@ -75,7 +75,7 @@
     {
       "id": "russia",
       "name": "Russia",
-      "flag": "🇷🇺",
+      "flag": "\ud83c\uddf7\ud83c\uddfa",
       "firstVisited": 2000,
       "order": 7,
       "continent": "Europe",
@@ -87,7 +87,7 @@
     {
       "id": "finland",
       "name": "Finland",
-      "flag": "🇫🇮",
+      "flag": "\ud83c\uddeb\ud83c\uddee",
       "firstVisited": 2000,
       "order": 8,
       "continent": "Europe",
@@ -99,7 +99,7 @@
     {
       "id": "dominican-republic",
       "name": "Dominican Republic",
-      "flag": "🇩🇴",
+      "flag": "\ud83c\udde9\ud83c\uddf4",
       "firstVisited": 2003,
       "order": 9,
       "continent": "North America",
@@ -111,7 +111,7 @@
     {
       "id": "uk",
       "name": "UK",
-      "flag": "🇬🇧",
+      "flag": "\ud83c\uddec\ud83c\udde7",
       "firstVisited": 2008,
       "order": 10,
       "continent": "Europe",
@@ -123,7 +123,7 @@
     {
       "id": "france",
       "name": "France",
-      "flag": "🇫🇷",
+      "flag": "\ud83c\uddeb\ud83c\uddf7",
       "firstVisited": 2008,
       "order": 11,
       "continent": "Europe",
@@ -135,7 +135,7 @@
     {
       "id": "monaco",
       "name": "Monaco",
-      "flag": "🇲🇨",
+      "flag": "\ud83c\uddf2\ud83c\udde8",
       "firstVisited": 2008,
       "order": 12,
       "continent": "Europe",
@@ -147,7 +147,7 @@
     {
       "id": "italy",
       "name": "Italy",
-      "flag": "🇮🇹",
+      "flag": "\ud83c\uddee\ud83c\uddf9",
       "firstVisited": 2008,
       "order": 13,
       "continent": "Europe",
@@ -159,7 +159,7 @@
     {
       "id": "vatican-city",
       "name": "Vatican City",
-      "flag": "🇻🇦",
+      "flag": "\ud83c\uddfb\ud83c\udde6",
       "firstVisited": 2008,
       "order": 14,
       "continent": "Europe",
@@ -171,7 +171,7 @@
     {
       "id": "greece",
       "name": "Greece",
-      "flag": "🇬🇷",
+      "flag": "\ud83c\uddec\ud83c\uddf7",
       "firstVisited": 2008,
       "order": 15,
       "continent": "Europe",
@@ -183,7 +183,7 @@
     {
       "id": "austria",
       "name": "Austria",
-      "flag": "🇦🇹",
+      "flag": "\ud83c\udde6\ud83c\uddf9",
       "firstVisited": 2008,
       "order": 16,
       "continent": "Europe",
@@ -195,7 +195,7 @@
     {
       "id": "switzerland",
       "name": "Switzerland",
-      "flag": "🇨🇭",
+      "flag": "\ud83c\udde8\ud83c\udded",
       "firstVisited": 2008,
       "order": 17,
       "continent": "Europe",
@@ -207,7 +207,7 @@
     {
       "id": "czech-republic",
       "name": "Czech Republic",
-      "flag": "🇨🇿",
+      "flag": "\ud83c\udde8\ud83c\uddff",
       "firstVisited": 2008,
       "order": 18,
       "continent": "Europe",
@@ -219,7 +219,7 @@
     {
       "id": "germany",
       "name": "Germany",
-      "flag": "🇩🇪",
+      "flag": "\ud83c\udde9\ud83c\uddea",
       "firstVisited": 2008,
       "order": 19,
       "continent": "Europe",
@@ -231,7 +231,7 @@
     {
       "id": "liechtenstein",
       "name": "Liechtenstein",
-      "flag": "🇱🇮",
+      "flag": "\ud83c\uddf1\ud83c\uddee",
       "firstVisited": 2008,
       "order": 20,
       "continent": "Europe",
@@ -243,7 +243,7 @@
     {
       "id": "netherlands",
       "name": "Netherlands",
-      "flag": "🇳🇱",
+      "flag": "\ud83c\uddf3\ud83c\uddf1",
       "firstVisited": 2008,
       "order": 21,
       "continent": "Europe",
@@ -255,7 +255,7 @@
     {
       "id": "costa-rica",
       "name": "Costa Rica",
-      "flag": "🇨🇷",
+      "flag": "\ud83c\udde8\ud83c\uddf7",
       "firstVisited": 2009,
       "order": 22,
       "continent": "North America",
@@ -267,7 +267,7 @@
     {
       "id": "jamaica",
       "name": "Jamaica",
-      "flag": "🇯🇲",
+      "flag": "\ud83c\uddef\ud83c\uddf2",
       "firstVisited": 2009,
       "order": 23,
       "continent": "North America",
@@ -279,7 +279,7 @@
     {
       "id": "colombia",
       "name": "Colombia",
-      "flag": "🇨🇴",
+      "flag": "\ud83c\udde8\ud83c\uddf4",
       "firstVisited": 2010,
       "order": 24,
       "continent": "South America",
@@ -291,7 +291,7 @@
     {
       "id": "panama",
       "name": "Panama",
-      "flag": "🇵🇦",
+      "flag": "\ud83c\uddf5\ud83c\udde6",
       "firstVisited": 2011,
       "order": 25,
       "continent": "North America",
@@ -303,7 +303,7 @@
     {
       "id": "hong-kong",
       "name": "Hong Kong",
-      "flag": "🇭🇰",
+      "flag": "\ud83c\udded\ud83c\uddf0",
       "firstVisited": 2011,
       "order": 26,
       "continent": "Asia",
@@ -315,7 +315,7 @@
     {
       "id": "cambodia",
       "name": "Cambodia",
-      "flag": "🇰🇭",
+      "flag": "\ud83c\uddf0\ud83c\udded",
       "firstVisited": 2011,
       "order": 27,
       "continent": "Asia",
@@ -327,7 +327,7 @@
     {
       "id": "bolivia",
       "name": "Bolivia",
-      "flag": "🇧🇴",
+      "flag": "\ud83c\udde7\ud83c\uddf4",
       "firstVisited": 2013,
       "order": 28,
       "continent": "South America",
@@ -339,7 +339,7 @@
     {
       "id": "chile",
       "name": "Chile",
-      "flag": "🇨🇱",
+      "flag": "\ud83c\udde8\ud83c\uddf1",
       "firstVisited": 2013,
       "order": 29,
       "continent": "South America",
@@ -351,7 +351,7 @@
     {
       "id": "peru",
       "name": "Peru",
-      "flag": "🇵🇪",
+      "flag": "\ud83c\uddf5\ud83c\uddea",
       "firstVisited": 2013,
       "order": 30,
       "continent": "South America",
@@ -363,7 +363,7 @@
     {
       "id": "morocco",
       "name": "Morocco",
-      "flag": "🇲🇦",
+      "flag": "\ud83c\uddf2\ud83c\udde6",
       "firstVisited": 2014,
       "order": 31,
       "continent": "Africa",
@@ -375,7 +375,7 @@
     {
       "id": "cuba",
       "name": "Cuba",
-      "flag": "🇨🇺",
+      "flag": "\ud83c\udde8\ud83c\uddfa",
       "firstVisited": 2015,
       "order": 32,
       "continent": "North America",
@@ -387,7 +387,7 @@
     {
       "id": "japan",
       "name": "Japan",
-      "flag": "🇯🇵",
+      "flag": "\ud83c\uddef\ud83c\uddf5",
       "firstVisited": 2015,
       "order": 33,
       "continent": "Asia",
@@ -399,7 +399,7 @@
     {
       "id": "china",
       "name": "China",
-      "flag": "🇨🇳",
+      "flag": "\ud83c\udde8\ud83c\uddf3",
       "firstVisited": 2015,
       "order": 34,
       "continent": "Asia",
@@ -411,7 +411,7 @@
     {
       "id": "vietnam",
       "name": "Vietnam",
-      "flag": "🇻🇳",
+      "flag": "\ud83c\uddfb\ud83c\uddf3",
       "firstVisited": 2015,
       "order": 35,
       "continent": "Asia",
@@ -423,7 +423,7 @@
     {
       "id": "thailand",
       "name": "Thailand",
-      "flag": "🇹🇭",
+      "flag": "\ud83c\uddf9\ud83c\udded",
       "firstVisited": 2015,
       "order": 36,
       "continent": "Asia",
@@ -435,7 +435,7 @@
     {
       "id": "malaysia",
       "name": "Malaysia",
-      "flag": "🇲🇾",
+      "flag": "\ud83c\uddf2\ud83c\uddfe",
       "firstVisited": 2015,
       "order": 37,
       "continent": "Asia",
@@ -447,7 +447,7 @@
     {
       "id": "singapore",
       "name": "Singapore",
-      "flag": "🇸🇬",
+      "flag": "\ud83c\uddf8\ud83c\uddec",
       "firstVisited": 2015,
       "order": 38,
       "continent": "Asia",
@@ -459,7 +459,7 @@
     {
       "id": "turkey",
       "name": "Turkey",
-      "flag": "🇹🇷",
+      "flag": "\ud83c\uddf9\ud83c\uddf7",
       "firstVisited": 2015,
       "order": 39,
       "continent": "Asia",
@@ -471,7 +471,7 @@
     {
       "id": "hungary",
       "name": "Hungary",
-      "flag": "🇭🇺",
+      "flag": "\ud83c\udded\ud83c\uddfa",
       "firstVisited": 2015,
       "order": 40,
       "continent": "Europe",
@@ -483,7 +483,7 @@
     {
       "id": "denmark",
       "name": "Denmark",
-      "flag": "🇩🇰",
+      "flag": "\ud83c\udde9\ud83c\uddf0",
       "firstVisited": 2015,
       "order": 41,
       "continent": "Europe",
@@ -495,7 +495,7 @@
     {
       "id": "poland",
       "name": "Poland",
-      "flag": "🇵🇱",
+      "flag": "\ud83c\uddf5\ud83c\uddf1",
       "firstVisited": 2016,
       "order": 42,
       "continent": "Europe",
@@ -507,7 +507,7 @@
     {
       "id": "mexico",
       "name": "Mexico",
-      "flag": "🇲🇽",
+      "flag": "\ud83c\uddf2\ud83c\uddfd",
       "firstVisited": 2017,
       "order": 43,
       "continent": "North America",
@@ -519,7 +519,7 @@
     {
       "id": "nepal",
       "name": "Nepal",
-      "flag": "🇳🇵",
+      "flag": "\ud83c\uddf3\ud83c\uddf5",
       "firstVisited": 2017,
       "order": 44,
       "continent": "Asia",
@@ -531,7 +531,7 @@
     {
       "id": "india",
       "name": "India",
-      "flag": "🇮🇳",
+      "flag": "\ud83c\uddee\ud83c\uddf3",
       "firstVisited": 2017,
       "order": 45,
       "continent": "Asia",
@@ -543,7 +543,7 @@
     {
       "id": "south-korea",
       "name": "South Korea",
-      "flag": "🇰🇷",
+      "flag": "\ud83c\uddf0\ud83c\uddf7",
       "firstVisited": 2017,
       "order": 46,
       "continent": "Asia",
@@ -555,7 +555,7 @@
     {
       "id": "spain",
       "name": "Spain",
-      "flag": "🇪🇸",
+      "flag": "\ud83c\uddea\ud83c\uddf8",
       "firstVisited": 2019,
       "order": 47,
       "continent": "Europe",
@@ -567,7 +567,7 @@
     {
       "id": "portugal",
       "name": "Portugal",
-      "flag": "🇵🇹",
+      "flag": "\ud83c\uddf5\ud83c\uddf9",
       "firstVisited": 2019,
       "order": 48,
       "continent": "Europe",
@@ -579,7 +579,7 @@
     {
       "id": "taiwan",
       "name": "Taiwan",
-      "flag": "🇹🇼",
+      "flag": "\ud83c\uddf9\ud83c\uddfc",
       "firstVisited": 2023,
       "order": 49,
       "continent": "Asia",
@@ -591,7 +591,7 @@
     {
       "id": "qatar",
       "name": "Qatar",
-      "flag": "🇶🇦",
+      "flag": "\ud83c\uddf6\ud83c\udde6",
       "firstVisited": 2023,
       "order": 50,
       "continent": "Asia",
@@ -603,7 +603,7 @@
     {
       "id": "argentina",
       "name": "Argentina",
-      "flag": "🇦🇷",
+      "flag": "\ud83c\udde6\ud83c\uddf7",
       "firstVisited": 2024,
       "order": 51,
       "continent": "South America",
@@ -615,7 +615,7 @@
     {
       "id": "brazil",
       "name": "Brazil",
-      "flag": "🇧🇷",
+      "flag": "\ud83c\udde7\ud83c\uddf7",
       "firstVisited": 2024,
       "order": 52,
       "continent": "South America",
@@ -627,7 +627,7 @@
     {
       "id": "aruba",
       "name": "Aruba",
-      "flag": "🇦🇼",
+      "flag": "\ud83c\udde6\ud83c\uddfc",
       "firstVisited": 2026,
       "order": 53,
       "continent": "North America",
@@ -635,10 +635,22 @@
         12.5211,
         -69.9683
       ]
+    },
+    {
+      "id": "bahamas",
+      "name": "Bahamas",
+      "flag": "\ud83c\udde7\ud83c\uddf8",
+      "firstVisited": 2026,
+      "order": 54,
+      "continent": "North America",
+      "coordinates": [
+        25.0343,
+        -77.3963
+      ]
     }
   ],
   "stats": {
-    "totalCountries": 53,
+    "totalCountries": 54,
     "continents": 5,
     "continentNames": [
       "Africa",
@@ -654,7 +666,7 @@
       "Africa": 1,
       "Asia": 15,
       "Europe": 21,
-      "North America": 10,
+      "North America": 11,
       "South America": 6
     }
   }
