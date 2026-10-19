@@ -345,7 +345,28 @@ input,
     animation: bar-fill var(--dur-slow) var(--ease-out) backwards;
     animation-delay: calc(var(--i, 0) * 60ms);
   }
+
+  /* Flight globe intro. Timings mirror useGlobeIntro.ts (DRAW_MS = 900). Routes
+     carry pathLength=1, so dash units are fractions of each route's length.
+     The classes drop away after the intro, so routes that rotate into view
+     later render solid instead of redrawing. */
+  .flight-line.is-pending { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .flight-line.is-drawing {
+    animation: route-draw 900ms var(--ease-out) backwards;
+    animation-delay: var(--delay, 0ms);
+  }
+  .airport-dot { transform-box: fill-box; transform-origin: center; }
+  .airport-dot.is-pending { transform: scale(0); }
+  .airport-dot.is-drawing {
+    animation: airport-pop var(--dur-base) var(--ease-out) backwards;
+    animation-delay: 900ms;
+  }
 }
+@keyframes route-draw {
+  from { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  to { stroke-dasharray: 1; stroke-dashoffset: 0; }
+}
+@keyframes airport-pop { from { transform: scale(0); } to { transform: scale(1); } }
 @keyframes scroll-progress { to { transform: scaleX(1); } }
 @keyframes rule-wipe {
   from { clip-path: inset(0 100% 0 0); color: var(--accent-text); }

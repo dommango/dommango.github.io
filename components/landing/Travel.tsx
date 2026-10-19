@@ -49,6 +49,7 @@ export function Travel({
   const [year, setYear] = useState(max)
   const [playing, setPlaying] = useState(false)
   const { ref: listRef, inView: listInView } = useInView<HTMLUListElement>()
+  const { ref: mapRef, inView: mapInView } = useInView<HTMLDivElement>()
 
   const bars = buildContinentBars(countries, year)
   const visible = countriesUpTo(countries, year)
@@ -162,12 +163,13 @@ export function Travel({
             Flight history
           </button>
         </div>
-        <div className="travel-map-frame">
+        <div className="travel-map-frame" ref={mapRef}>
           <TravelMap
             countries={countries}
             flightRoutes={flightRoutes}
             showFlights={showFlights}
             selectedYear={year}
+            drawIn={mapInView}
           />
         </div>
         <p className="travel-map-cap">
