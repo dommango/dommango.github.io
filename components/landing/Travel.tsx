@@ -1,7 +1,7 @@
 'use client'
 
 // Travel — brutalist continent bars + the real interactive globe map.
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import dynamic from 'next/dynamic'
 import {
   buildContinentBars,
@@ -12,6 +12,8 @@ import {
   type FlightRoute,
 } from '@/lib/content/travel'
 import { BinaryRule } from './BinaryRule'
+import { CountUp } from './CountUp'
+import { useInView } from './useInView'
 
 const TravelMap = dynamic(
   () => import('@/components/travel/TravelMap').then((mod) => mod.TravelMap),
@@ -46,6 +48,8 @@ export function Travel({
   const [min, max] = yearBounds(countries)
   const [year, setYear] = useState(max)
   const [playing, setPlaying] = useState(false)
+  const { ref: listRef, inView: listInView } = useInView<HTMLUListElement>()
+  const { ref: mapRef, inView: mapInView } = useInView<HTMLDivElement>()
 
   const bars = buildContinentBars(countries, year)
   const visible = countriesUpTo(countries, year)
@@ -82,14 +86,19 @@ export function Travel({
       </div>
 
       <div className="travel-grid">
-        <ul className="continent-list">
-          {bars.map((c) => (
+        <ul ref={listRef} className={`continent-list${listInView ? ' is-in' : ''}`}>
+          {bars.map((c, i) => (
             <li key={c.name} className="continent-row">
               <span className="continent-name">{c.name}</span>
               <span className="continent-bar">
-                <span className="continent-fill" style={{ width: `${c.pct}%` }} />
+                <span
+                  className="continent-fill"
+                  style={{ '--p': c.pct / 100, '--i': i } as CSSProperties}
+                />
               </span>
-              <span className="continent-count">{c.count}</span>
+              <span className="continent-count">
+                <CountUp value={c.count} active={listInView} />
+              </span>
             </li>
           ))}
         </ul>
@@ -154,12 +163,13 @@ export function Travel({
             Flight history
           </button>
         </div>
-        <div className="travel-map-frame">
+        <div className="travel-map-frame" ref={mapRef}>
           <TravelMap
             countries={countries}
             flightRoutes={flightRoutes}
             showFlights={showFlights}
             selectedYear={year}
+            drawIn={mapInView}
           />
         </div>
         <p className="travel-map-cap">

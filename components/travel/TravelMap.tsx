@@ -11,6 +11,13 @@ import {
 } from "react-simple-maps";
 import { geoOrthographic } from "d3-geo";
 import { Country, FlightRoute } from "@/lib/content/travel";
+import {
+  INTRO_START_LON,
+  MAX_STAGGER_MS,
+  prefersReducedMotion,
+  useGlobeSpin,
+  useIntroDone,
+} from "./useGlobeIntro";
 
 // Served locally so a CDN hiccup can't blank the globe — the site otherwise
 // has no runtime third-party dependency.
@@ -81,6 +88,8 @@ interface TravelMapProps {
   flightRoutes?: FlightRoute[];
   selectedYear?: number;
   showFlights?: boolean;
+  /** Flips true once the globe scrolls into view; starts the route draw-in. */
+  drawIn?: boolean;
 }
 
 interface TooltipData {
@@ -104,12 +113,30 @@ export function TravelMap({
   flightRoutes = [],
   selectedYear,
   showFlights = false,
+  drawIn = false,
 }: TravelMapProps) {
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  // Starts off-axis so the intro spin has somewhere to settle from; the map is
+  // client-only (dynamic, ssr:false), so reading matchMedia here is safe.
   const [rotation, setRotation] = useState<[number, number, number]>([
-    0, -20, 0,
+    prefersReducedMotion() ? 0 : INTRO_START_LON,
+    -20,
+    0,
   ]);
+  const userRotated = useRef(false);
+  const introDone = useIntroDone(drawIn);
+  useGlobeSpin(drawIn, setRotation, userRotated);
+  const routeClass = !drawIn
+    ? "flight-line is-pending"
+    : introDone
+      ? "flight-line"
+      : "flight-line is-drawing";
+  const airportClass = !drawIn
+    ? "airport-dot is-pending"
+    : introDone
+      ? "airport-dot"
+      : "airport-dot is-drawing";
   const [isDragging, setIsDragging] = useState(false);
   const dragStart = useRef<{
     x: number;
@@ -183,6 +210,7 @@ export function TravelMap({
 
   const handleMouseDown = useCallback(
     (e: React.PointerEvent) => {
+      userRotated.current = true;
       setIsDragging(true);
       dragStart.current = {
         x: e.clientX,
@@ -259,6 +287,7 @@ export function TravelMap({
       aria-label={`Globe showing ${displayedCountries.length} visited countries. Drag or use the arrow keys to rotate.`}
       onKeyDown={(e) => {
         const step = 10;
+        userRotated.current = true;
         const [lon, lat] = rotation;
         // Match drag: dragging up increases rotation[1] (dy < 0, so
         // rotation[1] - dy*sensitivity grows), so ArrowUp must also increase it.
@@ -354,7 +383,15 @@ export function TravelMap({
                 strokeOpacity={0.6}
                 strokeWidth={Math.min(0.8 + route.count * 0.15, 3)}
                 strokeLinecap="round"
-                style={{ cursor: "pointer" }}
+                // Normalises dash lengths so the draw-in works for any route length.
+                pathLength={1}
+                className={routeClass}
+                style={
+                  {
+                    cursor: "pointer",
+                    "--delay": `${Math.min(idx * 25, MAX_STAGGER_MS)}ms`,
+                  } as React.CSSProperties
+                }
                 onMouseEnter={() =>
                   showFlightTooltip(route.from, route.to, route.count)
                 }
@@ -382,6 +419,7 @@ export function TravelMap({
                   r={Math.min(2.5 + airport.count * 0.05, 5)}
                   stroke="var(--map-stroke)"
                   strokeWidth={0.5}
+                  className={airportClass}
                   style={{ fill: "var(--accent)", cursor: "pointer" }}
                 />
               </Marker>

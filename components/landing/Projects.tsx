@@ -1,6 +1,8 @@
 // Projects — the main section. Catalog-ID cards for shipped software.
+import type { CSSProperties } from 'react'
 import { PROJECTS, type Project } from '@/lib/content/projects'
 import { BinaryRule } from './BinaryRule'
+import { RevealGroup } from './RevealGroup'
 
 const LINK_LABEL: Record<NonNullable<Project['hrefKind']>, string> = {
   live: 'Open live ↗',
@@ -40,12 +42,13 @@ export function Projects() {
         </p>
       </div>
 
-      <div className="projects-grid">
-        {PROJECTS.map((project) =>
+      <RevealGroup className="projects-grid">
+        {PROJECTS.map((project, i) =>
           project.href ? (
             <a
               key={project.id}
               className="work-card is-linked"
+              style={{ '--i': i } as CSSProperties}
               href={project.href}
               target="_blank"
               rel="noreferrer"
@@ -53,12 +56,16 @@ export function Projects() {
               <CardBody project={project} />
             </a>
           ) : (
-            <article key={project.id} className="work-card">
+            <article
+              key={project.id}
+              className="work-card"
+              style={{ '--i': i } as CSSProperties}
+            >
               <CardBody project={project} />
             </article>
           )
         )}
-      </div>
+      </RevealGroup>
     </section>
   )
 }
