@@ -68,6 +68,7 @@ export function BrutalistLanding({ travel }: { travel: LandingTravelData }) {
 
   return (
     <div className="brutalist-root" data-accent={accentAttr} data-contrast={contrastAttr}>
+      <div className="scroll-progress" aria-hidden="true" />
       <div className="page">
         <a className="skip-link" href="#projects">Skip to projects</a>
         <Nav

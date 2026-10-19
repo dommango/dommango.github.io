@@ -289,6 +289,75 @@ input,
 .brutalist-root[data-contrast="high"] :focus-visible { outline: 3px solid #fff; outline-offset: 3px; box-shadow: 0 0 0 6px #000; }
 .field input:focus-visible, .field textarea:focus-visible { outline-offset: 6px; border-bottom-width: 2px; }
 
+/* ---- Scroll motion ---------------------------------------- *
+ * Two techniques. Scrubbed (CSS scroll timelines) follows scroll position and
+ * is progressive enhancement: without support the element just shows its final
+ * state. One-shot (`.is-in`, added by useInView) plays once on entry; the hidden
+ * start state applies only when scripting is on, so no-JS never sees blank
+ * content. Both are fenced to no-preference — scroll timelines ignore the
+ * duration-shrinking reduced-motion rule below, so they must be opted out. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      z-index: 55; /* above .site-nav (50) */
+      pointer-events: none;
+      animation: scroll-progress linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+  @supports (animation-timeline: view()) {
+    .binary-rule {
+      animation: rule-wipe steps(14, end) both;
+      animation-timeline: view();
+      animation-range: entry 10% entry 100%;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--accent);
+      transform-origin: top;
+      animation: timeline-spine linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 55%;
+    }
+  }
+  @media (scripting: enabled) {
+    .projects-grid:not(.is-in) .work-card { clip-path: inset(0 0 100% 0); }
+    .continent-list:not(.is-in) .continent-fill { transform: scaleX(0); }
+    .continent-list:not(.is-in) .continent-count { opacity: 0; }
+  }
+  .projects-grid.is-in .work-card {
+    /* `backwards` only: a forwards fill would pin transform and kill the hover lift. */
+    animation: card-stamp var(--dur-slow) var(--ease-out) backwards;
+    animation-delay: calc(var(--i, 0) * 70ms);
+  }
+  .continent-list.is-in .continent-fill {
+    animation: bar-fill var(--dur-slow) var(--ease-out) backwards;
+    animation-delay: calc(var(--i, 0) * 60ms);
+  }
+}
+@keyframes scroll-progress { to { transform: scaleX(1); } }
+@keyframes rule-wipe {
+  from { clip-path: inset(0 100% 0 0); color: var(--accent-text); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes timeline-spine { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes card-stamp {
+  from { clip-path: inset(0 0 100% 0); transform: translateY(14px); }
+  to { clip-path: inset(0 0 0 0); transform: none; }
+}
+@keyframes bar-fill { from { transform: scaleX(0); } }
+
 /* ---- Reduced motion --------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   .brutalist-root *, .brutalist-root *::before, .brutalist-root *::after {
@@ -603,7 +672,14 @@ input,
   position: relative;
   overflow: hidden;
 }
-.continent-fill { display: block; height: 100%; background: var(--accent); }
+.continent-fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleX(var(--p));
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
 .continent-count {
   font-family: var(--font-mono);
   font-size: 13px;
@@ -996,7 +1072,7 @@ input,
   gap: var(--s-8);
   align-items: start;
 }
-.timeline { list-style: none; padding: 0; margin: 0; }
+.timeline { list-style: none; padding: 0 0 0 var(--s-5); margin: 0; position: relative; }
 .timeline-row {
   display: grid;
   grid-template-columns: 140px 1fr 1.4fr;
