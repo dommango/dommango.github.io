@@ -12,7 +12,9 @@ concurrency:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # Playwright can't install chromium on ubuntu-latest's current target
+    # (ubuntu-26.04) — pin to the last release it supports.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
