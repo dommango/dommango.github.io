@@ -1,6 +1,5 @@
 // Hero — headline, headshot, and a short bio. Everything else moved out:
 // the projects below make the case that a themes grid used to assert.
-import Image from 'next/image'
 import { BinaryRule } from './BinaryRule'
 
 export function Hero() {
@@ -21,12 +20,17 @@ export function Hero() {
           </p>
         </div>
         <div className="hero-portrait">
-          <Image
+          {/* images.unoptimized is on for the static export, so Next can't
+              generate responsive sizes itself — these are pre-generated. */}
+          <img
             src="/images/portrait-skyline.webp"
+            srcSet="/images/portrait-skyline-320.webp 320w, /images/portrait-skyline-480.webp 480w, /images/portrait-skyline.webp 640w"
+            sizes="(max-width: 900px) 100vw, 320px"
             alt="Dom Mangonon"
             width={640}
             height={960}
-            priority
+            fetchPriority="high"
+            loading="eager"
           />
           <span className="hero-portrait-cap">Dom · NJ → NYC · 2026</span>
         </div>
