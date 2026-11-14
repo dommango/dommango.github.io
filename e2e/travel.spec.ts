@@ -4,8 +4,10 @@ test.describe("Travel map", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
     // "My Travel Map" was pre-brutalist copy and no longer exists, so this
-    // hook failed on every test. Scroll to the section itself instead.
-    await page.locator("#travel").scrollIntoViewIfNeeded();
+    // hook failed on every test. Scroll to the map frame itself — the globe
+    // chunk now loads on approach to it, not on page hydration, so the earlier
+    // scroll to the top of #travel left it unmounted for these tests.
+    await page.locator(".travel-map-frame").scrollIntoViewIfNeeded();
   });
 
   test("renders the travel map globe", async ({ page }) => {

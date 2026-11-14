@@ -164,13 +164,19 @@ export function Travel({
           </button>
         </div>
         <div className="travel-map-frame" ref={mapRef}>
-          <TravelMap
-            countries={countries}
-            flightRoutes={flightRoutes}
-            showFlights={showFlights}
-            selectedYear={year}
-            drawIn={mapInView}
-          />
+          {mapInView ? (
+            <TravelMap
+              countries={countries}
+              flightRoutes={flightRoutes}
+              showFlights={showFlights}
+              selectedYear={year}
+              drawIn={mapInView}
+            />
+          ) : (
+            <div className="travel-map-cap" style={{ padding: 'var(--s-7) 0', textAlign: 'center' }}>
+              Loading globe…
+            </div>
+          )}
         </div>
         <p className="travel-map-cap">
           {/* All-time total, independent of the scrubber above — the heading
