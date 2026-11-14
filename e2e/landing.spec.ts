@@ -64,6 +64,23 @@ test.describe("Landing structure", () => {
     ).toHaveCount(expected);
   });
 
+  // Regression for the Writing card staying clipped to zero height: its grid
+  // reused `.projects-grid` without the `RevealGroup` that adds `.is-in`.
+  test("writing card is not clipped once scrolled into view", async ({
+    page,
+  }) => {
+    test.skip(POSTS.length === 0, "no posts to assert on");
+
+    const card = page.locator("#writing .work-card").first();
+    await card.scrollIntoViewIfNeeded();
+    await expect(card).toBeVisible();
+
+    const clipPath = await card.evaluate(
+      (el) => getComputedStyle(el).clipPath,
+    );
+    expect(clipPath).not.toBe("inset(0px 0px 100% 0px)");
+  });
+
   test("no career-first content survives on the page", async ({ page }) => {
     await expect(page.locator(".themes-grid")).toHaveCount(0);
     await expect(page.getByText("Request CV")).toHaveCount(0);
