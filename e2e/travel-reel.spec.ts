@@ -18,7 +18,9 @@ async function scrubTo(page: Page, fraction: number) {
     },
     { selector: REEL, at: fraction },
   );
-  // The hook measures in a frame, then React paints the new year.
+  // The hook measures in a frame, then React paints the new year. Callers
+  // poll for what they expect rather than trusting this nudge, so a loaded
+  // machine cannot make them read a stale year.
   await page.waitForTimeout(150);
 }
 
@@ -52,15 +54,14 @@ test.describe("Travel reel, scrubbed by scroll", () => {
 
   test("advances the year as the reel is scrolled", async ({ page }) => {
     await scrubTo(page, 0);
-    expect(await year(page)).toBe(FIRST_YEAR);
+    await expect.poll(() => year(page)).toBe(FIRST_YEAR);
 
     await scrubTo(page, 0.5);
-    const middle = await year(page);
-    expect(middle).toBeGreaterThan(FIRST_YEAR);
-    expect(middle).toBeLessThan(LAST_YEAR);
+    await expect.poll(() => year(page)).toBeGreaterThan(FIRST_YEAR);
+    expect(await year(page)).toBeLessThan(LAST_YEAR);
 
     await scrubTo(page, 1);
-    expect(await year(page)).toBe(LAST_YEAR);
+    await expect.poll(() => year(page)).toBe(LAST_YEAR);
   });
 
   test("grows the countries the globe lists as the year advances", async ({
@@ -68,11 +69,12 @@ test.describe("Travel reel, scrubbed by scroll", () => {
   }) => {
     const items = page.locator("#travel .globe-countries li");
     await scrubTo(page, 0);
+    await expect.poll(() => items.count()).toBeLessThan(countries.length);
     const atStart = await items.count();
 
     await scrubTo(page, 1);
-    expect(await items.count()).toBeGreaterThan(atStart);
-    expect(await items.count()).toBe(countries.length);
+    await expect.poll(() => items.count()).toBe(countries.length);
+    expect(countries.length).toBeGreaterThan(atStart);
   });
 
   test("hands the year to scroll, so the manual scrubber steps aside", async ({

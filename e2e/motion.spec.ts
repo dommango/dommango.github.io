@@ -18,6 +18,8 @@ test.describe("Hero decode", () => {
   }) => {
     await page.emulateMedia({ reducedMotion: "no-preference" });
     await page.goto("/");
+    // Absorbs a slow first compile before the assertions below start counting.
+    await expect(page.locator("#hero h1")).toBeVisible({ timeout: 20000 });
 
     // The real text is a single sr-only node per line, so the decode never
     // changes what a screen reader reads, however far along it is.
