@@ -60,8 +60,8 @@ export function TravelMap({
   const dragRef = useRef<{
     x: number
     y: number
-    rotation: [number, number, number]
-    moved: boolean
+    /** Rotation when the drag took over; null while the press is still a tap. */
+    rotation: [number, number, number] | null
   } | null>(null)
   const tipStateRef = useRef<TooltipData | null>(null)
   const [shapes, setShapes] = useState<CountryShape[]>([])
@@ -210,12 +210,7 @@ export function TravelMap({
         moveTip(e.clientX, e.clientY)
         updateHover(e.clientX, e.clientY)
         e.currentTarget.setPointerCapture(e.pointerId)
-        dragRef.current = {
-          x: e.clientX,
-          y: e.clientY,
-          rotation: controller.rotation(),
-          moved: false,
-        }
+        dragRef.current = { x: e.clientX, y: e.clientY, rotation: null }
         setDragging(true)
       }}
       onPointerMove={(e) => {
@@ -224,10 +219,11 @@ export function TravelMap({
         if (drag) {
           const dx = e.clientX - drag.x
           const dy = e.clientY - drag.y
-          if (!drag.moved) {
+          if (!drag.rotation) {
             if (Math.hypot(dx, dy) < DRAG_THRESHOLD_PX) return
-            dragRef.current = { ...drag, moved: true }
             controller.markUserRotated()
+            dragRef.current = { x: e.clientX, y: e.clientY, rotation: controller.rotation() }
+            return
           }
           controller.setRotation([
             drag.rotation[0] + dx * DRAG_SENSITIVITY,
