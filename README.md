@@ -29,8 +29,8 @@ npx tsc --noEmit
 
 ## Environment
 
-Copy `.env.example` to `.env.local`. The contact form uses EmailJS; without those keys it renders
-but won't send.
+Create `.env.local` with the variables below. The contact form uses EmailJS; without those keys it
+renders but won't send.
 
 ```
 NEXT_PUBLIC_EMAILJS_SERVICE_ID=
