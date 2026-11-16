@@ -69,6 +69,7 @@ export function createGlobeController({ reduced }: { reduced: boolean }): GlobeC
   let introStart: number | null = null
   let tween: Tween | null = null
   let userRotated = false
+  let focused = false
   let frame = 0
   /** The rotation the canvas currently shows, so a tick knows if it moved. */
   let painted: Rotation | null = null
@@ -99,7 +100,7 @@ export function createGlobeController({ reduced }: { reduced: boolean }): GlobeC
       rotation = tweenRotation(tween.from, tween.to, progress)
       if (progress >= 1) tween = null
       else animating = true
-    } else if (introStart !== null && !userRotated && now - introStart < SPIN_MS) {
+    } else if (introStart !== null && !userRotated && !focused && now - introStart < SPIN_MS) {
       rotation = [introSpinLon(now - introStart), rotation[1], 0]
       animating = true
     }
@@ -180,6 +181,7 @@ export function createGlobeController({ reduced }: { reduced: boolean }): GlobeC
     },
     focusOn(point) {
       if (reduced || userRotated) return
+      focused = true
       tween = { from: rotation, to: focusRotation(point), start: performance.now() }
       schedule()
     },
