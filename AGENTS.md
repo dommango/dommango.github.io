@@ -48,7 +48,7 @@ all data loaded at build time) · GitHub Pages deploy via `.github/workflows/dep
   that commits data can't make the site rebuild. Anything needing fresh data at deploy time must
   fetch during the build, not commit-then-rebuild.
 
-## Env (`.env.local`, copy from `.env.example`)
+## Env (`.env.local`)
 
 EmailJS (`NEXT_PUBLIC_EMAILJS_SERVICE_ID`/`_TEMPLATE_ID`/`_PUBLIC_KEY`,
 `NEXT_PUBLIC_EMAILJS_CONTACT_TEMPLATE_ID`) — without these the contact form renders but won't
