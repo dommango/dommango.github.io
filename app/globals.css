@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* All motion lives in one place; see the conventions at the top of it. */
+@import "./styles/motion.css";
 
 /* Dark mode is the default */
 :root {
@@ -97,27 +99,6 @@ input,
   transition-duration: 150ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-/* Fade-in animation */
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fade-in 0.5s ease-out forwards;
-}
-
-/* Animation delay utilities */
-.animation-delay-100 { animation-delay: 100ms; }
-.animation-delay-200 { animation-delay: 200ms; }
-.animation-delay-300 { animation-delay: 300ms; }
 
 /* ============================================================
    BRUTALIST-OXBLOOD LANDING — ported from Claude Design bundle
@@ -288,105 +269,6 @@ input,
 .brutalist-root :focus-visible { outline: var(--bw-2) solid var(--accent); outline-offset: 3px; }
 .brutalist-root[data-contrast="high"] :focus-visible { outline: 3px solid #fff; outline-offset: 3px; box-shadow: 0 0 0 6px #000; }
 .field input:focus-visible, .field textarea:focus-visible { outline-offset: 6px; border-bottom-width: 2px; }
-
-/* ---- Scroll motion ---------------------------------------- *
- * Two techniques. Scrubbed (CSS scroll timelines) follows scroll position and
- * is progressive enhancement: without support the element just shows its final
- * state. One-shot (`.is-in`, added by useInView) plays once on entry; the hidden
- * start state applies only when scripting is on, so no-JS never sees blank
- * content. Both are fenced to no-preference — scroll timelines ignore the
- * duration-shrinking reduced-motion rule below, so they must be opted out. */
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: scroll()) {
-    .scroll-progress {
-      position: fixed;
-      inset: 0 0 auto 0;
-      height: 3px;
-      background: var(--accent);
-      transform: scaleX(0);
-      transform-origin: left;
-      z-index: 55; /* above .site-nav (50) */
-      pointer-events: none;
-      animation: scroll-progress linear both;
-      animation-timeline: scroll(root);
-    }
-  }
-  @supports (animation-timeline: view()) {
-    .binary-rule {
-      animation: rule-wipe steps(14, end) both;
-      animation-timeline: view();
-      animation-range: entry 10% entry 100%;
-    }
-    .timeline::before {
-      content: "";
-      position: absolute;
-      left: 4px;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: var(--accent);
-      transform-origin: top;
-      animation: timeline-spine linear both;
-      animation-timeline: view();
-      animation-range: entry 30% cover 55%;
-    }
-  }
-  @media (scripting: enabled) {
-    .projects-grid:not(.is-in) .work-card { clip-path: inset(0 0 100% 0); }
-    .continent-list:not(.is-in) .continent-fill { transform: scaleX(0); }
-    .continent-list:not(.is-in) .continent-count { opacity: 0; }
-  }
-  .projects-grid.is-in .work-card {
-    /* `backwards` only: a forwards fill would pin transform and kill the hover lift. */
-    animation: card-stamp var(--dur-slow) var(--ease-out) backwards;
-    animation-delay: calc(var(--i, 0) * 70ms);
-  }
-  .continent-list.is-in .continent-fill {
-    animation: bar-fill var(--dur-slow) var(--ease-out) backwards;
-    animation-delay: calc(var(--i, 0) * 60ms);
-  }
-
-  /* Flight globe intro. Timings mirror useGlobeIntro.ts (DRAW_MS = 900). Routes
-     carry pathLength=1, so dash units are fractions of each route's length.
-     The classes drop away after the intro, so routes that rotate into view
-     later render solid instead of redrawing. */
-  .flight-line.is-pending { stroke-dasharray: 1; stroke-dashoffset: 1; }
-  .flight-line.is-drawing {
-    animation: route-draw 900ms var(--ease-out) backwards;
-    animation-delay: var(--delay, 0ms);
-  }
-  .airport-dot { transform-box: fill-box; transform-origin: center; }
-  .airport-dot.is-pending { transform: scale(0); }
-  .airport-dot.is-drawing {
-    animation: airport-pop var(--dur-base) var(--ease-out) backwards;
-    animation-delay: 900ms;
-  }
-}
-@keyframes route-draw {
-  from { stroke-dasharray: 1; stroke-dashoffset: 1; }
-  to { stroke-dasharray: 1; stroke-dashoffset: 0; }
-}
-@keyframes airport-pop { from { transform: scale(0); } to { transform: scale(1); } }
-@keyframes scroll-progress { to { transform: scaleX(1); } }
-@keyframes rule-wipe {
-  from { clip-path: inset(0 100% 0 0); color: var(--accent-text); }
-  to { clip-path: inset(0 0 0 0); }
-}
-@keyframes timeline-spine { from { transform: scaleY(0); } to { transform: scaleY(1); } }
-@keyframes card-stamp {
-  from { clip-path: inset(0 0 100% 0); transform: translateY(14px); }
-  to { clip-path: inset(0 0 0 0); transform: none; }
-}
-@keyframes bar-fill { from { transform: scaleX(0); } }
-
-/* ---- Reduced motion --------------------------------------- */
-@media (prefers-reduced-motion: reduce) {
-  .brutalist-root *, .brutalist-root *::before, .brutalist-root *::after {
-    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important;
-  }
-  .work-card:hover { transform: none !important; }
-  .btn-primary:hover { transform: none !important; }
-}
 
 /* ---- Skip link --------------------------------------------- */
 .skip-link { position: fixed; left: -9999px; top: 8px; z-index: 60; padding: 8px 12px; background: var(--accent); color: var(--btn-fg); font-family: var(--font-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
@@ -710,7 +592,7 @@ input,
 .scrub { border: 1px solid var(--rule); padding: var(--s-5); display: flex; flex-direction: column; gap: var(--s-4); }
 .scrub-year { font-family: var(--font-display); font-size: 64px; line-height: .9; letter-spacing: -.04em; color: var(--accent); }
 .scrub input[type=range] { width: 100%; accent-color: var(--accent); }
-.scrub-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.scrub-manual { display: flex; flex-direction: column; gap: var(--s-4); align-items: flex-start; }
 .scrub-stat { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-muted); }
 .scrub-stat b { color: var(--fg); font-weight: 500; }
 .scrub-new { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -732,7 +614,11 @@ input,
   padding: var(--s-4);
   background: var(--bg-elevated);
 }
-.map-frame { position: relative; width: 100%; overflow: hidden; }
+/* Square by design: the orthographic globe is drawn into a square canvas,
+   which the renderer sizes from this box. */
+.map-frame { position: relative; width: 100%; aspect-ratio: 1; overflow: hidden;
+  display: grid; place-items: center; }
+.globe-canvas { display: block; }
 .map-tip {
   position: fixed;
   z-index: 60;
@@ -745,6 +631,7 @@ input,
   color: var(--fg);
 }
 .map-tip small { display: block; color: var(--fg-muted); font-size: 11px; }
+.map-tip[hidden] { display: none; }
 .travel-map-toggle {
   font-family: var(--font-mono);
   font-size: 11px;
