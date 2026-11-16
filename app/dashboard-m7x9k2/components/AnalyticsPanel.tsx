@@ -1,6 +1,5 @@
 'use client'
 
-import { clsx } from 'clsx'
 import { Card, CardHeader, CardBody } from '@/components/ui/Card'
 import { Skeleton } from '@/components/ui/Skeleton'
 import type { AnalyticsData } from '@/lib/types/dashboard'
