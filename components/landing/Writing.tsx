@@ -1,7 +1,9 @@
 // Writing — recent Substack posts. Renders only when there are posts;
 // the Nav link is gated on the same predicate in BrutalistLanding.
+import type { CSSProperties } from 'react'
 import { POSTS, SUBSTACK_URL } from '@/lib/content/writing'
 import { BinaryRule } from './BinaryRule'
+import { RevealGroup } from './RevealGroup'
 
 const formatDate = (iso: string): string => {
   const parsed = new Date(iso)
@@ -27,11 +29,12 @@ export function Writing() {
         </p>
       </div>
 
-      <div className="projects-grid">
-        {POSTS.map((post) => (
+      <RevealGroup className="projects-grid">
+        {POSTS.map((post, i) => (
           <a
             key={post.url}
             className="work-card is-linked"
+            style={{ '--i': i } as CSSProperties}
             href={post.url}
             target="_blank"
             rel="noreferrer"
@@ -45,7 +48,7 @@ export function Writing() {
             <span className="work-link">Read ↗</span>
           </a>
         ))}
-      </div>
+      </RevealGroup>
 
       <a className="writing-all" href={SUBSTACK_URL} target="_blank" rel="noreferrer">
         All posts on Substack ↗

@@ -1,12 +1,20 @@
 'use client'
 
 // Contact — wide-tracked closing headline + EmailJS-wired message form + socials.
-import { useRef, useState } from 'react'
-import ReCAPTCHA from 'react-google-recaptcha'
+import { useRef, useState, type ComponentType, type Ref } from 'react'
+import dynamic from 'next/dynamic'
+import type ReCAPTCHA from 'react-google-recaptcha'
+import type { ReCAPTCHAProps } from 'react-google-recaptcha'
 import { initEmailJS, sendContactEmail } from '@/lib/services/emailjs'
 import { BinaryRule } from './BinaryRule'
 
 const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''
+
+// Loaded only once the visitor interacts with the form — ~450 KiB of
+// reCAPTCHA script otherwise ships on every page view, used or not.
+const LazyReCAPTCHA = dynamic(() => import('react-google-recaptcha'), {
+  ssr: false,
+}) as ComponentType<ReCAPTCHAProps & { ref?: Ref<ReCAPTCHA> }>
 
 type Status = 'idle' | 'sending' | 'success' | 'error'
 
@@ -15,6 +23,7 @@ export function Contact() {
   const [status, setStatus] = useState<Status>('idle')
   const [feedback, setFeedback] = useState('')
   const [captchaOk, setCaptchaOk] = useState(false)
+  const [formTouched, setFormTouched] = useState(false)
   const recaptchaRef = useRef<ReCAPTCHA>(null)
 
   const update =
@@ -82,7 +91,7 @@ export function Contact() {
           </div>
         </div>
 
-        <form className="contact-form" onSubmit={submit}>
+        <form className="contact-form" onSubmit={submit} onFocus={() => setFormTouched(true)}>
           <div className="field">
             <label htmlFor="c-name">Name</label>
             <input id="c-name" required value={form.name} onChange={update('name')} autoComplete="name" />
@@ -111,9 +120,9 @@ export function Contact() {
             />
           </div>
 
-          {RECAPTCHA_SITE_KEY && (
+          {RECAPTCHA_SITE_KEY && formTouched && (
             <div className="form-captcha">
-              <ReCAPTCHA
+              <LazyReCAPTCHA
                 ref={recaptchaRef}
                 sitekey={RECAPTCHA_SITE_KEY}
                 onChange={(token) => setCaptchaOk(!!token)}
