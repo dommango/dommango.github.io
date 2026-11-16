@@ -3,6 +3,7 @@
 // BrutalistLanding — top-level client shell. Holds theme/section state,
 // wires smooth-scroll + scroll-spy, and composes the page sections.
 import { useEffect, useState } from 'react'
+import { flushSync } from 'react-dom'
 import { Nav, type ThemeMode, type SectionId } from './Nav'
 import { Availability } from './Availability'
 import { Hero } from './Hero'
@@ -12,6 +13,7 @@ import { Travel } from './Travel'
 import { Contact } from './Contact'
 import { Resume } from './Resume'
 import { Footer } from './Footer'
+import { withViewTransition } from '@/lib/motion/view-transition'
 import { hasPosts } from '@/lib/content/writing'
 import type { Country, FlightRoute } from '@/lib/content/travel'
 
@@ -38,8 +40,13 @@ export function BrutalistLanding({ travel }: { travel: LandingTravelData }) {
   const [mode, setMode] = useState<ThemeMode>('gold')
   const [section, setSection] = useState<SectionId>('hero')
 
+  const nextMode = (m: ThemeMode): ThemeMode =>
+    m === 'gold' ? 'oxblood' : m === 'oxblood' ? 'contrast' : 'gold'
+
+  // The palette wipes down the page like a film-gate change; browsers without
+  // View Transitions, and reduced-motion users, get the instant swap.
   const cycleMode = () =>
-    setMode((m) => (m === 'gold' ? 'oxblood' : m === 'oxblood' ? 'contrast' : 'gold'))
+    withViewTransition(() => setMode(nextMode), { flush: flushSync })
 
   const accentAttr = mode === 'oxblood' ? 'oxblood' : 'gold'
   const contrastAttr = mode === 'contrast' ? 'high' : 'default'
