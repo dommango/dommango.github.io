@@ -176,6 +176,18 @@ describe('runDecode', () => {
     expect(vi.getTimerCount()).toBe(0)
   })
 
+  it('decodes again after a cancelled run, as a StrictMode remount does', () => {
+    const el = host('abc')
+    runDecode(el, { startMs: 0, durationMs: 900 })()
+    expect(noisy(el)).toBe(0)
+    runDecode(el, { startMs: 300, durationMs: 900 })
+    expect(noisy(el)).toBe(3)
+    const cells = Array.from(el.children) as HTMLElement[]
+    expect(cells.every((c) => c.dataset.g === '0' || c.dataset.g === '1')).toBe(true)
+    vi.advanceTimersByTime(2000)
+    expect(noisy(el)).toBe(0)
+  })
+
   it('ignores non-element children instead of throwing', () => {
     const el = host('ab')
     el.append(document.createTextNode('stray'))

@@ -144,11 +144,15 @@ describe('hitAirport', () => {
     expect(hitAirport(projection, close, target, 50)?.code).toBe('BBB')
   })
 
-  it('ignores an airport the projection cannot place', () => {
-    const behind = [airport('FAR', [180, 0])]
-    const result = hitAirport(projection, behind, [SIZE / 2, SIZE / 2], 500)
-    // Orthographic still projects the far side, so the guard is the distance,
-    // not the projection — the mirrored point is half a globe away on screen.
-    expect(result === null || result.code === 'FAR').toBe(true)
+  it('ignores a far-side airport whose mirrored position is under the pointer', () => {
+    // Orthographic projects [120, 0] onto the same pixel as the near-side [60, 0].
+    const behind = [airport('FAR', [120, 0])]
+    expect(hitAirport(projection, behind, at(projection, [60, 0]))).toBeNull()
+  })
+
+  it('finds an airport once rotation brings it to the near side', () => {
+    const rotated = projectionAt([-120, 0, 0])
+    const near = [airport('FAR', [120, 0])]
+    expect(hitAirport(rotated, near, at(rotated, [120, 0]))?.code).toBe('FAR')
   })
 })

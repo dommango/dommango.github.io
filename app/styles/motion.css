@@ -147,8 +147,9 @@
 
 /* ---- Travel: the pinned reel ------------------------------ *
  * A tall container with a sticky stage, so scrolling past the section scrubs
- * the year. The fences mirror useReelProgress: with reduced motion, no JS or no
- * sticky support the stage is plain markup in normal flow and the manual
+ * the year. useReelProgress reads the stage's computed position, so these
+ * fences alone decide: with reduced motion, no JS or no sticky support the
+ * stage is plain markup in normal flow and the manual
  * scrubber stays the control. The site has one breakpoint (900px) and the
  * reel's phone composition lives inside it, nested here rather than in a
  * breakpoint of its own. */

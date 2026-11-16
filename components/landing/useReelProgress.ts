@@ -7,15 +7,18 @@
 import { useEffect, useRef, useState } from 'react'
 import { progressStep, reelProgress } from '@/lib/motion/reel'
 
-const canPin = () =>
-  typeof CSS !== 'undefined' &&
-  typeof CSS.supports === 'function' &&
-  CSS.supports('position', 'sticky')
+/** The stage is the container's first child; the CSS alone decides whether it pins. */
+const stagePinned = (container: HTMLElement) => {
+  const stage = container.firstElementChild
+  return stage !== null && window.getComputedStyle(stage).position === 'sticky'
+}
 
 /**
- * `step` is null whenever the reel is not driving — reduced motion, no sticky
- * support, or a container shorter than the viewport — so callers keep their
- * manual controls and their final state. Mirrors the CSS fences on the stage.
+ * `step` is null whenever the reel is not driving — the CSS left the stage
+ * unpinned (reduced motion, no scripting or sticky support), or the container
+ * is shorter than the viewport — so callers keep their manual controls and
+ * their final state. Reading the stage's computed position, rather than
+ * re-asking the media queries, keeps this from disagreeing with the CSS.
  */
 export function useReelProgress<T extends HTMLElement>(steps: number) {
   const ref = useRef<T>(null)
@@ -25,8 +28,7 @@ export function useReelProgress<T extends HTMLElement>(steps: number) {
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    if (!canPin()) return
+    if (!stagePinned(el)) return
 
     let frame = 0
     const measure = () => {

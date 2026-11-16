@@ -6,6 +6,7 @@ import type { Feature, Geometry } from 'geojson'
 import type { FlightRoute } from '@/lib/content/travel'
 import type { Airport, LonLat, RouteArc } from './globe-geometry'
 import type { CountryShape } from './globe-draw'
+import { pointVisible, viewCenter } from './globe-cull'
 
 /** Pixels of slack around a marker or route before it counts as hovered. */
 const AIRPORT_GRAB_PX = 6
@@ -61,7 +62,7 @@ export function hitCountry(
   return null
 }
 
-/** Nearest airport marker within grabbing distance of `point`, or null. */
+/** Nearest near-side airport marker within grabbing distance of `point`, or null. */
 export function hitAirport(
   projection: GeoProjection,
   airports: Airport[],
@@ -70,7 +71,9 @@ export function hitAirport(
 ): Airport | null {
   let best: Airport | null = null
   let bestDistance = grabPx
+  const view = viewCenter(projection.rotate())
   for (const airport of airports) {
+    if (!pointVisible(airport.coords, view)) continue
     const projected = projection(airport.coords)
     if (!projected) continue
     const distance = Math.hypot(projected[0] - point[0], projected[1] - point[1])

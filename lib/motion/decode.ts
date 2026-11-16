@@ -70,6 +70,12 @@ export function runDecode(host: HTMLElement, options: DecodeOptions): () => void
     return () => {}
   }
 
+  cells.forEach((el) => {
+    if (!isScrambled(el)) return
+    el.classList.add('is-noise')
+    el.dataset.g ??= noiseGlyph(Math.random())
+  })
+
   let interval = 0
   const paint = (elapsedMs: number): boolean => {
     const resolved = resolvedCount(cells.length, elapsedMs, durationMs)

@@ -21,6 +21,8 @@ import { hitAirport, hitCountry, hitRoute } from './globe-hit'
 import { prefersReducedMotion } from './globe-timing'
 
 const DRAG_SENSITIVITY = 0.3
+/** Pointer travel before a press counts as a drag rather than a tap or a scroll. */
+const DRAG_THRESHOLD_PX = 10
 const KEY_STEP_DEG = 10
 const TIP_OFFSET_PX = 15
 
@@ -55,7 +57,12 @@ export function TravelMap({
   const frameRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const tipRef = useRef<HTMLDivElement>(null)
-  const dragRef = useRef<{ x: number; y: number; rotation: [number, number, number] } | null>(null)
+  const dragRef = useRef<{
+    x: number
+    y: number
+    rotation: [number, number, number]
+    moved: boolean
+  } | null>(null)
   const tipStateRef = useRef<TooltipData | null>(null)
   const [shapes, setShapes] = useState<CountryShape[]>([])
   const [tooltip, setTooltip] = useState<TooltipData | null>(null)
@@ -203,17 +210,28 @@ export function TravelMap({
         moveTip(e.clientX, e.clientY)
         updateHover(e.clientX, e.clientY)
         e.currentTarget.setPointerCapture(e.pointerId)
-        controller.markUserRotated()
-        dragRef.current = { x: e.clientX, y: e.clientY, rotation: controller.rotation() }
+        dragRef.current = {
+          x: e.clientX,
+          y: e.clientY,
+          rotation: controller.rotation(),
+          moved: false,
+        }
         setDragging(true)
       }}
       onPointerMove={(e) => {
         moveTip(e.clientX, e.clientY)
         const drag = dragRef.current
         if (drag) {
+          const dx = e.clientX - drag.x
+          const dy = e.clientY - drag.y
+          if (!drag.moved) {
+            if (Math.hypot(dx, dy) < DRAG_THRESHOLD_PX) return
+            dragRef.current = { ...drag, moved: true }
+            controller.markUserRotated()
+          }
           controller.setRotation([
-            drag.rotation[0] + (e.clientX - drag.x) * DRAG_SENSITIVITY,
-            drag.rotation[1] - (e.clientY - drag.y) * DRAG_SENSITIVITY,
+            drag.rotation[0] + dx * DRAG_SENSITIVITY,
+            drag.rotation[1] - dy * DRAG_SENSITIVITY,
             0,
           ])
           return

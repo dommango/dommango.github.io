@@ -7,7 +7,7 @@ const HEIGHT = 2400 // two viewports of pin distance
 const STEPS = 41 // 1986..2026, as the real reel
 
 let rect = { top: 0, height: HEIGHT }
-let reducedMotion = false
+let pinned = true
 // The hook defers its measurement to a frame; queueing them and flushing by
 // hand keeps each assertion in the same act() as the scroll that caused it.
 let frames: FrameRequestCallback[] = []
@@ -16,7 +16,9 @@ function Reel({ steps = STEPS }: { steps?: number }) {
   const { ref, step } = useReelProgress<HTMLDivElement>(steps)
   return (
     <div ref={ref} data-testid="reel">
-      <span data-testid="step">{step === null ? 'none' : step}</span>
+      <div style={{ position: pinned ? 'sticky' : 'static' }}>
+        <span data-testid="step">{step === null ? 'none' : step}</span>
+      </div>
     </div>
   )
 }
@@ -44,13 +46,8 @@ describe('useReelProgress', () => {
   beforeEach(() => {
     rect = { top: 0, height: HEIGHT }
     frames = []
-    reducedMotion = false
+    pinned = true
     window.innerHeight = VIEWPORT
-    // Assigned rather than spied: a spy on the shared matchMedia mock outlives
-    // restoreAllMocks and would report reduced motion to every later test.
-    window.matchMedia = ((query: string) =>
-      ({ matches: reducedMotion, media: query }) as MediaQueryList) as typeof window.matchMedia
-    vi.stubGlobal('CSS', { supports: () => true })
     vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => frames.push(cb))
     vi.spyOn(window, 'cancelAnimationFrame').mockImplementation(() => {})
     vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(
@@ -69,7 +66,6 @@ describe('useReelProgress', () => {
   })
 
   afterEach(() => {
-    vi.unstubAllGlobals()
     vi.restoreAllMocks()
   })
 
@@ -105,17 +101,11 @@ describe('useReelProgress', () => {
     expect(step()).toBe('20')
   })
 
-  it('stays off for reduced motion, so the manual scrubber keeps the year', () => {
-    reducedMotion = true
+  it('stays off when the CSS leaves the stage unpinned, so the manual scrubber keeps the year', () => {
+    pinned = false
     render(<Reel />)
     expect(step()).toBe('none')
     scrollTo(-VIEWPORT)
-    expect(step()).toBe('none')
-  })
-
-  it('stays off where position: sticky is unsupported', () => {
-    vi.stubGlobal('CSS', { supports: () => false })
-    render(<Reel />)
     expect(step()).toBe('none')
   })
 
