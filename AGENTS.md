@@ -10,7 +10,7 @@ all data loaded at build time) · GitHub Pages deploy via `.github/workflows/dep
 
 ## Commands
 
-- `npm install --legacy-peer-deps` — react-simple-maps declares a React <19 peer; CI uses it too
+- `npm install --legacy-peer-deps` — kept for now (may no longer be required since react-simple-maps was removed); CI uses it too
 - `npm run dev` / `build` (→ `out/`) / `lint` · `npx tsc --noEmit`
 - `npm test -- --run` (vitest; drop `-- --run` for watch mode) · `npx playwright test` (e2e)
 
@@ -32,7 +32,8 @@ all data loaded at build time) · GitHub Pages deploy via `.github/workflows/dep
   `var(--rule)`, `var(--s-N)`, `var(--font-*)`) in `app/globals.css` — that's what makes all three
   themes (Gold/Oxblood/High Contrast) work via `[data-accent]`/`[data-contrast]`. The landing
   (`.brutalist-root`) is dark-only by design and shadows the legacy `:root` light block. One
-  responsive breakpoint, `@media (max-width: 900px)` at the bottom of globals.css — new grids
+  responsive breakpoint, `@media (max-width: 900px)` at the bottom of globals.css (the reel's
+  phone layout reuses it in `app/styles/motion.css`) — new grids
   aren't automatic. Structure convention: `.section` > `<BinaryRule/>` > `.*-head`, order matters
   (adjacent-sibling rule supplies top margin). `BinaryRule`'s `seed` prop drives a deterministic
   PRNG for hydration safety, not aesthetics — give new sections an unused seed.
