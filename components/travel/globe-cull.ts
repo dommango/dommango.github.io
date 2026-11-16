@@ -8,18 +8,6 @@ const DEG = Math.PI / 180
 /** Nothing further than a quarter turn from the centre is on the near side. */
 const HORIZON_DEG = 90
 
-/** Centre and angular radius (degrees) of the cap covering a bounding box. */
-export function boundsCap(bounds: [LonLat, LonLat]): { center: LonLat; radius: number } {
-  const [[west, south], [east, north]] = bounds
-  // geoBounds reports west > east for a box that crosses the antimeridian.
-  const spanLon = ((east - west) % 360 + 360) % 360
-  const centerLon = (((west + spanLon / 2 + 180) % 360) + 360) % 360 - 180
-  const centerLat = (south + north) / 2
-  // Deliberately generous: over-estimating only costs a shape that stays drawn.
-  const radius = Math.max(spanLon / 2, (north - south) / 2)
-  return { center: [centerLon, centerLat], radius }
-}
-
 /** Great-circle distance in degrees between two [lon, lat] points. */
 export function angularDistance(a: LonLat, b: LonLat): number {
   const [lonA, latA] = a
@@ -28,6 +16,37 @@ export function angularDistance(a: LonLat, b: LonLat): number {
     Math.sin(latA * DEG) * Math.sin(latB * DEG) +
     Math.cos(latA * DEG) * Math.cos(latB * DEG) * Math.cos((lonB - lonA) * DEG)
   return Math.acos(Math.min(1, Math.max(-1, cos))) / DEG
+}
+
+/**
+ * Centre and angular radius (degrees) of the cap covering a bounding box.
+ *
+ * The radius reaches the box's corners, which for a box narrower than a half
+ * turn are its farthest points. Half the wider span is not enough: the corner
+ * of a box broad in both directions lies further out than either span (a
+ * Brazil-sized box's is 7.8 degrees beyond), and an under-covering cap culls a
+ * shape whose corner is still on the near side, popping it off at the horizon.
+ */
+export function boundsCap(bounds: [LonLat, LonLat]): { center: LonLat; radius: number } {
+  const [[west, south], [east, north]] = bounds
+  // geoBounds reports west > east for a box that crosses the antimeridian, and
+  // -180..180 for one spanning every longitude — which the modulo alone would
+  // read as a box of no width, leaving Antarctica culled while it is on screen.
+  const rawSpan = east - west
+  const spanLon = rawSpan >= 360 ? 360 : ((rawSpan % 360) + 360) % 360
+  const centerLon = (((west + spanLon / 2 + 180) % 360) + 360) % 360 - 180
+  const center: LonLat = [centerLon, (south + north) / 2]
+  const corners: LonLat[] = [
+    [west, south],
+    [west, north],
+    [west + spanLon, south],
+    [west + spanLon, north],
+  ]
+  const radius = corners.reduce(
+    (widest, corner) => Math.max(widest, angularDistance(center, corner)),
+    0
+  )
+  return { center, radius }
 }
 
 /** The [lon, lat] facing the viewer for a d3 rotation. */
