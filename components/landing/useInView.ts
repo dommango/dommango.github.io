@@ -4,7 +4,7 @@
 // viewport. One-shot by design: scroll-back never replays the entrance.
 import { useEffect, useRef, useState } from 'react'
 
-export function useInView<T extends Element>() {
+export function useInView<T extends Element>(rootMargin = '0px 0px -10% 0px') {
   const ref = useRef<T>(null)
   const [inView, setInView] = useState(false)
 
@@ -17,12 +17,12 @@ export function useInView<T extends Element>() {
         setInView(true)
         io.disconnect()
       },
-      // Inset the bottom edge so tall elements trigger before they're half read.
-      { rootMargin: '0px 0px -10% 0px' }
+      // Default insets the bottom edge so tall elements trigger before they're half read.
+      { rootMargin }
     )
     io.observe(el)
     return () => io.disconnect()
-  }, [])
+  }, [rootMargin])
 
   return { ref, inView }
 }

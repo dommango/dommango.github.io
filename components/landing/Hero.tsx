@@ -21,7 +21,11 @@ export function Hero() {
         </div>
         <div className="hero-portrait">
           {/* images.unoptimized is on for the static export, so Next can't
-              generate responsive sizes itself — these are pre-generated. */}
+              generate responsive sizes itself — these are pre-generated. The
+              smaller files only reach DPR-1 screens (320w on desktop, 480w on
+              a ~390px phone) and DPR-1.5 desktops (480w); phones at DPR 2-3
+              still need and get the full 640w file. AVIF was not worth adding:
+              it only saved 25% at a quality that visibly softened the photo. */}
           <img
             src="/images/portrait-skyline.webp"
             srcSet="/images/portrait-skyline-320.webp 320w, /images/portrait-skyline-480.webp 480w, /images/portrait-skyline.webp 640w"

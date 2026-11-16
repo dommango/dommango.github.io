@@ -5,8 +5,8 @@ test.describe("Travel map", () => {
     await page.goto("/");
     // "My Travel Map" was pre-brutalist copy and no longer exists, so this
     // hook failed on every test. Scroll to the map frame itself — the globe
-    // chunk now loads on approach to it, not on page hydration, so the earlier
-    // scroll to the top of #travel left it unmounted for these tests.
+    // chunk now mounts as the map nears the viewport and draws in once the
+    // frame is on screen, not on page hydration.
     await page.locator(".travel-map-frame").scrollIntoViewIfNeeded();
   });
 

@@ -15,17 +15,22 @@ import { BinaryRule } from './BinaryRule'
 import { CountUp } from './CountUp'
 import { useInView } from './useInView'
 
+function GlobePlaceholder() {
+  return (
+    <div className="travel-map-cap" style={{ padding: 'var(--s-7) 0', textAlign: 'center' }}>
+      Loading globe…
+    </div>
+  )
+}
+
 const TravelMap = dynamic(
   () => import('@/components/travel/TravelMap').then((mod) => mod.TravelMap),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="travel-map-cap" style={{ padding: 'var(--s-7) 0', textAlign: 'center' }}>
-        Loading globe…
-      </div>
-    ),
-  }
+  { ssr: false, loading: GlobePlaceholder }
 )
+
+// Mount the globe chunk while the frame is still this far below the fold, so
+// it and its geography have loaded by the time the draw-in starts.
+const GLOBE_PRELOAD_MARGIN = '0px 0px 600px 0px'
 
 interface TravelProps {
   totalCountries: number
@@ -50,6 +55,7 @@ export function Travel({
   const [playing, setPlaying] = useState(false)
   const { ref: listRef, inView: listInView } = useInView<HTMLUListElement>()
   const { ref: mapRef, inView: mapInView } = useInView<HTMLDivElement>()
+  const { ref: mapNearRef, inView: mapNear } = useInView<HTMLDivElement>(GLOBE_PRELOAD_MARGIN)
 
   const bars = buildContinentBars(countries, year)
   const visible = countriesUpTo(countries, year)
@@ -152,7 +158,7 @@ export function Travel({
         </div>
       </div>
 
-      <div className="travel-map-wrap">
+      <div className="travel-map-wrap" ref={mapNearRef}>
         <div className="travel-map-head">
           <span className="ds-eyebrow">The map · drag or use arrow keys</span>
           <button
@@ -164,7 +170,7 @@ export function Travel({
           </button>
         </div>
         <div className="travel-map-frame" ref={mapRef}>
-          {mapInView ? (
+          {mapNear ? (
             <TravelMap
               countries={countries}
               flightRoutes={flightRoutes}
@@ -173,9 +179,7 @@ export function Travel({
               drawIn={mapInView}
             />
           ) : (
-            <div className="travel-map-cap" style={{ padding: 'var(--s-7) 0', textAlign: 'center' }}>
-              Loading globe…
-            </div>
+            <GlobePlaceholder />
           )}
         </div>
         <p className="travel-map-cap">

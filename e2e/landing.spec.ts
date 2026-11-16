@@ -73,12 +73,7 @@ test.describe("Landing structure", () => {
 
     const card = page.locator("#writing .work-card").first();
     await card.scrollIntoViewIfNeeded();
-    await expect(card).toBeVisible();
-
-    const clipPath = await card.evaluate(
-      (el) => getComputedStyle(el).clipPath,
-    );
-    expect(clipPath).not.toBe("inset(0px 0px 100% 0px)");
+    await expect(card).toHaveCSS("clip-path", "none");
   });
 
   test("no career-first content survives on the page", async ({ page }) => {
