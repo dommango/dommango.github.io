@@ -65,6 +65,8 @@ export function readGlobeColors(el: Element): GlobeColors {
 export interface CountryShape {
   id: string
   feature: Feature<Geometry>
+  /** Fewer vertices, for the frames where the globe is moving. */
+  simple: Feature<Geometry>
   /** [[west, south], [east, north]] — a cheap reject before a containment test. */
   bounds: [LonLat, LonLat]
   /** Centre and angular radius of the cap covering `bounds`, for culling. */
@@ -85,6 +87,8 @@ export interface GlobeFrame {
   /** ms since the globe entered view, or Infinity once the intro is over. */
   elapsed: number
   hoverIso: string | null
+  /** True while the rotation is changing, which halves the land's vertex count. */
+  moving: boolean
 }
 
 export const createProjection = (size: number, rotation: Rotation): GeoProjection =>
@@ -118,7 +122,12 @@ function landFill(
   return visited ? colors.visited : colors.land
 }
 
-/** One pass: each country is walked once and both filled and stroked from it. */
+/**
+ * One pass: each country is walked once and both filled and stroked from it.
+ * Walking the land is the globe's frame cost — d3-geo clips every ring against
+ * the horizon vertex by vertex — so a moving globe draws the simplified
+ * outlines and a settled one draws the full atlas.
+ */
 function drawLand(
   ctx: CanvasRenderingContext2D,
   path: Path,
@@ -131,7 +140,7 @@ function drawLand(
   for (const shape of scene.shapes) {
     if (!capVisible(shape.center, shape.radius, view)) continue
     ctx.beginPath()
-    path(shape.feature)
+    path(frame.moving ? shape.simple : shape.feature)
     ctx.fillStyle = landFill(shape, scene, frame, colors)
     ctx.fill()
     ctx.stroke()

@@ -25,6 +25,9 @@ const MAX_DPR = 2
 const START_LAT = -20
 const MAX_LAT = 90
 
+const sameRotation = (a: Rotation, b: Rotation): boolean =>
+  a[0] === b[0] && a[1] === b[1] && a[2] === b[2]
+
 interface Tween {
   from: Rotation
   to: Rotation
@@ -67,6 +70,8 @@ export function createGlobeController({ reduced }: { reduced: boolean }): GlobeC
   let tween: Tween | null = null
   let userRotated = false
   let frame = 0
+  /** The rotation the canvas currently shows, so a tick knows if it moved. */
+  let painted: Rotation | null = null
   // Parked until a canvas arrives. React re-runs effects (and so detaches and
   // re-attaches the canvas) on every remount, so this has to be reversible.
   let parked = true
@@ -101,7 +106,7 @@ export function createGlobeController({ reduced }: { reduced: boolean }): GlobeC
     return animating || (introStart !== null && now - introStart < INTRO_TOTAL_MS)
   }
 
-  function paint(now: number) {
+  function paint(now: number, moving: boolean) {
     if (!canvas || !scene || size <= 0) return
     const ctx = canvas.getContext('2d')
     if (!ctx) return
@@ -116,15 +121,25 @@ export function createGlobeController({ reduced }: { reduced: boolean }): GlobeC
       canvas.style.height = `${size}px`
     }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-    drawGlobe(ctx, scene, { size, rotation, elapsed: introElapsed(now), hoverIso }, colors)
+    drawGlobe(
+      ctx,
+      scene,
+      { size, rotation, elapsed: introElapsed(now), hoverIso, moving },
+      colors
+    )
   }
 
   function tick(now: number) {
     frame = 0
     if (parked) return
     const animating = advance(now)
-    paint(now)
-    if (animating) schedule()
+    // A frame that moves the globe draws the simplified land; it then asks for
+    // one more frame, so a globe that has come to rest — whether a tween ended
+    // or a drag did — always settles at full detail.
+    const moving = painted !== null && !sameRotation(painted, rotation)
+    paint(now, moving)
+    painted = rotation
+    if (animating || moving) schedule()
   }
 
   function applyRotation(next: Rotation) {

@@ -47,7 +47,7 @@ const squareShape = (id: string, [lon, lat]: LonLat, half = 5): CountryShape => 
     [lon - half, lat - half],
     [lon + half, lat + half],
   ]
-  return { id, feature, bounds, ...boundsCap(bounds) }
+  return { id, feature, simple: feature, bounds, ...boundsCap(bounds) }
 }
 
 const airport = (code: string, coords: LonLat, count = 1): Airport => ({ code, coords, count })

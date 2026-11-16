@@ -7,13 +7,16 @@ import type { FeatureCollection, Geometry } from 'geojson'
 import type { Topology, GeometryCollection } from 'topojson-specification'
 import type { CountryShape } from './globe-draw'
 import { boundsCap } from './globe-cull'
+import { simplifyFeature } from './globe-simplify'
 
 export const ATLAS_URL = '/data/world-110m.json'
 const COUNTRIES_OBJECT = 'countries'
 
 /**
  * Country shapes with their geographic bounds precomputed, so hover testing can
- * reject most of the 177 features without a containment test.
+ * reject most of the 177 features without a containment test, and a simplified
+ * outline for the frames where the globe is moving. Hit-testing and culling
+ * always use the full geometry, so neither loses accuracy.
  */
 export async function loadCountryShapes(
   url: string = ATLAS_URL,
@@ -33,6 +36,12 @@ export async function loadCountryShapes(
   const collection = feature(topology, countries) as FeatureCollection<Geometry>
   return collection.features.map((shape) => {
     const bounds = geoBounds(shape)
-    return { id: String(shape.id), feature: shape, bounds, ...boundsCap(bounds) }
+    return {
+      id: String(shape.id),
+      feature: shape,
+      simple: simplifyFeature(shape),
+      bounds,
+      ...boundsCap(bounds),
+    }
   })
 }

@@ -49,23 +49,27 @@ test.describe("Hero decode", () => {
     await expect.poll(() => noiseCells(page), { timeout: 3000 }).toBe(0);
   });
 
-  test("holds the headline's layout while it decodes", async ({ page }) => {
+  test("resolves without shifting the page", async ({ page }) => {
+    await page.addInitScript(() => {
+      const shifts: number[] = []
+      ;(window as unknown as { __shifts: number[] }).__shifts = shifts
+      new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          const shift = entry as PerformanceEntry & { value: number; hadRecentInput: boolean }
+          if (!shift.hadRecentInput) shifts.push(shift.value)
+        }
+      }).observe({ type: "layout-shift", buffered: true })
+    })
     await page.emulateMedia({ reducedMotion: "no-preference" });
     await page.goto("/");
 
-    const headline = page.locator("#hero h1");
-    // Mid-decode: characters are still showing noise glyphs.
-    expect(await noiseCells(page)).toBeGreaterThan(0);
-    const decoding = await headline.boundingBox();
-
+    // Every character keeps its real glyph in the layout and the noise is
+    // painted over it, so a full decode must not move anything on the page.
     await expect.poll(() => noiseCells(page), { timeout: 10000 }).toBe(0);
-    const settled = await headline.boundingBox();
-
-    // Each character keeps its real glyph in the layout and the noise is drawn
-    // over it, so resolving cannot move anything — that is the CLS guarantee.
-    expect(decoding!.width).toBeCloseTo(settled!.width, 1);
-    expect(decoding!.height).toBeCloseTo(settled!.height, 1);
-    expect(decoding!.y).toBeCloseTo(settled!.y, 1);
+    const shifted = await page.evaluate(
+      () => (window as unknown as { __shifts: number[] }).__shifts.reduce((a, b) => a + b, 0),
+    );
+    expect(shifted).toBe(0);
   });
 });
 
