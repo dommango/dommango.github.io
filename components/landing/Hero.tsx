@@ -26,6 +26,7 @@ export function Hero() {
               a ~390px phone) and DPR-1.5 desktops (480w); phones at DPR 2-3
               still need and get the full 640w file. AVIF was not worth adding:
               it only saved 25% at a quality that visibly softened the photo. */}
+          {/* eslint-disable-next-line @next/next/no-img-element -- see above */}
           <img
             src="/images/portrait-skyline.webp"
             srcSet="/images/portrait-skyline-320.webp 320w, /images/portrait-skyline-480.webp 480w, /images/portrait-skyline.webp 640w"
