@@ -13,7 +13,7 @@ No server runtime — everything renders at build time.
 ## Local development
 
 ```bash
-npm install --legacy-peer-deps   # react-simple-maps declares a React <19 peer
+npm install --legacy-peer-deps   # matches CI
 npm run dev                      # localhost:3000
 ```
 

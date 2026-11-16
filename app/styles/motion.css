@@ -1,0 +1,291 @@
+/* ============================================================
+   MOTION — every animation on the site, split out of globals.css
+   so neither file outgrows the house size limit.
+
+   Three techniques, in order of preference:
+   1. Scrubbed (CSS scroll timelines, `scroll()` / `view()`) — zero JS,
+      compositor-only, and progressive enhancement: without support the element
+      simply shows its final state.
+   2. One-shot (`.is-in`, added by useInView) — plays once on entry. Its hidden
+      start state applies only when scripting is on, so no-JS never sees blank
+      content.
+   3. Scroll-driven stages (the Travel reel) and one-shot sequences written from
+      JS (the hero decode, the globe's canvas intro). Their CSS is fenced to
+      match the JS that drives them, so the two can never disagree.
+
+   Everything here animates transform, opacity or clip-path only — nothing that
+   triggers layout, which is what keeps CLS at 0. All of it is fenced to
+   `prefers-reduced-motion: no-preference`; scroll timelines ignore the
+   duration-shrinking reduced-motion rule at the bottom, so they must be opted
+   out explicitly.
+   ============================================================ */
+
+/* ---- Legacy utilities (pre-brutalist pages) ---------------- */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+.animation-delay-100 { animation-delay: 100ms; }
+.animation-delay-200 { animation-delay: 200ms; }
+.animation-delay-300 { animation-delay: 300ms; }
+
+/* ---- Scroll motion ---------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      z-index: 55; /* above .site-nav (50) */
+      pointer-events: none;
+      animation: scroll-progress linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+  @supports (animation-timeline: view()) {
+    .binary-rule {
+      animation: rule-wipe steps(14, end) both;
+      animation-timeline: view();
+      animation-range: entry 10% entry 100%;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--accent);
+      transform-origin: top;
+      animation: timeline-spine linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 55%;
+    }
+  }
+  @media (scripting: enabled) {
+    .projects-grid:not(.is-in) .work-card { clip-path: inset(0 0 100% 0); }
+    .continent-list:not(.is-in) .continent-fill { transform: scaleX(0); }
+    .continent-list:not(.is-in) .continent-count { opacity: 0; }
+  }
+  .projects-grid.is-in .work-card {
+    /* `backwards` only: a forwards fill would pin transform and kill the hover lift. */
+    animation: card-stamp var(--dur-slow) var(--ease-out) backwards;
+    animation-delay: calc(var(--i, 0) * 70ms);
+  }
+  .continent-list.is-in .continent-fill {
+    animation: bar-fill var(--dur-slow) var(--ease-out) backwards;
+    animation-delay: calc(var(--i, 0) * 60ms);
+  }
+}
+
+/* ---- Hero: the headline decodes out of 1/0 noise ----------- *
+ * Each character keeps its real glyph in the layout and ::after paints the
+ * noise over it, so nothing reflows and the accessible text never changes.
+ * The server renders the seeded noise state, which is why this is fenced to
+ * `scripting: enabled` — with JS off nothing would ever resolve it. */
+@media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
+  .decode-ch { position: relative; }
+  .decode-ch.is-noise { color: transparent; }
+  .decode-ch.is-noise::after {
+    content: attr(data-g);
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.62em;
+    color: var(--accent-text);
+  }
+}
+
+/* ---- Hero: the portrait develops like a print ------------- *
+ * The <img> paints on frame 1 (it is the LCP element), and only the two
+ * overlays animate: a page-coloured curtain clipped away downward, with a
+ * scanline riding its edge. Both are inset to the image's own box, not the
+ * frame's, so the caption below is untouched. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-portrait.is-develop::after,
+  .hero-portrait.is-develop::before {
+    content: "";
+    position: absolute;
+    top: 10px; /* .hero-portrait's padding — the overlay tracks the image box */
+    left: 10px;
+    right: 10px;
+    aspect-ratio: 2 / 3;
+    pointer-events: none;
+  }
+  .hero-portrait.is-develop::after {
+    background: var(--bg);
+    animation: portrait-develop 1400ms var(--ease-inout) 200ms both;
+  }
+  .hero-portrait.is-develop::before {
+    z-index: 2;
+    background: linear-gradient(
+      to bottom,
+      var(--accent) 0 2px,
+      color-mix(in srgb, var(--accent) 30%, transparent) 2px 9px,
+      transparent 9px
+    );
+    animation: portrait-scanline 1400ms var(--ease-inout) 200ms both;
+  }
+}
+
+/* ---- Travel: the pinned reel ------------------------------ *
+ * A tall container with a sticky stage, so scrolling past the section scrubs
+ * the year. useReelProgress reads the stage's computed position, so these
+ * fences alone decide: with reduced motion, no JS or no sticky support the
+ * stage is plain markup in normal flow and the manual
+ * scrubber stays the control. The site has one breakpoint (900px) and the
+ * reel's phone composition lives inside it, nested here rather than in a
+ * breakpoint of its own. */
+@media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
+  @supports (position: sticky) {
+    .travel-reel { height: 320vh; }
+    .travel-reel-stage {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      height: 100svh;
+      display: grid;
+      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+      align-items: center;
+      gap: var(--s-7);
+      overflow: hidden;
+    }
+    /* Both columns are explicitly row 1: auto-placement would otherwise read
+       the second column as a second row and overflow the stage. */
+    .travel-reel-stage .travel-map-wrap {
+      grid-area: 1 / 1;
+      margin-top: 0;
+    }
+    /* Right column: the year reads first, the bars grow underneath it. */
+    .travel-reel-stage .travel-grid {
+      grid-area: 1 / 2;
+      grid-template-columns: 1fr;
+      gap: var(--s-6);
+      margin-top: 0;
+    }
+    .travel-reel-stage .scrub {
+      order: -1;
+      border: 0;
+      padding: 0;
+    }
+    .travel-reel-stage .map-frame {
+      width: min(100%, 58vh);
+      margin-inline: auto;
+    }
+    .travel-reel-stage .scrub-year { font-size: clamp(64px, 8vw, 128px); }
+    /* Scroll is the scrubber while the stage is pinned. */
+    .travel-reel-stage .scrub-manual { display: none; }
+
+    @media (max-width: 900px) {
+      .travel-reel { height: 260vh; }
+      .travel-reel-stage {
+        grid-template-columns: 1fr;
+        /* The globe takes whatever height the year and the bars leave, so the
+           composition holds from a 667px phone to a tall one. */
+        grid-template-rows: auto minmax(0, 1fr) auto;
+        align-items: stretch;
+        gap: var(--s-4);
+        padding: var(--s-6) 0 var(--s-5);
+      }
+      /* Promotes the two-column grid's children to stage rows, so the globe can
+         sit between the year above it and the bars below. */
+      .travel-reel-stage .travel-grid { display: contents; }
+      .travel-reel-stage .scrub { grid-area: 1 / 1; order: 0; }
+      .travel-reel-stage .travel-map-wrap {
+        grid-area: 2 / 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+      }
+      .travel-reel-stage .travel-map-frame {
+        flex: 1 1 auto;
+        min-height: 0;
+      }
+      .travel-reel-stage .map-frame {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: auto;
+      }
+      .travel-reel-stage .scrub-year { font-size: 72px; }
+      .travel-reel-stage .travel-map-head {
+        justify-content: flex-end;
+        margin-bottom: var(--s-2);
+      }
+      .travel-reel-stage .travel-map-head .ds-eyebrow,
+      .travel-reel-stage .travel-map-cap { display: none; }
+      .travel-reel-stage .travel-map-frame { padding: var(--s-2); }
+      .travel-reel-stage .continent-row {
+        grid-template-columns: 92px 1fr 24px;
+        gap: var(--s-3);
+        padding: 4px 0;
+      }
+      /* "North America" must stay on one line here, or the bars grow a row
+         taller than the stage has left. */
+      .travel-reel-stage .continent-name { font-size: 11px; white-space: nowrap; }
+      .travel-reel-stage .continent-count { font-size: 11px; }
+    }
+  }
+}
+
+/* ---- Keyframes -------------------------------------------- */
+@keyframes scroll-progress { to { transform: scaleX(1); } }
+@keyframes rule-wipe {
+  from { clip-path: inset(0 100% 0 0); color: var(--accent-text); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes timeline-spine { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes card-stamp {
+  from { clip-path: inset(0 0 100% 0); transform: translateY(14px); }
+  to { clip-path: inset(0 0 0 0); transform: none; }
+}
+@keyframes bar-fill { from { transform: scaleX(0); } }
+@keyframes portrait-develop {
+  from { clip-path: inset(0 0 0 0); }
+  to { clip-path: inset(100% 0 0 0); }
+}
+@keyframes portrait-scanline {
+  from { transform: translateY(0); opacity: 1; }
+  90% { opacity: 1; }
+  to { transform: translateY(100%); opacity: 0; }
+}
+@keyframes theme-wipe {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* ---- Theme switch as a film-gate wipe --------------------- *
+ * A same-document View Transition around the theme change (see
+ * lib/motion/view-transition.ts). These pseudo-elements live on the document,
+ * outside .brutalist-root, so --ease-inout needs a fallback here. Browsers
+ * without View Transitions never create them and get the instant swap. */
+::view-transition-old(root) { animation: none; }
+::view-transition-new(root) {
+  animation: theme-wipe 520ms var(--ease-inout, ease) both;
+}
+
+/* ---- Reduced motion --------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .brutalist-root *, .brutalist-root *::before, .brutalist-root *::after {
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important;
+  }
+  .work-card:hover { transform: none !important; }
+  .btn-primary:hover { transform: none !important; }
+  ::view-transition-new(root) { animation: none; }
+}

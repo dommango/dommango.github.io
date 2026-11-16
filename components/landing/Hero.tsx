@@ -1,6 +1,7 @@
 // Hero — headline, headshot, and a short bio. Everything else moved out:
 // the projects below make the case that a themes grid used to assert.
 import { BinaryRule } from './BinaryRule'
+import { DecodeText } from './DecodeText'
 
 export function Hero() {
   return (
@@ -10,16 +11,20 @@ export function Hero() {
         <div className="hero-head-text">
           <span className="ds-eyebrow">Intro</span>
           <h1 className="hero-title">
-            <span className="hero-title-alt">Unapologetically</span>
+            <span className="hero-title-alt">
+              <DecodeText text="Unapologetically" startMs={150} durationMs={1000} />
+            </span>
             <br />
-            AI-pilled.
+            <DecodeText text="AI-pilled." startMs={650} durationMs={700} />
           </h1>
           <p className="hero-kicker">
             Growing enterprise AI adoption at Citi by day,{' '}
             <span className="hero-kicker-alt">doing my best to keep up at the frontier by night</span>
           </p>
         </div>
-        <div className="hero-portrait">
+        {/* is-develop only adds two overlays over the image's own box, so the
+            portrait still paints on frame 1 as the LCP element. */}
+        <div className="hero-portrait is-develop">
           {/* images.unoptimized is on for the static export, so Next can't
               generate responsive sizes itself — these are pre-generated. The
               smaller files only reach DPR-1 screens (320w on desktop, 480w on

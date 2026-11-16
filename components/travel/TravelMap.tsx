@@ -1,112 +1,49 @@
-"use client";
+'use client'
 
-import { useState, useCallback, useRef } from "react";
+// TravelMap — the flight globe. The scene is painted to one canvas by
+// globe-controller (see globe-draw for why: the old SVG renderer handed 177
+// country paths to React and re-rendered all of them per rotation tick, which
+// the scroll-driven reel could not afford). React here only owns the frame, the
+// hover tooltip and the text equivalent of the globe for screen readers.
+import { useEffect, useMemo, useRef, useState } from 'react'
+import type { Country, FlightRoute } from '@/lib/content/travel'
+import { loadCountryShapes } from './globe-atlas'
+import { readGlobeColors, type CountryShape } from './globe-draw'
+import { createGlobeController } from './globe-controller'
 import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  Marker,
-  Line,
-  Sphere,
-} from "react-simple-maps";
-import { geoOrthographic } from "d3-geo";
-import { Country, FlightRoute } from "@/lib/content/travel";
-import {
-  INTRO_START_LON,
-  MAX_STAGGER_MS,
-  prefersReducedMotion,
-  useGlobeSpin,
-  useIntroDone,
-} from "./useGlobeIntro";
+  buildAirports,
+  buildRouteArcs,
+  isoCountryMap,
+  visitedIsoCodes,
+  type LonLat,
+} from './globe-geometry'
+import { hitAirport, hitCountry, hitRoute } from './globe-hit'
+import { prefersReducedMotion } from './globe-timing'
 
-// Served locally so a CDN hiccup can't blank the globe — the site otherwise
-// has no runtime third-party dependency.
-const geoUrl = "/data/world-110m.json";
-
-// world-atlas@2 countries-110m.json uses zero-padded numeric ISO 3166-1 codes as geo.id
-const COUNTRY_ISO_MAP: Record<string, string> = {
-  usa: "840",
-  philippines: "608",
-  canada: "124",
-  grenada: "308",
-  sweden: "752",
-  estonia: "233",
-  russia: "643",
-  finland: "246",
-  "dominican-republic": "214",
-  uk: "826",
-  france: "250",
-  monaco: "492",
-  italy: "380",
-  "vatican-city": "336",
-  greece: "300",
-  austria: "040",
-  switzerland: "756",
-  "czech-republic": "203",
-  germany: "276",
-  liechtenstein: "438",
-  netherlands: "528",
-  "costa-rica": "188",
-  jamaica: "388",
-  colombia: "170",
-  panama: "591",
-  "hong-kong": "344",
-  cambodia: "116",
-  bolivia: "068",
-  chile: "152",
-  peru: "604",
-  morocco: "504",
-  cuba: "192",
-  japan: "392",
-  china: "156",
-  vietnam: "704",
-  thailand: "764",
-  malaysia: "458",
-  singapore: "702",
-  turkey: "792",
-  hungary: "348",
-  denmark: "208",
-  poland: "616",
-  mexico: "484",
-  nepal: "524",
-  india: "356",
-  "south-korea": "410",
-  spain: "724",
-  portugal: "620",
-  taiwan: "158",
-  qatar: "634",
-  argentina: "032",
-  brazil: "076",
-  iceland: "352",
-  "saudi-arabia": "682",
-  oman: "512",
-  "united-arab-emirates": "784",
-};
+const DRAG_SENSITIVITY = 0.3
+/** Pointer travel before a press counts as a drag rather than a tap or a scroll. */
+const DRAG_THRESHOLD_PX = 10
+const KEY_STEP_DEG = 10
+const TIP_OFFSET_PX = 15
 
 interface TravelMapProps {
-  countries: Country[];
-  flightRoutes?: FlightRoute[];
-  selectedYear?: number;
-  showFlights?: boolean;
+  countries: Country[]
+  flightRoutes?: FlightRoute[]
+  selectedYear?: number
+  showFlights?: boolean
   /** Flips true once the globe scrolls into view; starts the route draw-in. */
-  drawIn?: boolean;
+  drawIn?: boolean
+  /** [lon, lat] the globe should swing to — the reel's current year. */
+  focus?: LonLat
 }
 
 interface TooltipData {
-  content: string;
-  subtext?: string;
+  content: string
+  subtext?: string
 }
 
-function isVisible(
-  coords: [number, number],
-  rotation: [number, number, number],
-): boolean {
-  const projection = geoOrthographic()
-    .rotate(rotation)
-    .translate([0, 0])
-    .scale(1);
-  return projection(coords) !== null;
-}
+const sameTip = (a: TooltipData | null, b: TooltipData | null) =>
+  a?.content === b?.content && a?.subtext === b?.subtext
 
 export function TravelMap({
   countries,
@@ -114,318 +51,226 @@ export function TravelMap({
   selectedYear,
   showFlights = false,
   drawIn = false,
+  focus,
 }: TravelMapProps) {
-  const [tooltip, setTooltip] = useState<TooltipData | null>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  // Starts off-axis so the intro spin has somewhere to settle from; the map is
-  // client-only (dynamic, ssr:false), so reading matchMedia here is safe.
-  const [rotation, setRotation] = useState<[number, number, number]>([
-    prefersReducedMotion() ? 0 : INTRO_START_LON,
-    -20,
-    0,
-  ]);
-  const userRotated = useRef(false);
-  const introDone = useIntroDone(drawIn);
-  useGlobeSpin(drawIn, setRotation, userRotated);
-  const routeClass = !drawIn
-    ? "flight-line is-pending"
-    : introDone
-      ? "flight-line"
-      : "flight-line is-drawing";
-  const airportClass = !drawIn
-    ? "airport-dot is-pending"
-    : introDone
-      ? "airport-dot"
-      : "airport-dot is-drawing";
-  const [isDragging, setIsDragging] = useState(false);
-  const dragStart = useRef<{
-    x: number;
-    y: number;
-    rotation: [number, number, number];
-  } | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [controller] = useState(() => createGlobeController({ reduced: prefersReducedMotion() }))
+  const frameRef = useRef<HTMLDivElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const tipRef = useRef<HTMLDivElement>(null)
+  const dragRef = useRef<{
+    x: number
+    y: number
+    /** Rotation when the drag took over; null while the press is still a tap. */
+    rotation: [number, number, number] | null
+  } | null>(null)
+  const tipStateRef = useRef<TooltipData | null>(null)
+  const [shapes, setShapes] = useState<CountryShape[]>([])
+  const [tooltip, setTooltip] = useState<TooltipData | null>(null)
+  const [dragging, setDragging] = useState(false)
 
-  const displayedCountries = selectedYear
-    ? countries.filter((c) => c.firstVisited <= selectedYear)
-    : countries;
+  const displayed = useMemo(
+    () => (selectedYear ? countries.filter((c) => c.firstVisited <= selectedYear) : countries),
+    [countries, selectedYear]
+  )
+  const isoToCountry = useMemo(() => isoCountryMap(displayed), [displayed])
+  const airports = useMemo(() => buildAirports(flightRoutes), [flightRoutes])
+  const routeArcs = useMemo(() => buildRouteArcs(flightRoutes), [flightRoutes])
+  const [focusLon, focusLat] = focus ?? [null, null]
 
-  const visitedIsoCodesSet = new Set(
-    displayedCountries.map((c) => COUNTRY_ISO_MAP[c.id]).filter(Boolean),
-  );
+  useEffect(() => {
+    controller.setCanvas(canvasRef.current)
+    return () => controller.stop()
+  }, [controller])
 
-  const isoToCountryMap = new Map<string, Country>();
-  displayedCountries.forEach((c) => {
-    const iso = COUNTRY_ISO_MAP[c.id];
-    if (iso) isoToCountryMap.set(iso, c);
-  });
+  useEffect(() => {
+    const request = new AbortController()
+    loadCountryShapes(undefined, request.signal)
+      .then(setShapes)
+      .catch((error: unknown) => {
+        if (request.signal.aborted) return
+        console.error('Travel globe: country atlas unavailable', error)
+      })
+    return () => request.abort()
+  }, [])
 
-  const airportsMap = new Map<
-    string,
-    { code: string; coords: [number, number]; count: number }
-  >();
-  if (showFlights) {
-    flightRoutes.forEach((route) => {
-      if (!airportsMap.has(route.from)) {
-        airportsMap.set(route.from, {
-          code: route.from,
-          coords: route.fromCoords,
-          count: route.count,
-        });
-      } else {
-        airportsMap.get(route.from)!.count += route.count;
-      }
-      if (!airportsMap.has(route.to)) {
-        airportsMap.set(route.to, {
-          code: route.to,
-          coords: route.toCoords,
-          count: route.count,
-        });
-      } else {
-        airportsMap.get(route.to)!.count += route.count;
-      }
-    });
-  }
-  const airports = Array.from(airportsMap.values());
+  useEffect(() => {
+    controller.setScene({
+      shapes,
+      visitedIso: visitedIsoCodes(displayed),
+      routes: showFlights ? routeArcs : [],
+      airports: showFlights ? airports : [],
+    })
+  }, [controller, shapes, displayed, showFlights, routeArcs, airports])
 
-  const handleMouseMove = useCallback(
-    (e: React.PointerEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+  // The globe's colours are theme tokens, so re-read them when the theme flips.
+  useEffect(() => {
+    const frame = frameRef.current
+    if (!frame) return
+    const apply = () => controller.setColors(readGlobeColors(frame))
+    apply()
+    const root = frame.closest('.brutalist-root')
+    if (!root) return
+    const observer = new MutationObserver(apply)
+    observer.observe(root, { attributes: true, attributeFilter: ['data-accent', 'data-contrast'] })
+    return () => observer.disconnect()
+  }, [controller])
 
-      if (isDragging && dragStart.current) {
-        const dx = e.clientX - dragStart.current.x;
-        const dy = e.clientY - dragStart.current.y;
-        const sensitivity = 0.3;
-        setRotation([
-          dragStart.current.rotation[0] + dx * sensitivity,
-          Math.max(
-            -90,
-            Math.min(90, dragStart.current.rotation[1] - dy * sensitivity),
-          ),
-          0,
-        ]);
-      }
-    },
-    [isDragging],
-  );
-
-  const handleMouseDown = useCallback(
-    (e: React.PointerEvent) => {
-      userRotated.current = true;
-      setIsDragging(true);
-      dragStart.current = {
-        x: e.clientX,
-        y: e.clientY,
-        rotation: [...rotation] as [number, number, number],
-      };
-    },
-    [rotation],
-  );
-
-  const handleMouseUp = useCallback(() => {
-    setIsDragging(false);
-    dragStart.current = null;
-  }, []);
-
-  // Not wrapped in useCallback: isoToCountryMap is a new Map every render
-  // (built from displayedCountries above), so memoizing this against it would
-  // never actually skip a re-creation.
-  const showCountryTooltip = (isoCode: string) => {
-    const country = isoToCountryMap.get(isoCode);
-    if (country) {
-      setTooltip({
-        content: country.name,
-        subtext: `First visited: ${country.firstVisited}`,
-      });
+  useEffect(() => {
+    const frame = frameRef.current
+    if (!frame) return
+    const measure = () => {
+      const { width, height } = frame.getBoundingClientRect()
+      controller.setSize(Math.floor(Math.max(0, Math.min(width, height || width))))
     }
-  };
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(frame)
+    return () => observer.disconnect()
+  }, [controller])
 
-  const showFlightTooltip = useCallback(
-    (from: string, to: string, count: number) => {
-      setTooltip({
-        content: `${from} → ${to}`,
-        subtext: `${count} flight${count > 1 ? "s" : ""}`,
-      });
-    },
-    [],
-  );
+  useEffect(() => {
+    if (drawIn) controller.startIntro()
+  }, [controller, drawIn])
 
-  const showAirportTooltip = useCallback((code: string) => {
-    setTooltip({ content: code });
-  }, []);
+  useEffect(() => {
+    if (focusLon === null || focusLat === null) return
+    controller.focusOn([focusLon, focusLat])
+  }, [controller, focusLon, focusLat])
 
-  const hideTooltip = useCallback(() => {
-    setTooltip(null);
-  }, []);
+  const showTip = (next: TooltipData | null) => {
+    if (sameTip(tipStateRef.current, next)) return
+    tipStateRef.current = next
+    setTooltip(next)
+  }
+
+  const moveTip = (clientX: number, clientY: number) => {
+    const tip = tipRef.current
+    if (!tip) return
+    tip.style.left = `${clientX + TIP_OFFSET_PX}px`
+    tip.style.top = `${clientY + TIP_OFFSET_PX}px`
+  }
+
+  const canvasPoint = (clientX: number, clientY: number): [number, number] | null => {
+    const canvas = canvasRef.current
+    if (!canvas) return null
+    const rect = canvas.getBoundingClientRect()
+    return [clientX - rect.left, clientY - rect.top]
+  }
+
+  const updateHover = (clientX: number, clientY: number) => {
+    const point = canvasPoint(clientX, clientY)
+    if (!point) return
+    const projection = controller.projection()
+    const iso = hitCountry(projection, shapes, point)
+    controller.setHover(iso)
+    if (iso) {
+      const country = isoToCountry.get(iso)
+      showTip(
+        country ? { content: country.name, subtext: `First visited: ${country.firstVisited}` } : null
+      )
+      return
+    }
+    if (!showFlights) {
+      showTip(null)
+      return
+    }
+    const airport = hitAirport(projection, airports, point)
+    if (airport) {
+      showTip({ content: airport.code })
+      return
+    }
+    const ctx = canvasRef.current?.getContext('2d')
+    const route = ctx ? hitRoute(ctx, projection, routeArcs, point) : null
+    showTip(
+      route
+        ? {
+            content: `${route.from} → ${route.to}`,
+            subtext: `${route.count} flight${route.count > 1 ? 's' : ''}`,
+          }
+        : null
+    )
+  }
+
+  const endDrag = () => {
+    dragRef.current = null
+    setDragging(false)
+  }
 
   return (
     <div
-      ref={containerRef}
+      ref={frameRef}
       className="map-frame"
-      onPointerDown={(e) => {
-        // Seed the tooltip position on press — a tap has no preceding
-        // pointermove, so without this the tooltip renders at its stale
-        // (0,0) default the first time a touch lands on a country.
-        setMousePos({ x: e.clientX, y: e.clientY });
-        e.currentTarget.setPointerCapture(e.pointerId);
-        handleMouseDown(e);
-      }}
-      onPointerMove={handleMouseMove}
-      onPointerUp={(e) => {
-        // Touch/pen have no hover to dismiss the tooltip on — a mouse gets
-        // one via onMouseLeave/onPointerLeave on the Geography itself.
-        if (e.pointerType !== "mouse") hideTooltip();
-        handleMouseUp();
-      }}
-      onPointerCancel={handleMouseUp}
-      onPointerLeave={() => {
-        hideTooltip();
-        handleMouseUp();
-      }}
-      style={{ cursor: isDragging ? "grabbing" : "grab", touchAction: "pan-y" }}
+      style={{ cursor: dragging ? 'grabbing' : 'grab', touchAction: 'pan-y' }}
       tabIndex={0}
       role="group"
-      aria-label={`Globe showing ${displayedCountries.length} visited countries. Drag or use the arrow keys to rotate.`}
+      aria-label={`Globe showing ${displayed.length} visited countries. Drag or use the arrow keys to rotate.`}
+      onPointerDown={(e) => {
+        // A tap has no preceding move, so seed the tooltip's position and
+        // hit-test here too — touch has no hover to do it later.
+        moveTip(e.clientX, e.clientY)
+        updateHover(e.clientX, e.clientY)
+        e.currentTarget.setPointerCapture(e.pointerId)
+        dragRef.current = { x: e.clientX, y: e.clientY, rotation: null }
+        setDragging(true)
+      }}
+      onPointerMove={(e) => {
+        moveTip(e.clientX, e.clientY)
+        const drag = dragRef.current
+        if (drag) {
+          const dx = e.clientX - drag.x
+          const dy = e.clientY - drag.y
+          if (!drag.rotation) {
+            if (Math.hypot(dx, dy) < DRAG_THRESHOLD_PX) return
+            controller.markUserRotated()
+            dragRef.current = { x: e.clientX, y: e.clientY, rotation: controller.rotation() }
+            return
+          }
+          controller.setRotation([
+            drag.rotation[0] + dx * DRAG_SENSITIVITY,
+            drag.rotation[1] - dy * DRAG_SENSITIVITY,
+            0,
+          ])
+          return
+        }
+        if (e.pointerType === 'mouse') updateHover(e.clientX, e.clientY)
+      }}
+      onPointerUp={(e) => {
+        // Touch and pen have no hover to dismiss the tooltip on.
+        if (e.pointerType !== 'mouse') {
+          showTip(null)
+          controller.setHover(null)
+        }
+        endDrag()
+      }}
+      onPointerCancel={endDrag}
+      onPointerLeave={() => {
+        showTip(null)
+        controller.setHover(null)
+        endDrag()
+      }}
       onKeyDown={(e) => {
-        const step = 10;
-        userRotated.current = true;
-        const [lon, lat] = rotation;
-        // Match drag: dragging up increases rotation[1] (dy < 0, so
-        // rotation[1] - dy*sensitivity grows), so ArrowUp must also increase it.
-        if (e.key === "ArrowLeft") setRotation([lon - step, lat, 0]);
-        else if (e.key === "ArrowRight") setRotation([lon + step, lat, 0]);
-        else if (e.key === "ArrowUp") setRotation([lon, Math.min(90, lat + step), 0]);
-        else if (e.key === "ArrowDown") setRotation([lon, Math.max(-90, lat - step), 0]);
-        else return;
-        e.preventDefault();
+        // Match drag: dragging up tilts the globe's north toward the viewer.
+        if (e.key === 'ArrowLeft') controller.rotateBy(-KEY_STEP_DEG, 0)
+        else if (e.key === 'ArrowRight') controller.rotateBy(KEY_STEP_DEG, 0)
+        else if (e.key === 'ArrowUp') controller.rotateBy(0, KEY_STEP_DEG)
+        else if (e.key === 'ArrowDown') controller.rotateBy(0, -KEY_STEP_DEG)
+        else return
+        e.preventDefault()
       }}
     >
-      {tooltip && (
-        <div
-          className="map-tip"
-          style={{
-            left: mousePos.x + 15,
-            top: mousePos.y + 15,
-          }}
-        >
-          {tooltip.content}
-          {tooltip.subtext && <small>{tooltip.subtext}</small>}
-        </div>
-      )}
-
-      <ComposableMap
-        projection="geoOrthographic"
-        projectionConfig={{ scale: 250, rotate: rotation }}
-        style={{ width: "100%", height: "auto" }}
-        width={500}
-        height={500}
-      >
-        <Sphere
-          id="globe-sphere"
-          fill="var(--map-sphere)"
-          stroke="var(--map-stroke)"
-          strokeWidth={0.5}
-        />
-        <Geographies geography={geoUrl}>
-          {({ geographies }) =>
-            geographies.map((geo) => {
-              const isoCode = geo.id as string;
-              const isVisited = visitedIsoCodesSet.has(isoCode);
-              const baseFill = isVisited ? "var(--map-visited)" : "var(--map-land)";
-
-              return (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  data-visited={isVisited}
-                  // react-simple-maps hardcodes tabIndex=0 on every path; with
-                  // 177+ geographies that turns Tab into a scroll-by-country
-                  // trap after focusing the globe. The group itself is the
-                  // one keyboard target.
-                  tabIndex={-1}
-                  stroke="var(--map-stroke)"
-                  strokeWidth={0.5}
-                  style={{
-                    default: { fill: baseFill, outline: "none" },
-                    hover: {
-                      fill: isVisited ? "var(--map-visited-hover)" : "var(--map-land-hover)",
-                      outline: "none",
-                      cursor: isVisited ? "pointer" : "default",
-                    },
-                    pressed: { fill: baseFill, outline: "none" },
-                  }}
-                  onMouseEnter={() => {
-                    if (isVisited) showCountryTooltip(isoCode);
-                  }}
-                  onMouseLeave={hideTooltip}
-                />
-              );
-            })
-          }
-        </Geographies>
-
-        {showFlights &&
-          flightRoutes.map((route, idx) => {
-            const from: [number, number] = [
-              route.fromCoords[1],
-              route.fromCoords[0],
-            ];
-            const to: [number, number] = [route.toCoords[1], route.toCoords[0]];
-            const fromVisible = isVisible(from, rotation);
-            const toVisible = isVisible(to, rotation);
-            if (!fromVisible && !toVisible) return null;
-
-            return (
-              <Line
-                key={`flight-${route.from}-${route.to}-${idx}`}
-                from={from}
-                to={to}
-                stroke="var(--accent)"
-                strokeOpacity={0.6}
-                strokeWidth={Math.min(0.8 + route.count * 0.15, 3)}
-                strokeLinecap="round"
-                // Normalises dash lengths so the draw-in works for any route length.
-                pathLength={1}
-                className={routeClass}
-                style={
-                  {
-                    cursor: "pointer",
-                    "--delay": `${Math.min(idx * 25, MAX_STAGGER_MS)}ms`,
-                  } as React.CSSProperties
-                }
-                onMouseEnter={() =>
-                  showFlightTooltip(route.from, route.to, route.count)
-                }
-                onMouseLeave={hideTooltip}
-              />
-            );
-          })}
-
-        {showFlights &&
-          airports.map((airport) => {
-            const coords: [number, number] = [
-              airport.coords[1],
-              airport.coords[0],
-            ];
-            if (!isVisible(coords, rotation)) return null;
-
-            return (
-              <Marker
-                key={`airport-${airport.code}`}
-                coordinates={coords}
-                onMouseEnter={() => showAirportTooltip(airport.code)}
-                onMouseLeave={hideTooltip}
-              >
-                <circle
-                  r={Math.min(2.5 + airport.count * 0.05, 5)}
-                  stroke="var(--map-stroke)"
-                  strokeWidth={0.5}
-                  className={airportClass}
-                  style={{ fill: "var(--accent)", cursor: "pointer" }}
-                />
-              </Marker>
-            );
-          })}
-      </ComposableMap>
+      <canvas ref={canvasRef} className="globe-canvas" aria-hidden="true" />
+      {/* The canvas carries no accessible content: this is the globe in text. */}
+      <ul className="sr-only globe-countries">
+        {displayed.map((country) => (
+          <li key={country.id}>
+            {country.name} — first visited {country.firstVisited}
+          </li>
+        ))}
+      </ul>
+      <div ref={tipRef} className="map-tip" hidden={!tooltip} aria-hidden="true">
+        {tooltip?.content}
+        {tooltip?.subtext && <small>{tooltip.subtext}</small>}
+      </div>
     </div>
-  );
+  )
 }
