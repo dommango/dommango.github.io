@@ -1,7 +1,7 @@
 'use client'
 
 // Nav — sticky top nav. Brand wordmark + section links + a single theme
-// toggle that cycles Gold (default) → Oxblood → High Contrast.
+// toggle that cycles High Contrast (default) → Gold → Oxblood.
 import { useEffect, useRef } from 'react'
 
 export type ThemeMode = 'gold' | 'oxblood' | 'contrast'
@@ -85,7 +85,7 @@ export function Nav({ section, mode, onCycleMode, onNavigate, showWriting }: Nav
           type="button"
           className="contrast-toggle"
           onClick={onCycleMode}
-          title="Cycle theme: Gold → Oxblood → High Contrast"
+          title="Cycle theme: High Contrast → Gold → Oxblood"
         >
           <span className="contrast-swatch accent-swatch" />
           {MODE_LABEL[mode]}

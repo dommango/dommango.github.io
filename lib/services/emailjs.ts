@@ -63,7 +63,7 @@ export async function sendContactEmail({
     if (response.status === 200) {
       return {
         success: true,
-        message: 'Message sent. I read everything — talk soon.'
+        message: 'Message sent. I read everything. Talk soon.'
       }
     }
 

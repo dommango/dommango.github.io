@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     template: "%s | Dom Mangonon",
   },
   description:
-    "Dom Mangonon builds software with AI: SousIQ, Bracketeer, the Claude Code Placemat, and more. Projects, writing, and a travel map.",
+    "Dom Mangonon builds software with AI: SousIQ, Bracketeer, the Claude Code Placemat. Projects, writing, and a travel map.",
   openGraph: {
     title: "Dom Mangonon",
     description:
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Dom Mangonon: builds software with AI",
+        alt: "Dom Mangonon builds software with AI",
       },
     ],
   },
@@ -82,7 +82,9 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = { themeColor: "#160000" };
+// Matches the landing default (High Contrast), so the browser chrome
+// agrees with the page background on first paint.
+export const viewport: Viewport = { themeColor: "#000000" };
 
 export default function RootLayout({
   children,

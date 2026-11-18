@@ -75,7 +75,7 @@ export function NotFoundClient() {
   }, [redirecting, match, seconds])
 
   return (
-    <div className="brutalist-root" data-accent="gold" data-contrast="default">
+    <div className="brutalist-root" data-accent="gold" data-contrast="high">
       <div className="page">
         <nav className="site-nav" aria-label="Main">
           <Link href="/" className="brand" aria-label="Home"><span className="brand-mark">DM</span><span className="brand-word">Dom Mangonon</span></Link>
@@ -92,7 +92,7 @@ export function NotFoundClient() {
                 {path && <>You asked for <code>{displayPath(path)}</code>. </>}
                 {match
                   ? <>It now lives on the front page, under <strong>{match.label}</strong>.</>
-                  : <>There’s nothing at that address — no guessing where you meant.</>}
+                  : <>There’s nothing at that address, and I won’t guess where you meant.</>}
               </p>
               {redirecting && (
                 <p className="nf-count">

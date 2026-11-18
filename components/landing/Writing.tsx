@@ -24,7 +24,7 @@ export function Writing() {
         <span className="ds-eyebrow">Writing</span>
         <h2 className="projects-title">Context//Collapse.</h2>
         <p className="projects-blurb">
-          Notes on building with AI — what worked, what broke, and the occasional bit of slop.
+          Notes on building with AI: what worked, what broke, and the occasional bit of slop.
           Published on Substack.
         </p>
       </div>
