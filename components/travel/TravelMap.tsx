@@ -263,7 +263,7 @@ export function TravelMap({
       <ul className="sr-only globe-countries">
         {displayed.map((country) => (
           <li key={country.id}>
-            {country.name} — first visited {country.firstVisited}
+            {country.name}, first visited {country.firstVisited}
           </li>
         ))}
       </ul>
