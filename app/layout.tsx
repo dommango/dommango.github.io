@@ -82,7 +82,9 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = { themeColor: "#160000" };
+// Matches the landing default (High Contrast), so the browser chrome
+// agrees with the page background on first paint.
+export const viewport: Viewport = { themeColor: "#000000" };
 
 export default function RootLayout({
   children,

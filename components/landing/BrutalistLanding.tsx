@@ -37,7 +37,7 @@ function scrollToSection(id: SectionId) {
 }
 
 export function BrutalistLanding({ travel }: { travel: LandingTravelData }) {
-  const [mode, setMode] = useState<ThemeMode>('gold')
+  const [mode, setMode] = useState<ThemeMode>('contrast')
   const [section, setSection] = useState<SectionId>('hero')
 
   const nextMode = (m: ThemeMode): ThemeMode =>

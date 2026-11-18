@@ -76,10 +76,28 @@ test.describe("Hero decode", () => {
 });
 
 test.describe("Theme switch", () => {
+  // High Contrast is the landing default, so the cycle reads
+  // High Contrast -> Gold -> Oxblood -> High Contrast.
+  const TOGGLE = /gold|oxblood|contrast/i;
+
+  test("lands on High Contrast before any interaction", async ({ page }) => {
+    await page.goto("/");
+    expect(await theme(page)).toEqual({ accent: "gold", contrast: "high" });
+    await expect(page.getByRole("button", { name: TOGGLE })).toHaveText(
+      /high contrast/i,
+    );
+  });
+
   test("cycles the palette through all three themes", async ({ page }) => {
     await page.goto("/");
-    const button = page.getByRole("button", { name: /gold|oxblood|contrast/i });
-    expect(await theme(page)).toEqual({ accent: "gold", contrast: "default" });
+    const button = page.getByRole("button", { name: TOGGLE });
+    expect(await theme(page)).toEqual({ accent: "gold", contrast: "high" });
+
+    await button.click();
+    await expect.poll(() => theme(page)).toEqual({
+      accent: "gold",
+      contrast: "default",
+    });
 
     await button.click();
     await expect.poll(() => theme(page)).toEqual({
@@ -92,12 +110,6 @@ test.describe("Theme switch", () => {
       accent: "gold",
       contrast: "high",
     });
-
-    await button.click();
-    await expect.poll(() => theme(page)).toEqual({
-      accent: "gold",
-      contrast: "default",
-    });
   });
 
   test("changes the theme with no view transition support", async ({ page }) => {
@@ -106,9 +118,9 @@ test.describe("Theme switch", () => {
       delete Document.prototype.startViewTransition;
     });
     await page.goto("/");
-    await page.getByRole("button", { name: /gold/i }).click();
+    await page.getByRole("button", { name: TOGGLE }).click();
     await expect.poll(() => theme(page)).toEqual({
-      accent: "oxblood",
+      accent: "gold",
       contrast: "default",
     });
   });
@@ -116,9 +128,9 @@ test.describe("Theme switch", () => {
   test("changes the theme instantly for reduced motion", async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/");
-    await page.getByRole("button", { name: /gold/i }).click();
+    await page.getByRole("button", { name: TOGGLE }).click();
     await expect.poll(() => theme(page)).toEqual({
-      accent: "oxblood",
+      accent: "gold",
       contrast: "default",
     });
   });

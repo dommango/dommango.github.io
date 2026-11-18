@@ -50,4 +50,14 @@ test.describe("Custom 404", () => {
     await expect(page.locator(".brutalist-root .brand-mark")).toBeVisible();
     await expect(page.getByText("This page could not be found.")).toHaveCount(0);
   });
+
+  test("404 renders in High Contrast, same as the landing default", async ({
+    page,
+  }) => {
+    await page.goto("/definitely-not-a-page");
+    await expect(page.locator(".brutalist-root")).toHaveAttribute(
+      "data-contrast",
+      "high",
+    );
+  });
 });
